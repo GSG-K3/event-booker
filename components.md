@@ -4,21 +4,21 @@
     event card
 
 
-## user event details
+## user event details Page
     logo Comp
     event  data
     take place
 
-## sing up
+## sing up Page
     logo 
     sing up form 
 
-## sing in 
+## sing in Page
     logo 
     log in form
 
 
-## profile 
+## profile Page
     avatar "Profile Image"
     profile tab : 
         1.info 
@@ -33,28 +33,28 @@
     avatar "Profile Image" 
     event in day 
 
-## admin take Attendance
+## admin take Attendance Page
     admin menu
     event data 
     member Attendance in  event 
 
 
 
-## admin new Event 
+## admin new Event Page
     admin menu
     avatar "Profile Image" 
     Add Event Form 
 
 
 
-## admin Events 
+## admin Events Page 
     admin menu
     avatar "Profile Image"
     event tab
     event card
     action event "edit , delete"
 
-## admin Event Detail
+## admin Event Detail Page
     admin menu
     avatar "Profile Image"
     event data
