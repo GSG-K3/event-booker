@@ -116,3 +116,14 @@ user :
     event details : /event/id
     
     profile : /user/profile/userName
+
+
+
+
+================================================
+Database:
+Table
+    1. user
+    2. event
+    3. user-event
+    
