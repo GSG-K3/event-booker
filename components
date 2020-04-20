@@ -5,7 +5,7 @@ event card
 
 
 ## user event details
-logo
+logo Comp
 event  data
 take place
 
@@ -36,7 +36,7 @@ event in day
 ##admin take Attendance
 admin menu
 event data 
-member Attendance in this event 
+member Attendance in  event 
 
 
 
@@ -58,7 +58,7 @@ action event "edit , delete"
 admin menu
 avatar "Profile Image"
 event data
-member Attendance in this event 
+member Attendance in  event 
 
 
 ## user not login  menu contains :   
@@ -82,4 +82,11 @@ member Attendance in this event
 
 
 
-
+======================================
+common component : 
+logo comp
+event tab
+event card
+avatar "Profile Image"
+menu
+member Attendance in  event
