@@ -90,3 +90,53 @@ event card
 avatar "Profile Image"
 menu
 member Attendance in  event
+
+===============================================================
+
+browser Endpoint 
+Admin : 
+home : /admin/
+
+newEvent : /admin/NewEvent
+
+newMember : /admin/NewMember
+
+Take Attendance : /admin/Event/takeAttendance/:id "/admin/Event/5"
+
+Events : /admin/Events/
+
+Event Details : /admin/Event/Detail/:id "/admin/Event/5"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+user : 
