@@ -1,70 +1,70 @@
 ## user Home Page 
-logo comp
-event tab
-event card
+    logo comp
+    event tab
+    event card
 
 
 ## user event details
-logo Comp
-event  data
-take place
+    logo Comp
+    event  data
+    take place
 
 ## sing up
-logo 
-sing up form 
+    logo 
+    sing up form 
 
 ## sing in 
-logo 
-log in form
+    logo 
+    log in form
 
 
 ## profile 
-avatar "Profile Image"
-profile tab : 
-    1.info 
-       info user 
-    2. Events 
-       event of user
-    3. setting 
-       chage password
+    avatar "Profile Image"
+    profile tab : 
+        1.info 
+           info user 
+        2. Events 
+           event of user
+        3. setting 
+           chage password
 
 ## admin home page 
-admin menu
-avatar "Profile Image" 
-event in day 
+    admin menu
+    avatar "Profile Image" 
+    event in day 
 
 ## admin take Attendance
-admin menu
-event data 
-member Attendance in  event 
+    admin menu
+    event data 
+    member Attendance in  event 
 
 
 
 ## admin new Event 
-admin menu
-avatar "Profile Image" 
-Add Event Form 
+    admin menu
+    avatar "Profile Image" 
+    Add Event Form 
 
 
 
 ## admin Events 
-admin menu
-avatar "Profile Image"
-event tab
-event card
-action event "edit , delete"
+    admin menu
+    avatar "Profile Image"
+    event tab
+    event card
+    action event "edit , delete"
 
 ## admin Event Detail
-admin menu
-avatar "Profile Image"
-event data
-member Attendance in  event 
+    admin menu
+    avatar "Profile Image"
+    event data
+    member Attendance in  event 
 
 
 ## user not login  menu contains :   
-   1. login
-   2. sigup
-   3. contact us
+    1. login
+    2. sigup
+    3. contact us
    
    
    
@@ -76,21 +76,22 @@ member Attendance in  event
     
    
 ## admin login menu contains :
-   1.new Event 
-   2.new Member
-   3.logout 
+       1.new Event 
+       2.new Member
+       3.logout 
 
 ## common component : 
-logo comp
-event tab
-event card
-avatar "Profile Image"
-menu
-member Attendance in  event
+    logo comp
+    event tab
+    event card
+    avatar "Profile Image"
+    menu
+    member Attendance in  event
 
 
 ## browser Endpoint 
 Admin : 
+
     home : /admin/
 
     newEvent : /admin/NewEvent
@@ -104,7 +105,9 @@ Admin :
     Event Details : /admin/Event/Detail/:id "/admin/Event/5"
 
 user : 
+
     home : /
+    
     Singup : /user/Singup
     
     Login : /user/login
@@ -112,10 +115,6 @@ user :
     event details : /event/id
     
     profile : /user/profile/userName
-
-
-
-
 
 ## Database:
 Table
