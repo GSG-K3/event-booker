@@ -95,48 +95,24 @@ member Attendance in  event
 
 browser Endpoint 
 Admin : 
-home : /admin/
+    home : /admin/
 
-newEvent : /admin/NewEvent
+    newEvent : /admin/NewEvent
 
-newMember : /admin/NewMember
+    newMember : /admin/NewMember
 
-Take Attendance : /admin/Event/takeAttendance/:id "/admin/Event/5"
+    Take Attendance : /admin/Event/takeAttendance/:id "/admin/Event/5"
 
-Events : /admin/Events/
+    Events : /admin/Events/
 
-Event Details : /admin/Event/Detail/:id "/admin/Event/5"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Event Details : /admin/Event/Detail/:id "/admin/Event/5"
 
 user : 
+    home : /
+    Singup : /user/Singup
+    
+    Login : /user/login
+    
+    event details : /event/id
+    
+    profile : /user/profile/userName
