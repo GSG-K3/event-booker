@@ -21,20 +21,44 @@ log in form
 ## profile 
 avatar "Profile Image"
 profile tab : 
-    1.
+    1.info 
+       info user 
+    2. Events 
+       event of user
+    3. setting 
+       chage password
 
 ## admin home page 
+admin menu
+avatar "Profile Image" 
+event in day 
+
+##admin take Attendance
+admin menu
+event data 
+member Attendance in this event 
 
 
 
-## take Attendance
+##admin new Event 
+admin menu
+avatar "Profile Image" 
+Add Event Form 
 
 
 
-## new Event 
+## admin Events 
+admin menu
+avatar "Profile Image"
+event tab
+event card
+action event "edit , delete"
 
-
-
+## admin Event Detail
+admin menu
+avatar "Profile Image"
+event data
+member Attendance in this event 
 
 
 ## user not login  menu contains :   
