@@ -1,22 +1,27 @@
 ## user Home Page 
+logo comp
+event tab
+event card
 
 
+## user event details
+logo
+event  data
+take place
 
-
-## sing up 
-
-
-
+## sing up
+logo 
+sing up form 
 
 ## sing in 
+logo 
+log in form
 
 
-
-
-## event details
-
-
-
+## profile 
+avatar "Profile Image"
+profile tab : 
+    1.
 
 ## admin home page 
 
@@ -27,5 +32,30 @@
 
 
 ## new Event 
+
+
+
+
+
+## user not login  menu contains :   
+   1. login
+   2. sigup
+   3. contact us
+   
+   
+   
+## user login menu contains : 
+    1.profile
+    2.events 
+    3.contactus
+    4.logout
+    
+   
+## admin login menu contains :
+   1.new Event 
+   2.new Member
+   3.logout 
+
+
 
 
