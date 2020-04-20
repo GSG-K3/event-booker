@@ -33,14 +33,14 @@ admin menu
 avatar "Profile Image" 
 event in day 
 
-##admin take Attendance
+## admin take Attendance
 admin menu
 event data 
 member Attendance in  event 
 
 
 
-##admin new Event 
+## admin new Event 
 admin menu
 avatar "Profile Image" 
 Add Event Form 
@@ -80,10 +80,7 @@ member Attendance in  event
    2.new Member
    3.logout 
 
-
-
-======================================
-common component : 
+## common component : 
 logo comp
 event tab
 event card
@@ -91,9 +88,8 @@ avatar "Profile Image"
 menu
 member Attendance in  event
 
-===============================================================
 
-browser Endpoint 
+## browser Endpoint 
 Admin : 
     home : /admin/
 
@@ -120,16 +116,13 @@ user :
 
 
 
-================================================
-Database:
+
+## Database:
 Table
     1. user
     2. event
     3. user-event
     
-  
-https://github.com/GSG-K3/event-booker/issues/6#issue-603266525
-
 
 ![Entity_Relationship_Diagram_Example_UML_Notation_1](https://user-images.githubusercontent.com/47992412/79761058-a39b8e80-8329-11ea-8a3d-8166b3aaf1e3.png)
 
