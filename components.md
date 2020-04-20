@@ -90,7 +90,7 @@
 
 
 ## browser Endpoint 
-Admin : 
+  ### Admin : 
 
     home : /admin/
 
@@ -104,7 +104,7 @@ Admin :
 
     Event Details : /admin/Event/Detail/:id "/admin/Event/5"
 
-user : 
+  ### User : 
 
     home : /
     
