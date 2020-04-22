@@ -3,7 +3,7 @@ const { join } = require("path");
 
 const connection = require("./connection");
 
-const sql = readFileSync(join(__dirname, "build.sql")).toString();
+const sql = readFileSync(join(__dirname, "db_build.sql")).toString();
 
 connection
   .query(sql)
