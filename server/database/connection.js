@@ -3,7 +3,7 @@ require('env2')('./config.env');
 
 const connectionString = process.env.DATABASE_URL;
 
-if (connectionString){ throw new Error('DB connection not found');}
+if (!connectionString){ throw new Error('DB connection not found');}
 
 const options = {
   connectionString,
