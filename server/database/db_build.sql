@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS users, events, userEvent, category cascade;
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
   user_name VARCHAR(100) NOT NULL,
-  guid uuid NOT NULL,
   phone VARCHAR(15) NOT NULL,
   birth_date DATE NOT NULL,
   email VARCHAR(100) NOT NULL,
@@ -18,9 +17,13 @@ CREATE TABLE users (
   phone_activate bit
 );
 
+CREATE TABLE category(
+    id SERIAL PRIMARY KEY NOT NULL,
+    catg_name VARCHAR(20) NOT NULL
+);
+
 CREATE TABLE events(
     id SERIAL PRIMARY KEY NOT NULL,
-    guid uuid NOT NULL,
     title VARCHAR(100) NOT NULL,
     category_id INTEGER NOT NULL, FOREIGN KEY (category_id) REFERENCES category (id),
     description TEXT NOT NULL,
@@ -33,21 +36,15 @@ CREATE TABLE events(
     attendance_cnt INT
 );
 
+
 CREATE TABLE userEvent(
     id SERIAL PRIMARY KEY NOT NULL,
-    guid uuid NOT NULL,
     event_id INTEGER, FOREIGN KEY (event_id) REFERENCES events (id),
     user_id INTEGER, FOREIGN KEY(user_id) REFERENCES users (id),
     code VARCHAR(6),
     attendance_status bit,
     note TEXT
 
-);
-
-CREATE TABLE category(
-    id SERIAL PRIMARY KEY NOT NULL,
-    catg_name VARCHAR(20) NOT NULL,
-    guid uuid NOT NULL
 );
 
 INSERT INTO users (
