@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Box, ThemeProvider } from '@material-ui/core';
+import { Grid, Box } from '@material-ui/core';
 
 import Header from '../Common/Header/Header';
 
@@ -26,7 +26,7 @@ export default class Home extends Component {
           />
         </Grid>
         <Grid item container>
-          <Grid item xs={0} sm={3} />
+          <Grid item xs={false} sm={3} />
           <Grid item container xs={12} sm={6}>
             <Box p={3}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -41,7 +41,7 @@ export default class Home extends Component {
               Lorem Ipsum.
             </Box>
           </Grid>
-          <Grid item xs={0} sm={3} />
+          <Grid item xs={false} sm={3} />
         </Grid>
       </Grid>
     );
