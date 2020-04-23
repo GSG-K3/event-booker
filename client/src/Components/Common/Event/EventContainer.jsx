@@ -42,7 +42,9 @@ export default class EventContainer extends Component {
               indicatorColor="secondary"
               textColor="primary"
               onChange={this.TabChangeHandler}
-              variant="fullWidth"
+              variant="scrollable"
+              scrollButtons="on"
+              aria-label="scrollable force tabs example"
             >
               {tab}
             </Tabs>
