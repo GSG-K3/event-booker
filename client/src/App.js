@@ -1,14 +1,14 @@
 import React from 'react';
+import BaseLayout from './Components/Layout/Base/BaseLayout';
 
-import './App.css';
+import './Theme/Css/App.css';
 
 function App() {
-    return ( <
-        div >
-        <
-        p > hello < /p> < /
-        div >
-    );
+  return (
+    <div className="App">
+      <BaseLayout />
+    </div>
+  );
 }
 
 export default App;
