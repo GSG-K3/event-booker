@@ -6,14 +6,15 @@ BEGIN;
 
 -- create extension to user uuid_generate_v4 ()
 --https://www.postgresql.org/docs/9.4/uuid-ossp.html
-CREATE EXTENSION
-IF NOT EXISTS "uuid-ossp";
+-- CREATE EXTENSION
+-- IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE users
 (
     id SERIAL PRIMARY KEY NOT NULL,
+    gid uuid NOT NULL,
+    --gid uuid NOT NULL DEFAULT uuid_generate_v4 (),
     user_name VARCHAR(100) NOT NULL,
-    gid uuid NOT NULL DEFAULT uuid_generate_v4 (),
     phone VARCHAR(15) NOT NULL,
     birth_date DATE NOT NULL,
     email VARCHAR(100) NOT NULL,
@@ -29,14 +30,14 @@ CREATE TABLE users
 CREATE TABLE category
 (
     id SERIAL PRIMARY KEY NOT NULL,
-    gid uuid NOT NULL DEFAULT uuid_generate_v4 (),
+    gid uuid NOT NULL,
     catg_name VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE events
 (
     id SERIAL PRIMARY KEY NOT NULL,
-    gid uuid NOT NULL DEFAULT uuid_generate_v4 (),
+    gid uuid NOT NULL,
     title VARCHAR(100) NOT NULL,
     category_id INTEGER NOT NULL,
     FOREIGN KEY (category_id) REFERENCES category (id),
@@ -54,7 +55,7 @@ CREATE TABLE events
 CREATE TABLE userEvent
 (
     id SERIAL PRIMARY KEY NOT NULL,
-    gid uuid NOT NULL DEFAULT uuid_generate_v4 (),
+    gid uuid NOT NULL,
     event_id INTEGER,
     FOREIGN KEY (event_id) REFERENCES events (id),
     user_id INTEGER,
@@ -64,73 +65,5 @@ CREATE TABLE userEvent
     note TEXT
 
 );
-
-INSERT INTO users
-    (
-    user_name,
-    phone,
-    birth_date,
-    email,
-    university,
-    address,
-    role,
-    profession,
-    password)
-values
-    ('Ahmad', '123456789', '1-1-1992', 'ahmad@github.com', 'PPU', 'Hebron', 'student', 'CSE', 'abcabc');
-
-
-INSERT INTO users
-    (
-    user_name,
-    phone,
-    birth_date,
-    email,
-    university,
-    address,
-    role,
-    profession,
-    password)
-values
-    ('Ali', '987654321', '1-1-1992', 'ali@github.com', 'PPU', 'HEBRON', 'student', 'IT', '123123');
-
-INSERT INTO category
-    (catg_name)
-values('Code Academy');
-INSERT INTO category
-    (catg_name)
-values('Freelancers');
-INSERT INTO category
-    (catg_name)
-values('start up');
-INSERT INTO category
-    (catg_name)
-values('Public');
-
-INSERT INTO events
-    (
-    title,
-    category_id,
-    description,
-    event_date,
-    event_time,
-    event_location,
-    host )
-values
-    ('Coding for everyone', '1', 'abcdefghijklmnobqrstvwxyz', '1-1-2021', '5:00:00', 'Hebron', 'GSG');
-
-INSERT INTO events
-    (
-    title,
-    category_id,
-    description,
-    event_date,
-    event_time,
-    event_location,
-    host )
-values
-    ('JS workshop', '1', 'abcdefghijklmnobqrstvwxyz', '1-1-2022', '5:00:00', 'Hebron', 'YDRC');
-
-
 
 COMMIT;
