@@ -25,7 +25,6 @@ export default class UserLayout extends Component {
             <Grid item container xs={12} sm={6}>
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Home />
               </Switch>
             </Grid>
             <Grid item xs={false} sm={3} />
