@@ -53,7 +53,9 @@ export default class EventContainer extends Component {
             axis={direction === 'rtl' ? 'x-reverse' : 'x'}
             index={tabIndex}
           >
-            <EventCardContainer value={tabIndex} index={0}></EventCardContainer>
+            <EventCardContainer value={tabIndex} index={0}>
+              Item one
+            </EventCardContainer>
             <EventCardContainer value={tabIndex} index={1}>
               Item Two
             </EventCardContainer>
