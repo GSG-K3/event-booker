@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Home from './../Home';
+import EventDetails from './../EventDetails';
 import Header from './../../Common/Header/Header';
 import { Grid } from '@material-ui/core';
 export default class UserLayout extends Component {
@@ -19,7 +20,8 @@ export default class UserLayout extends Component {
         <Grid item container>
           <Grid item xs={false} sm={3} />
           <Grid item container xs={12} sm={6}>
-            <Home />
+            {/* <Home /> */}
+            <EventDetails />
           </Grid>
           <Grid item xs={false} sm={3} />
         </Grid>
