@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Home from './../Home';
-import Header from './../../Common/Header/Header';
-import { Grid } from '@material-ui/core';
+import Home from "./../Home";
+import Header from "./../../Common/Header/Header";
+import SignUp from "./../SignUp";
+import { Grid } from "@material-ui/core";
 export default class UserLayout extends Component {
   render() {
     return (
@@ -25,6 +26,7 @@ export default class UserLayout extends Component {
             <Grid item container xs={12} sm={6}>
               <Switch>
                 <Route exact path="/" component={Home} />
+                <Route exact path="/user/SignUp" component={SignUp}/>
               </Switch>
             </Grid>
             <Grid item xs={false} sm={3} />

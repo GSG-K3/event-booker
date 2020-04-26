@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import {
-  Box,
-  Grid,
-  TextField,
-  Button,
-  Link,
-  Typography,
-} from "@material-ui/core";
+import { Box, Grid, TextField, Button, Typography } from "@material-ui/core";
 import { Person, AlternateEmail, Phone, Lock } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
+import { orange } from "@material-ui/core/colors/";
 
-class SignUP extends Component {
+const userStyle = (theme) => ({
+  loginLink: {
+    color: orange[500],
+    "text-decoration": "none",
+    "&:hover": { color: theme.palette.primary.main },
+  },
+});
+
+class signUp extends Component {
   state = {
     userdetails: {
       name: "",
@@ -34,6 +36,7 @@ class SignUP extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <Box p={3}>
         <form onSubmit={this.handleSubmit}>
@@ -113,12 +116,14 @@ class SignUP extends Component {
               </Grid>
             </div>
 
-            <Button size="small" color="primary" variant="contained">
+            <Button className={classes.signUpBtn} size="small" color="primary" variant="contained">
               Sign up
             </Button>
             <Typography variant="h7" color="primary">
               {"Have an account?  "}
-              <Link to={`/user/login}`}>Login</Link>
+              <Link className={classes.loginLink} to={`/user/login}`}>
+                Login
+              </Link>
             </Typography>
           </Grid>
         </form>
@@ -127,4 +132,4 @@ class SignUP extends Component {
   }
 }
 
-export default signUp;
+export default withStyles(userStyle)(signUp);
