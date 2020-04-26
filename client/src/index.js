@@ -8,7 +8,6 @@ import theme from './Theme/MaterialTheme';
 import './Theme/Css/index.css';
 import * as serviceWorker from './serviceWorker';
 
-console.log(theme());
 ReactDOM.render(
   <MuiThemeProvider theme={theme()}>
     <React.StrictMode>
