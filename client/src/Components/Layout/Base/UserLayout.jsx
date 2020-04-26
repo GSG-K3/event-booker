@@ -23,7 +23,7 @@ export default class UserLayout extends Component {
           </Grid>
           <Grid item container>
             <Grid item xs={false} sm={3} />
-            <Grid item container xs={12} sm={6}>
+            <Grid item container xs={12} sm={6} justify="center">
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/event/:id" component={EventDetails} />
