@@ -7,6 +7,9 @@ import {
 } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
+import { getEventById } from '../../Api/event';
+import '../../Theme/Css/App.css';
+//  import './Theme/Css/App.css';
 
 const useStyles = (theme) => ({
   root: { 'text-align': 'center' },
@@ -17,17 +20,11 @@ const useStyles = (theme) => ({
 
 class EventDetails extends Component {
   state = {
-    eventdetail: {
-      title: 'coding for everyone',
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, ',
-      event_date: '23/5',
-      event_time: '5:00',
-      event_location: 'home',
-      host: 'ruba',
-    },
+    eventdetail: [],
   };
-
+  componentDidMount() {
+    getEventById('68e74515-ec09-4aff-9c5c-41e73055a573');
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -91,3 +88,13 @@ class EventDetails extends Component {
   }
 }
 export default withStyles(useStyles)(EventDetails);
+
+// eventdetail: {
+//   title: 'coding for everyone',
+//   description:
+//     'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, ',
+//   event_date: '23/5',
+//   event_time: '5:00',
+//   event_location: 'home',
+//   host: 'ruba',
+// },
