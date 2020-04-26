@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
 
+
 // require('env2')('./config.env');
 
 require('dotenv').config();
@@ -16,3 +17,4 @@ const options = {
 };
 
 module.exports = new Pool(options);
+

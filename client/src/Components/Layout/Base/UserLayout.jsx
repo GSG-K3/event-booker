@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './../Home';
+import EventDetails from './../EventDetails';
 import Header from './../../Common/Header/Header';
 import { Grid } from '@material-ui/core';
 export default class UserLayout extends Component {
@@ -25,6 +26,7 @@ export default class UserLayout extends Component {
             <Grid item container xs={12} sm={6} justify="center">
               <Switch>
                 <Route exact path="/" component={Home} />
+                <Route exact path="/event/:id" component={EventDetails} />
               </Switch>
             </Grid>
             <Grid item xs={false} sm={3} />
