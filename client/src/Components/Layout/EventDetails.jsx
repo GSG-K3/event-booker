@@ -7,9 +7,8 @@ import {
 } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
-import { getEventById } from '../../Api/event';
 import '../../Theme/Css/App.css';
-//  import './Theme/Css/App.css';
+import axios from 'axios';
 
 const useStyles = (theme) => ({
   root: { 'text-align': 'center' },
@@ -23,7 +22,13 @@ class EventDetails extends Component {
     eventdetail: [],
   };
   componentDidMount() {
-    getEventById('68e74515-ec09-4aff-9c5c-41e73055a573');
+    const id = '8a3c942d-d429-47ff-a81d-4727f292ea49';
+
+    console.log(id);
+    axios.get(`/api/event/${id}`).then((res) => {
+      const eventdetail = res.data;
+      console.log(eventdetail);
+    });
   }
   render() {
     const { classes } = this.props;
