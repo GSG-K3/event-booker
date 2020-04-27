@@ -22,12 +22,21 @@ class EventDetails extends Component {
     eventdetail: [],
   };
   componentDidMount() {
-    const id = 'e44c360c-b9a3-4c07-b2c6-5d0ed52943fb';
+    const id = props.match.params.id;
+    console.log(props.match.params.id);
     axios.get(`/api/event/${id}`).then((res) => {
-      const eventdetail = res.data;
+      const eventdetail = res.data.data;
       console.log(eventdetail);
+      this.setState({ eventdetail: res.data.data[0] });
     });
   }
+  // componentDidMount() {
+  //   const id = this.props.match.params.id;
+  //   axios.get(`/api/event/${id}`).then((res) => {
+  //     const eventdetail = res.data;
+  //     console.log(eventdetail);
+  //   });
+  // }
   render() {
     const { classes } = this.props;
     return (
