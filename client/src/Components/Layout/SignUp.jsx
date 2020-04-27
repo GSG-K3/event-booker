@@ -115,10 +115,16 @@ class signUp extends Component {
                 </Grid>
               </Grid>
             </div>
-
-            <Button className={classes.signUpBtn} size="small" color="primary" variant="contained">
-              Sign up
-            </Button>
+            <box>
+              <Button
+                className={classes.signUpBtn}
+                size="small"
+                color="primary"
+                variant="contained"
+              >
+                Sign up
+              </Button>
+            </box>
             <Typography variant="h7" color="primary">
               {"Have an account?  "}
               <Link className={classes.loginLink} to={`/user/login}`}>
