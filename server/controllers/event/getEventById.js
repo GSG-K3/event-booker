@@ -3,9 +3,7 @@ const responsemessage = require('../../helpers/responseMessage');
 
 const getEventbyId = (req, res) => {
   const id = req.params.id;
-  console.log('Hi My req.params : ', req.params);
-  console.log('start geteventdetails');
-  console.log('id from params : ', id);
+
   getevent(id)
     .then((data) => {
       res

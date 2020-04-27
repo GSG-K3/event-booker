@@ -23,10 +23,7 @@ class EventDetails extends Component {
   };
   componentDidMount() {
     const id = 'e44c360c-b9a3-4c07-b2c6-5d0ed52943fb';
-    //`http://localhost:4000/api/event/${id}`
-    console.log(id);
     axios.get(`/api/event/${id}`).then((res) => {
-      //console.log(res);
       const eventdetail = res.data;
       console.log(eventdetail);
     });
