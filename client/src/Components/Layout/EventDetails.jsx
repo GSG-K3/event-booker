@@ -22,21 +22,15 @@ class EventDetails extends Component {
     eventdetail: [],
   };
   componentDidMount() {
-    const id = props.match.params.id;
-    console.log(props.match.params.id);
+    const id = this.props.match.params.id;
+    console.log(this.props.match.params.id);
     axios.get(`/api/event/${id}`).then((res) => {
       const eventdetail = res.data.data;
       console.log(eventdetail);
       this.setState({ eventdetail: res.data.data[0] });
     });
   }
-  // componentDidMount() {
-  //   const id = this.props.match.params.id;
-  //   axios.get(`/api/event/${id}`).then((res) => {
-  //     const eventdetail = res.data;
-  //     console.log(eventdetail);
-  //   });
-  // }
+
   render() {
     const { classes } = this.props;
     return (
@@ -89,7 +83,7 @@ class EventDetails extends Component {
           </Grid>
         </Grid>
         <Grid item>
-          <Box classes={{ root: classes.root }}>
+          <Box classes={{ root: classes.root }} m={4}>
             <Button size="small" color="primary" variant="contained">
               Take a place
             </Button>
@@ -100,13 +94,3 @@ class EventDetails extends Component {
   }
 }
 export default withStyles(useStyles)(EventDetails);
-
-// eventdetail: {
-//   title: 'coding for everyone',
-//   description:
-//     'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, ',
-//   event_date: '23/5',
-//   event_time: '5:00',
-//   event_location: 'home',
-//   host: 'ruba',
-// },
