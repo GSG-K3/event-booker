@@ -1,40 +1,47 @@
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import axios from 'axios';
-import { Paper, Tabs, Tab, Grid } from '@material-ui/core';
+import {
+  Tabs,
+  Tab,
+  Grid,
+  CircularProgress,
+  Paper,
+  Backdrop,
+  Box,
+} from '@material-ui/core';
 import EventDefaultImg from './../../../assets/eventDefaultimg.svg';
 import EventCardContainer from './EventCardContainer';
 import EventCard from './EventCard';
 
-export default class EventContainer extends Component {
+const useStyle = (theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+});
+
+class EventContainer extends Component {
   state = {
     tabIndex: 0,
     direction: 'ltr',
-    category: [
-      { id: 1, catg_name: 'Code Academy' },
-      { id: 2, catg_name: 'Freelancers' },
-      { id: 3, catg_name: 'start up' },
-      { id: 4, catg_name: 'Public' },
-    ],
-    Events: [
-      {
-        gid: '1',
-        title: 'Code for everyOne',
-        category_id: '1',
-        event_date: '15/5/2020',
-        event_time: '5:00 PM',
-        host: 'Rube',
-      },
-    ],
-
+    isLoading: true,
     eventData: [],
   };
 
+  finishLoading = () => {
+    const { isLoading } = this.state;
+
+    if (isLoading) {
+      this.setState({ isLoading: false });
+    }
+  };
   componentDidMount() {
     axios
       .get('/api/envet/getupComingEvent')
       .then((result) => {
-        console.log(result.data.data);
+        console.log('Data from Server : ', result.data.data);
         this.setState({ eventData: result.data.data });
       })
       .catch((err) => {
@@ -56,29 +63,42 @@ export default class EventContainer extends Component {
 
   render() {
     //console.log(this.state);
-    const { tabIndex, direction, eventData } = this.state;
-    const tabs = [];
-
-    const tab = eventData.map((item) => {
-      const eventCard = item.events.map((event) => {
+    const { classes } = this.props;
+    const { tabIndex, direction, eventData, isLoading } = this.state;
+    const displayStatus = isLoading ? 'none' : 'block';
+    const eventCardContainer = [];
+    // build Tab with Event Card Container
+    console.log('mpa is starte');
+    const eventTab = eventData.map((item, index) => {
+      // Create Event Card for each Tab
+      const eventCard = item.events.map((event, eventIndex) => {
         return (
           <EventCard
-            id={this.state.Events[0].gid}
-            title={this.state.Events[0].title}
-            hostBy={this.state.Events[0].host}
-            eventDate={this.state.Events[0].event_date}
-            eventTime={this.state.Events[0].event_time}
+            key={eventIndex.toString()}
+            id={event.gid}
+            title={event.title}
+            hostBy={event.host}
+            eventDate={event.event_date}
+            eventTime={event.event_time}
             imageurl={EventDefaultImg}
           />
         );
       });
 
-      tabs.push(
-        <EventCardContainer value={tabIndex} index={0}>
+      // create Event Card Container and Add Event Card Children
+      eventCardContainer.push(
+        <EventCardContainer
+          value={tabIndex}
+          index={index}
+          key={item.id.toString()}
+        >
           <Grid container>{eventCard}</Grid>
         </EventCardContainer>
       );
-
+      if (index === eventData.length - 1) {
+        console.log('last time');
+        this.finishLoading();
+      }
       return (
         <Tab
           key={item.id.toString()}
@@ -90,7 +110,10 @@ export default class EventContainer extends Component {
 
     return (
       <div>
-        <div>
+        <Backdrop className={classes.backdrop} open={isLoading}>
+          <CircularProgress color="inherit" size={60} thickness={2} />
+        </Backdrop>
+        <Box component="div" display={displayStatus}>
           <Paper square position="relative">
             <Tabs
               value={tabIndex}
@@ -101,7 +124,7 @@ export default class EventContainer extends Component {
               scrollButtons="on"
               aria-label="scrollable force tabs example"
             >
-              {tab}
+              {eventTab}
             </Tabs>
           </Paper>
           <SwipeableViews
@@ -109,63 +132,11 @@ export default class EventContainer extends Component {
             index={tabIndex}
             disableLazyLoading={false}
           >
-            {tabs}
-            {/* <EventCardContainer value={tabIndex} index={0}>
-              <Grid container>
-                <EventCard
-                  id={this.state.Events[0].gid}
-                  title={this.state.Events[0].title}
-                  hostBy={this.state.Events[0].host}
-                  eventDate={this.state.Events[0].event_date}
-                  eventTime={this.state.Events[0].event_time}
-                  imageurl={EventDefaultImg}
-                />
-                <EventCard
-                  id={this.state.Events[0].gid}
-                  title={this.state.Events[0].title}
-                  hostBy={this.state.Events[0].host}
-                  eventDate={this.state.Events[0].event_date}
-                  eventTime={this.state.Events[0].event_time}
-                  imageurl={EventDefaultImg}
-                />
-                <EventCard
-                  id={this.state.Events[0].gid}
-                  title={this.state.Events[0].title}
-                  hostBy={this.state.Events[0].host}
-                  eventDate={this.state.Events[0].event_date}
-                  eventTime={this.state.Events[0].event_time}
-                  imageurl={EventDefaultImg}
-                />
-                <EventCard
-                  id={this.state.Events[0].gid}
-                  title={this.state.Events[0].title}
-                  hostBy={this.state.Events[0].host}
-                  eventDate={this.state.Events[0].event_date}
-                  eventTime={this.state.Events[0].event_time}
-                  imageurl={EventDefaultImg}
-                />
-                <EventCard
-                  id={this.state.Events[0].gid}
-                  title={this.state.Events[0].title}
-                  hostBy={this.state.Events[0].host}
-                  eventDate={this.state.Events[0].event_date}
-                  eventTime={this.state.Events[0].event_time}
-                  imageurl={EventDefaultImg}
-                />
-              </Grid>
-            </EventCardContainer>
-            <EventCardContainer value={tabIndex} index={1}>
-              Item Two
-            </EventCardContainer>
-            <EventCardContainer value={tabIndex} index={2}>
-              Item Three
-            </EventCardContainer>
-            <EventCardContainer value={tabIndex} index={3}>
-              Item Foure
-            </EventCardContainer> */}
+            {eventCardContainer}
           </SwipeableViews>
-        </div>
+        </Box>
       </div>
     );
   }
 }
+export default withStyles(useStyle)(EventContainer);
