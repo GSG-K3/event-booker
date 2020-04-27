@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './../Home';
 import EventDetails from './../EventDetails';
+import Login from './../Login';
 import Header from './../../Common/Header/Header';
 import { Grid } from '@material-ui/core';
 export default class UserLayout extends Component {
@@ -27,6 +28,7 @@ export default class UserLayout extends Component {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/event/:id" component={EventDetails} />
+                <Route exact path="/user/login" component={Login} />
               </Switch>
             </Grid>
             <Grid item xs={false} sm={3} />
