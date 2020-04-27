@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Box, Grid, TextField, Button, Typography } from "@material-ui/core";
 import { Person, AlternateEmail, Phone, Lock } from "@material-ui/icons";
-import {orange} from '@material-ui/core/colors/';
-import { withStyles } from "@material-ui/core/styles";
 import { orange } from "@material-ui/core/colors/";
+import { withStyles } from "@material-ui/core/styles";
 
 const userStyle = (theme) => ({
   loginLink: {
@@ -116,16 +115,14 @@ class signUp extends Component {
                 </Grid>
               </Grid>
             </div>
-            <box>
-              <Button
-                className={classes.signUpBtn}
-                size="small"
-                color="primary"
-                variant="contained"
-              >
-                Sign up
-              </Button>
-            </box>
+            <Button
+              className={classes.signUpBtn}
+              size="small"
+              color="primary"
+              variant="contained"
+            >
+              Sign up
+            </Button>
             <Typography variant="h7" color="primary">
               {"Have an account?  "}
               <Link className={classes.loginLink} to={`/user/login}`}>
