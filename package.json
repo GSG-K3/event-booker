@@ -1,47 +1,4 @@
 {
-<<<<<<< HEAD
-    "name": "event-booker",
-    "version": "1.0.0",
-    "description": "[Figma Design](https://www.figma.com/file/1TG0gAAmL4qvqlhIlieYv1/event-booker?node-id=0%3A1&viewport=1114%2C1177%2C0.09017345309257507)",
-    "main": "index.js",
-    "scripts": {
-        "lint": "eslint . --fix",
-        "start": "node src/app.js",
-        "server": "nodemon src/app.js",
-        "client": "cd client && npm start",
-        "dev": "concurrently \"npm run server\" \"npm run client\""
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/GSG-K3/event-booker.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/GSG-K3/event-booker/issues"
-    },
-    "homepage": "https://github.com/GSG-K3/event-booker#readme",
-    "devDependencies": {
-        "eslint": "^6.8.0",
-        "eslint-config-airbnb-base": "^14.0.0",
-        "eslint-plugin-import": "^2.20.1",
-        "eslint-plugin-prettier": "^3.1.2",
-        "nodemon": "^2.0.2",
-        "prettier": "^1.19.1"
-    },
-    "dependencies": {
-        "bcrypt": "^4.0.1",
-        "concurrently": "^5.1.0",
-        "cookie-parser": "^1.4.4",
-        "dotenv": "^8.2.0",
-        "env2": "^2.2.2",
-        "express": "^4.17.1",
-        "jsonwebtoken": "^8.5.1",
-        "pg": "^7.18.2",
-        "uuid": "^7.0.2"
-    }
-=======
   "name": "event-booker",
   "version": "1.0.0",
   "description": "[Figma Design](https://www.figma.com/file/1TG0gAAmL4qvqlhIlieYv1/event-booker?node-id=0%3A1&viewport=1114%2C1177%2C0.09017345309257507)",
@@ -83,5 +40,4 @@
     "pg": "^7.18.2",
     "uuid": "^7.0.2"
   }
->>>>>>> 613c61d42692a1c568ea8d0757c732fa2058ae9e
 }
