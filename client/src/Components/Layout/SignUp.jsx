@@ -11,6 +11,7 @@ const userStyle = (theme) => ({
     "text-decoration": "none",
     "&:hover": { color: theme.palette.primary.main },
   },
+
 });
 
 class signUp extends Component {
@@ -39,6 +40,12 @@ class signUp extends Component {
     const { classes } = this.props;
     return (
       <Box p={3}>
+        <Typography variant="h4" color="textSecondary">
+          Sign Up
+        </Typography>
+        <Typography variant="h8" color="textSecondary">
+          Please enter your info to continue.
+        </Typography>
         <form onSubmit={this.handleSubmit}>
           <Grid container item justify="center" direction="column">
             <div>
@@ -116,21 +123,23 @@ class signUp extends Component {
               </Grid>
             </div>
             <Box m={2}>
-            <Button
-              className={classes.signUpBtn}
-              size="small"
-              color="primary"
-              variant="contained"
-            >
-              Sign up
-            </Button>
+              <Button
+                className={classes.signUpBtn}
+                size="small"
+                color="primary"
+                variant="contained"
+              >
+                Sign up
+              </Button>
             </Box>
+            <Box m={2}>
             <Typography variant="h7" color="primary">
               {"Have an account?  "}
               <Link className={classes.loginLink} to={`/user/login}`}>
                 Login
               </Link>
             </Typography>
+            </Box>
           </Grid>
         </form>
       </Box>
