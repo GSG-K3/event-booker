@@ -22,10 +22,11 @@ class EventDetails extends Component {
     eventdetail: [],
   };
   componentDidMount() {
-    const id = '8a3c942d-d429-47ff-a81d-4727f292ea49';
-
+    const id = 'e44c360c-b9a3-4c07-b2c6-5d0ed52943fb';
+    //`http://localhost:4000/api/event/${id}`
     console.log(id);
     axios.get(`/api/event/${id}`).then((res) => {
+      //console.log(res);
       const eventdetail = res.data;
       console.log(eventdetail);
     });

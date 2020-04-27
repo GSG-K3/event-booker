@@ -3,14 +3,14 @@ const responsemessage = require('../../helpers/responseMessage');
 
 const getEventbyId = (req, res) => {
   const id = req.params.id;
-  console.log(req.params);
+  console.log('Hi My req.params : ', req.params);
   console.log('start geteventdetails');
-  console.log(id);
+  console.log('id from params : ', id);
   getevent(id)
     .then((data) => {
       res
         .status(200)
-        .json(responsemessage.successMessage(data, 'event details'));
+        .json(responsemessage.successMessage(data.rows, 'event details'));
     })
     .catch((err) => {
       res
