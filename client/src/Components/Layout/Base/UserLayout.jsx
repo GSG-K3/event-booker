@@ -8,7 +8,6 @@ import SignUp from "./../SignUp";
 import EventDetails from './../EventDetails';
 import { Grid } from '@material-ui/core';
 
-import signUp from "./../SignUp";
 export default class UserLayout extends Component {
   render() {
     return (
