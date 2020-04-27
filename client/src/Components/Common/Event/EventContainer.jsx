@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SwipeableViews from 'react-swipeable-views';
+import axios from 'axios';
 import { Paper, Tabs, Tab, Grid } from '@material-ui/core';
 import EventDefaultImg from './../../../assets/eventDefaultimg.svg';
 import EventCardContainer from './EventCardContainer';
@@ -25,7 +26,22 @@ export default class EventContainer extends Component {
         host: 'Rube',
       },
     ],
+
+    eventData: [],
   };
+
+  componentDidMount() {
+    axios
+      .get('/api/envet/getupComingEvent')
+      .then((result) => {
+        console.log(result.data.data);
+        this.setState({ eventData: result.data.data });
+      })
+      .catch((err) => {
+        console.log('Error ', err);
+        alert('Sorry Some Error Happened , try to contact us');
+      });
+  }
 
   IndexTabProps = (index) => {
     return {
@@ -39,8 +55,30 @@ export default class EventContainer extends Component {
   };
 
   render() {
-    const { tabIndex, direction, category } = this.state;
-    const tab = category.map((item) => {
+    //console.log(this.state);
+    const { tabIndex, direction, eventData } = this.state;
+    const tabs = [];
+
+    const tab = eventData.map((item) => {
+      const eventCard = item.events.map((event) => {
+        return (
+          <EventCard
+            id={this.state.Events[0].gid}
+            title={this.state.Events[0].title}
+            hostBy={this.state.Events[0].host}
+            eventDate={this.state.Events[0].event_date}
+            eventTime={this.state.Events[0].event_time}
+            imageurl={EventDefaultImg}
+          />
+        );
+      });
+
+      tabs.push(
+        <EventCardContainer value={tabIndex} index={0}>
+          <Grid container>{eventCard}</Grid>
+        </EventCardContainer>
+      );
+
       return (
         <Tab
           key={item.id.toString()}
@@ -71,7 +109,8 @@ export default class EventContainer extends Component {
             index={tabIndex}
             disableLazyLoading={false}
           >
-            <EventCardContainer value={tabIndex} index={0}>
+            {tabs}
+            {/* <EventCardContainer value={tabIndex} index={0}>
               <Grid container>
                 <EventCard
                   id={this.state.Events[0].gid}
@@ -123,7 +162,7 @@ export default class EventContainer extends Component {
             </EventCardContainer>
             <EventCardContainer value={tabIndex} index={3}>
               Item Foure
-            </EventCardContainer>
+            </EventCardContainer> */}
           </SwipeableViews>
         </div>
       </div>
