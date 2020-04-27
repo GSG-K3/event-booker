@@ -115,6 +115,7 @@ class signUp extends Component {
                 </Grid>
               </Grid>
             </div>
+            <Box m={2}>
             <Button
               className={classes.signUpBtn}
               size="small"
@@ -123,6 +124,7 @@ class signUp extends Component {
             >
               Sign up
             </Button>
+            </Box>
             <Typography variant="h7" color="primary">
               {"Have an account?  "}
               <Link className={classes.loginLink} to={`/user/login}`}>
