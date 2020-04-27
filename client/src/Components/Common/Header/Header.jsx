@@ -13,7 +13,7 @@ export default ({
 }) => {
   return (
     <Grid item container>
-      <Grid item xs={0} sm={2} />
+      <Grid item xs={false} sm={2} />
       <Grid item xs={10} sm={8}>
         <UserAvatar
           showAvatar={showAvatar}
@@ -26,7 +26,7 @@ export default ({
       <Grid item xs={2} sm={1}>
         <BurgerMenu showMeun={showMeun} />
       </Grid>
-      <Grid item xs={0} sm={2} />
+      <Grid item xs={false} sm={2} />
     </Grid>
   );
 };
