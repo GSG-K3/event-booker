@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Box, Grid, TextField, Button, Typography } from "@material-ui/core";
 import { Person, AlternateEmail, Phone, Lock } from "@material-ui/icons";
+import {orange} from '@material-ui/core/colors/';
 import { withStyles } from "@material-ui/core/styles";
 import { orange } from "@material-ui/core/colors/";
 
