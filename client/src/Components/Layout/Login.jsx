@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Grid, Box, Typography, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { Person as PersonIcon, Lock as LockIcon } from '@material-ui/icons';
@@ -73,9 +74,11 @@ class Login extends Component {
             <Typography variant="h13">If Its Your First Time</Typography>
           </Grid>
           <Grid item>
-            <Typography variant="button" className={classes.deepOrange}>
-              SignUp
-            </Typography>
+            <Link to="/user/Signup">
+              <Typography variant="button" className={classes.deepOrange}>
+                SignUp
+              </Typography>
+            </Link>
           </Grid>
         </Grid>
       </Box>
