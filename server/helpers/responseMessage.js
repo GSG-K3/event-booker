@@ -28,7 +28,7 @@ module.exports = {
   }),
 
   InternalErrorMessage: (data, messag) => ({
-    status: 404,
+    status: 501,
     messag,
     data,
   }),
