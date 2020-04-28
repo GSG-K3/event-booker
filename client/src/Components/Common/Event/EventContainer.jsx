@@ -13,16 +13,10 @@ import {
 } from '@material-ui/core';
 import EventDefaultImg from './../../../assets/eventDefaultimg.svg';
 import EventCardContainer from './EventCardContainer';
+import LoaderProgress from '../LoaderProgress';
 import EventCard from './EventCard';
 
-const useStyle = (theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
-  },
-});
-
-class EventContainer extends Component {
+export default class EventContainer extends Component {
   state = {
     tabIndex: 0,
     direction: 'ltr',
@@ -62,8 +56,6 @@ class EventContainer extends Component {
   };
 
   render() {
-    //console.log(this.state);
-    const { classes } = this.props;
     const { tabIndex, direction, eventData, isLoading } = this.state;
     const displayStatus = isLoading ? 'none' : 'block';
     const eventCardContainer = [];
@@ -78,7 +70,7 @@ class EventContainer extends Component {
             id={event.gid}
             title={event.title}
             hostBy={event.host}
-            eventDate={event.event_date}
+            eventDate={new Date(event.event_date).toLocaleDateString()}
             eventTime={event.event_time}
             imageurl={EventDefaultImg}
           />
@@ -110,9 +102,7 @@ class EventContainer extends Component {
 
     return (
       <div>
-        <Backdrop className={classes.backdrop} open={isLoading}>
-          <CircularProgress color="inherit" size={60} thickness={2} />
-        </Backdrop>
+        <LoaderProgress isLoading={isLoading} />
         <Box component="div" display={displayStatus}>
           <Paper square position="relative">
             <Tabs
@@ -139,4 +129,3 @@ class EventContainer extends Component {
     );
   }
 }
-export default withStyles(useStyle)(EventContainer);
