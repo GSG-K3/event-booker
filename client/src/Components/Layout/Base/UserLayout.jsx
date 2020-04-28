@@ -23,15 +23,15 @@ export default class UserLayout extends Component {
             />
           </Grid>
           <Grid item container>
-            <Grid item xs={false} sm={3} />
-            <Grid item container xs={12} sm={6} justify="center">
+            <Grid item xs={false} md={3} />
+            <Grid item container xs={12} md={6}>
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/event/:id" component={EventDetails} />
                 <Route exact path="/user/login" component={Login} />
               </Switch>
             </Grid>
-            <Grid item xs={false} sm={3} />
+            <Grid item xs={false} md={3} />
           </Grid>
         </Grid>
       </Router>
