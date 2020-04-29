@@ -58,7 +58,7 @@ export default function EventCard(props) {
                       color="textSecondary"
                       className={classes.eventDate}
                     >
-                      {eventDate + eventTime}
+                      {eventDate + ' ' + eventTime}
                     </Typography>
                   </Grid>
                 </Grid>
