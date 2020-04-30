@@ -1,4 +1,4 @@
 const getEventById = require('./getEventById');
 const getupComingEvent = require('./getupComingEvent');
-
-module.exports = { getEventById, getupComingEvent };
+const takePlace = require('./takePlace');
+module.exports = { getEventById, getupComingEvent, takePlace };
