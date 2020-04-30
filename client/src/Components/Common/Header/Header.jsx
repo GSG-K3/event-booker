@@ -13,8 +13,8 @@ export default ({
 }) => {
   return (
     <Grid item container>
-      <Grid item xs={false} sm={2} />
-      <Grid item xs={10} sm={8}>
+      <Grid item xs={false} md={2} />
+      <Grid item xs={10} md={8}>
         <UserAvatar
           showAvatar={showAvatar}
           isAvatarImage={isAvatarImage}
@@ -23,15 +23,10 @@ export default ({
         />
         <Logo showlogo={showlogo} />
       </Grid>
-      <Grid item xs={2} sm={1}>
+      <Grid item xs={2} md={1}>
         <BurgerMenu showMeun={showMeun} />
       </Grid>
-      <Grid item xs={false} sm={2} />
+      <Grid item xs={false} md={2} />
     </Grid>
   );
 };
-
-{
-  /* showMeun={showMeun}
-        showAvatar={showAvatar} */
-}

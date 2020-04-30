@@ -7,6 +7,7 @@ export default function createTheme() {
       secondary: {
         main: '#1C7690',
       },
+      third: { main: '#676363' },
     },
   });
 }
