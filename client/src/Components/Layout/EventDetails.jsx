@@ -41,14 +41,42 @@ class EventDetails extends Component {
     isLoading: true,
     displayBlock: false,
   };
-  componentDidMount() {
+
+  getEventDetail = () => {
     const id = this.props.match.params.id;
-    console.log(this.props.match.params.id);
-    axios.get(`/api/event/${id}`).then((res) => {
-      const eventdetail = res.data.data;
-      console.log(eventdetail);
-      this.setState({ eventdetail: res.data.data[0], isLoading: false });
-    });
+    console.log('start get Event Details id = > ', id);
+    return axios.get(`/api/event/${id}`);
+  };
+
+  getUserCode = () => {
+    console.log('start user code');
+    const AuthToken = Cookies.get('AuthToken');
+    if (AuthToken) {
+      const id = this.props.match.params.id;
+      console.log('user Auth then start => id : ', id);
+      return axios.get(`/api/user/userCode/${id}`);
+    }
+  };
+
+  componentDidMount() {
+    console.log('start component Did Mount');
+    axios.all([this.getEventDetail(), this.getUserCode()]).then(
+      axios.spread((eventDetail, userCode) => {
+        console.log('eventDetail : ', eventDetail.data);
+        console.log('userCode :', userCode.data.data);
+
+        console.log('!userCode.data.data.code', !userCode.data.data);
+
+        const code = !userCode.data.data ? null : userCode.data.data.code;
+        console.log('code code : ', code);
+        this.setState({
+          eventdetail: eventDetail.data.data[0],
+          userCode: code,
+          isEnrolled: !code ? false : true,
+          isLoading: false,
+        });
+      })
+    );
   }
 
   renderRedirect = () => {
@@ -59,7 +87,6 @@ class EventDetails extends Component {
 
   EnrollEventHandler = () => {
     const id = this.props.match.params.id;
-    console.log(Cookies);
     const AuthToken = Cookies.get('AuthToken');
 
     if (!AuthToken) {
@@ -71,7 +98,10 @@ class EventDetails extends Component {
       return;
     }
 
+    // update state to diplay loading progress
     this.setState({ isLoading: true, displayBlock: true });
+
+    // post requet to enroll in event , and take the Code
     axios
       .post('/api/event/takePlace', { eventId: id })
       .then((res) => {
@@ -110,6 +140,9 @@ class EventDetails extends Component {
     const { isLoading, isEnrolled, userCode, displayBlock } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
     const userEnroll = isEnrolled ? 'block' : 'none';
+
+    console.log(this.state);
+
     return (
       <Box component="div">
         <LoaderProgress isLoading={isLoading} />
