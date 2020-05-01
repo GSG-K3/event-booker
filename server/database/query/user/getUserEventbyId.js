@@ -3,7 +3,7 @@ const connection = require('./../../connection');
 module.exports = (eventId, userId) => {
   const sql = {
     text: `SELECT events.title , events.event_date , events.event_time ,events.event_status ,
-                  userEvent.gid , userEvent.code , userEvent.attendance_status ,userEvent.note 
+    userEvent.id , userEvent.gid , userEvent.code , userEvent.attendance_status ,userEvent.note 
            FROM 
            users inner join userEvent on 
            users.id = userEvent.user_id 
