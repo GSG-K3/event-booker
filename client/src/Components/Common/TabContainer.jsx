@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
 
-export default function EventCardContainer(props) {
+export default function TabContainer(props) {
   const { children, value, index, ...other } = props;
 
   return (
