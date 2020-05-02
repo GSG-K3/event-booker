@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Box, Paper, Avatar, Tabs, Tab } from '@material-ui/core';
-import { Redirect } from 'react-router-dom';
+
+import axios from 'axios';
 import SwipeableViews from 'react-swipeable-views';
 import { withStyles } from '@material-ui/core/styles';
 import UserAvatar from './../../Common/Header/UserAvatar';
@@ -8,49 +9,23 @@ import LoaderProgress from '../../Common/LoaderProgress';
 import ProfileTabContainer from '../../Common/TabContainer';
 import IndexTabProps from '../../../helpers/IndexTabProps';
 import UserInfo from './UserInfo';
-import ProfileStyles from './ProfileStyles';
+
 import Events from './Events';
+
+const ProfileStyles = (theme) => ({
+  large: {
+    width: theme.spacing(15),
+    height: theme.spacing(15),
+    fontSize: 48,
+    fontWeight: 800,
+  },
+});
 
 class Profile extends Component {
   state = {
     tabIndex: 0,
-    userEvent: [
-      {
-        gid: 'sdfdsf',
-        title: 'event title',
-        event_date: '18/8/2020',
-        event_time: '5:00',
-        event_status: 'open',
-        code: 'f4d5sdf',
-      },
-      {
-        gid: 'sdfdsf',
-        title: 'event title',
-        event_date: '18/8/2020',
-        event_time: '5:00',
-        event_status: 'Finised',
-        code: 'Qdfg345',
-      },
-      {
-        gid: 'sdfdsf',
-        title: 'event title',
-        event_date: '18/8/2020',
-        event_time: '5:00',
-        event_status: 'canceled',
-        code: '45gRSrf',
-      },
-    ],
-    userInfo: {
-      user_name: 'Mohamend AAAAA',
-      phone: '0598522552',
-      birth_date: '15/8/1990',
-      email: 'test@no.com',
-      university: 'PPu',
-      address: 'Hebron',
-      profession: 'Potato',
-      email_activate: false,
-      phone_activate: false,
-    },
+    userEvent: [],
+    userInfo: {},
     isLoading: true,
     displayBlock: false,
     direction: 'ltr',
@@ -61,12 +36,18 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    this.setState({
-      isLoading: false,
+    axios.get('/api/user/profile').then((result) => {
+      console.log(result.data);
+      this.setState({
+        isLoading: false,
+        userEvent: result.data.data.userEvents,
+        userInfo: result.data.data.userInfo,
+      });
     });
   }
 
   render() {
+    console.log(this.state);
     const { classes } = this.props;
     const { isLoading, displayBlock, userInfo, tabIndex, direction, userEvent } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
@@ -88,21 +69,25 @@ class Profile extends Component {
                     {/* <Tab label="Setting" {...IndexTabProps(2)} /> */}
                   </Tabs>
                 </Paper>
-                <SwipeableViews axis={direction === 'rtl' ? 'x-reverse' : 'x'} index={tabIndex} disableLazyLoading={false}>
-                  <ProfileTabContainer value={tabIndex} index={0}>
-                    <Grid container>
-                      <UserInfo userInfo={userInfo} />
-                    </Grid>
-                  </ProfileTabContainer>
-                  <ProfileTabContainer value={tabIndex} index={1}>
-                    <Grid container>
-                      <Events events={userEvent} />
-                    </Grid>
-                  </ProfileTabContainer>
-                  {/* <ProfileTabContainer value={tabIndex} index={2}>
+                <Box mt={1}>
+                  <Paper className={classes.dataPaper}>
+                    <SwipeableViews axis={direction === 'rtl' ? 'x-reverse' : 'x'} index={tabIndex} disableLazyLoading={false} disabled={true}>
+                      <ProfileTabContainer value={tabIndex} index={0}>
+                        <Grid container>
+                          <UserInfo userInfo={userInfo} />
+                        </Grid>
+                      </ProfileTabContainer>
+                      <ProfileTabContainer value={tabIndex} index={1}>
+                        <Grid container>
+                          <Events events={userEvent} />
+                        </Grid>
+                      </ProfileTabContainer>
+                      {/* <ProfileTabContainer value={tabIndex} index={2}>
                     <Grid container>Setting</Grid>
                   </ProfileTabContainer> */}
-                </SwipeableViews>
+                    </SwipeableViews>
+                  </Paper>
+                </Box>
               </Box>
             </Grid>
           </Grid>

@@ -1,11 +1,7 @@
-export default (theme) => ({
+import { green, red, blue } from '@material-ui/core/colors';
+import { makeStyles } from '@material-ui/core/styles';
+export default makeStyles((theme) => ({
   root: { 'text-align': 'center' },
-  large: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
-    fontSize: 48,
-    fontWeight: 800,
-  },
   btnCancel: {
     borderRadius: 15,
     width: 230,
@@ -18,4 +14,24 @@ export default (theme) => ({
     textTransform: 'uppercase',
     color: '#F6554D',
   },
-});
+  userRoot: {
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+  },
+
+  eventRoot: {
+    width: '100%',
+    maxWidth: '310px',
+    backgroundColor: theme.palette.background.paper,
+    padding: 14,
+  },
+  inline: {
+    display: 'inline',
+  },
+  statusEvent: { display: 'flex' },
+  small: { width: 18, height: 18, margin: '5px 11px' },
+  open: { backgroundColor: blue[500], color: blue[500] },
+  Finised: { backgroundColor: green[500], color: green[500] },
+  canceled: { backgroundColor: red[500], color: red[500] },
+  hideen: { display: 'none' },
+}));
