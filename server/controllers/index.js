@@ -1,13 +1,10 @@
 const router = require('express').Router();
 
-const {
-  getEventById,
-  getupComingEvent,
-  takePlace,
-  cancelPlace,
-} = require('./event/');
+const { getEventById, getupComingEvent, takePlace, cancelPlace } = require('./event/');
 
 const userEvent = require('./user/userEvent');
+
+const profile = require('./user/profile');
 
 const isAuth = require('./../middleware/isAuth');
 
@@ -25,5 +22,7 @@ router.post('/api/event/takePlace', takePlace); //isAuth;
 
 // cancel Registration  in event  => pageName : EventDetails , Login restricted
 router.delete('/api/event/cancelPlace', cancelPlace); //isAuth;
+
+router.get('/api/user/profile', profile);
 
 module.exports = router;
