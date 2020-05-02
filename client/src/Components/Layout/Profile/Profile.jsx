@@ -77,7 +77,7 @@ class Profile extends Component {
         <Box component="div" display={displayStatus} mt={2} width={1}>
           <Grid container justify="center">
             <Grid container item xs={12} justify="center">
-              <UserAvatar showAvatar={true} Name="Yako Hamm" cssClass={classes.large} />
+              <UserAvatar showAvatar={true} Name={userInfo.user_name} cssClass={classes.large} />
             </Grid>
             <Grid container item xs={12} justify="center">
               <Box Component="div" mt={6}>
