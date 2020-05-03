@@ -7,6 +7,8 @@ const {
   cancelPlace,
 } = require('./event/');
 
+const getUserByName = require('./user/getUserByName');
+
 const userEvent = require('./user/userEvent');
 
 const isAuth = require('./../middleware/isAuth');
@@ -25,5 +27,6 @@ router.post('/api/event/takePlace', takePlace); //isAuth;
 
 // cancel Registration  in event  => pageName : EventDetails , Login restricted
 router.delete('/api/event/cancelPlace', cancelPlace); //isAuth;
+router.post('/user/login', getUserByName);
 
 module.exports = router;
