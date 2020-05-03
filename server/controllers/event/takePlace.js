@@ -5,8 +5,6 @@ const dbTakePlace = require('./../../database/query/event/takePlace');
 const { getUserById } = require('./../../database/query/user');
 
 module.exports = async (req, res) => {
-  console.log(req.body);
-
   const eventId = req.body.eventId;
   const userId = '2b8a3b7a-1d77-4660-87ce-3155b3e7cadf'; //req.user;
 
@@ -27,7 +25,6 @@ module.exports = async (req, res) => {
         )
       );
   }
-  console.log('evetn : ', event);
   if (!event || !user) {
     return res
       .status(200)

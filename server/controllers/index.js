@@ -11,7 +11,7 @@ const getUserByName = require('./user/getUserByName');
 
 const userEvent = require('./user/userEvent');
 
-const isAuth = require('./../middleware/isAuth');
+const isAuth = require('../middleware/isAuth');
 
 // get event Details => pageName : EventDetails
 router.get('/api/event/:id', getEventById);
