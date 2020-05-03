@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Home from './../Home';
-import EventDetails from './../EventDetails';
-import Login from './../Login';
-import Header from './../../Common/Header/Header';
+import Home from '../Home';
+import Header from '../../Common/Header/Header';
+import SignUp from '../SignUp';
+import EventDetails from '../EventDetails';
+import Login from '../Login';
+import Profile from '../Profile/Profile';
 import { Grid } from '@material-ui/core';
+
 export default class UserLayout extends Component {
   render() {
     return (
@@ -27,8 +30,10 @@ export default class UserLayout extends Component {
             <Grid item container xs={12} md={6}>
               <Switch>
                 <Route exact path="/" component={Home} />
+                <Route exact path="/user/SignUp" component={SignUp} />
                 <Route exact path="/event/:id" component={EventDetails} />
                 <Route exact path="/user/login" component={Login} />
+                <Route exact path="/user/profile" component={Profile} />
               </Switch>
             </Grid>
             <Grid item xs={false} md={3} />

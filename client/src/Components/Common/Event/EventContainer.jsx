@@ -12,10 +12,10 @@ import {
   Box,
 } from '@material-ui/core';
 import EventDefaultImg from './../../../assets/eventDefaultimg.svg';
-import EventCardContainer from './EventCardContainer';
+import EventCardContainer from '../TabContainer';
 import LoaderProgress from '../LoaderProgress';
 import EventCard from './EventCard';
-
+import IndexTabProps from './../../../helpers/IndexTabProps';
 export default class EventContainer extends Component {
   state = {
     tabIndex: 0,
@@ -43,13 +43,6 @@ export default class EventContainer extends Component {
         alert('Sorry Some Error Happened , try to contact us');
       });
   }
-
-  IndexTabProps = (index) => {
-    return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
-    };
-  };
 
   TabChangeHandler = (event, index) => {
     this.setState({ tabIndex: index });
@@ -95,7 +88,7 @@ export default class EventContainer extends Component {
         <Tab
           key={item.id.toString()}
           label={item.catg_name}
-          {...this.IndexTabProps(item.id)}
+          {...IndexTabProps(item.id)}
         />
       );
     });

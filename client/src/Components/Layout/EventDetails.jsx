@@ -54,7 +54,11 @@ class EventDetails extends Component {
   componentDidMount() {
     axios.all([this.getEventDetail(), this.getUserCode()]).then(
       axios.spread((eventDetail, userCode) => {
-        const code = !userCode.data.data ? null : userCode.data.data.code;
+        let code = null;
+        if (userCode) {
+          code = !userCode.data.data ? null : userCode.data.data.code;
+        }
+
         this.setState({
           eventdetail: eventDetail.data.data[0],
           userCode: code,
@@ -106,7 +110,7 @@ class EventDetails extends Component {
         }
 
         alert(result.messag);
-        alert('code ' + result.data.userCode);
+
         this.setState({
           isEnrolled: true,
           userCode: result.data.userCode,
@@ -118,13 +122,47 @@ class EventDetails extends Component {
       });
   };
 
-  CancelRegistrationHandler = () => {};
+  CancelRegistrationHandler = () => {
+    // update state to diplay loading progress
+    this.setState({ isLoading: true, displayBlock: true });
+
+    const id = this.props.match.params.id;
+    axios
+      .delete('/api/event/cancelPlace', { data: { eventId: id } })
+      .then((res) => {
+        const result = res.data;
+        if (result.status === 401) {
+          alert(result.messag);
+          this.props.history.push({
+            pathname: '/user/login',
+            search: `?redirecturl=/event/${id}`,
+          });
+          return;
+        }
+        if (result.status !== 200) {
+          alert(result.messag);
+          return;
+        }
+
+        alert(result.messag);
+
+        this.setState({
+          isEnrolled: false,
+          userCode: null,
+          isLoading: false,
+        });
+      })
+      .catch((err) => {
+        console.log('axios Error Cancle Place in  Event : ', err);
+      });
+  };
 
   render() {
     const { classes } = this.props;
     const { isLoading, isEnrolled, userCode, displayBlock } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
     const userEnroll = isEnrolled ? 'block' : 'none';
+
     return (
       <Box component="div">
         <LoaderProgress isLoading={isLoading} />
