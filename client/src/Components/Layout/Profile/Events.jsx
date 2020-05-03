@@ -1,5 +1,15 @@
 import React from 'react';
-import { List, ListItem, Divider, ListItemText, ListItemAvatar, makeStyles, Grid, Typography, Avatar } from '@material-ui/core';
+import {
+  List,
+  ListItem,
+  Divider,
+  ListItemText,
+  ListItemAvatar,
+  makeStyles,
+  Grid,
+  Typography,
+  Avatar,
+} from '@material-ui/core';
 import { EventNote, FullscreenExit } from '@material-ui/icons';
 import clsx from 'clsx';
 
@@ -67,11 +77,7 @@ export default ({ events }) => {
 
   return (
     <Grid container>
-<<<<<<< HEAD
       <List className={classes.eventRoot}>{userEvents}</List>
-=======
-      <List className={classes.root}>{userEvents}</List>
->>>>>>> master
     </Grid>
   );
 };
