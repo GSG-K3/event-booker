@@ -10,9 +10,14 @@
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 2018
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
   },
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "react"],
   "rules": {
     "no-unused-vars": "warn",
     "no-console": "warn",

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid, AppBar } from '@material-ui/core';
 import Logo from './Logo';
-import BurgerMenu from './BurgerMenu';
 import UserAvatar from './UserAvatar';
 export default ({
   showlogo,
@@ -23,10 +22,6 @@ export default ({
         />
         <Logo showlogo={showlogo} />
       </Grid>
-      <Grid item xs={2} md={1}>
-        <BurgerMenu showMeun={showMeun} />
-      </Grid>
-      <Grid item xs={false} md={2} />
     </Grid>
   );
 };

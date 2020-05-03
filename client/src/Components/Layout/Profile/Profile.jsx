@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Box, Paper, Avatar, Tabs, Tab } from '@material-ui/core';
 
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import { withStyles } from '@material-ui/core/styles';
 import UserAvatar from './../../Common/Header/UserAvatar';
@@ -9,23 +10,49 @@ import LoaderProgress from '../../Common/LoaderProgress';
 import ProfileTabContainer from '../../Common/TabContainer';
 import IndexTabProps from '../../../helpers/IndexTabProps';
 import UserInfo from './UserInfo';
-
+import ProfileStyles from './ProfileStyles';
 import Events from './Events';
-
-const ProfileStyles = (theme) => ({
-  large: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
-    fontSize: 48,
-    fontWeight: 800,
-  },
-});
 
 class Profile extends Component {
   state = {
     tabIndex: 0,
-    userEvent: [],
-    userInfo: {},
+    userEvent: [
+      {
+        gid: 'sdfdsf',
+        title: 'event title',
+        event_date: '18/8/2020',
+        event_time: '5:00',
+        event_status: 'open',
+        code: 'f4d5sdf',
+      },
+      {
+        gid: 'sdfdsf',
+        title: 'event title',
+        event_date: '18/8/2020',
+        event_time: '5:00',
+        event_status: 'Finised',
+        code: 'Qdfg345',
+      },
+      {
+        gid: 'sdfdsf',
+        title: 'event title',
+        event_date: '18/8/2020',
+        event_time: '5:00',
+        event_status: 'canceled',
+        code: '45gRSrf',
+      },
+    ],
+    userInfo: {
+      user_name: 'Mohamend AAAAA',
+      phone: '0598522552',
+      birth_date: '15/8/1990',
+      email: 'test@no.com',
+      university: 'PPu',
+      address: 'Hebron',
+      profession: 'Potato',
+      email_activate: false,
+      phone_activate: false,
+    },
     isLoading: true,
     displayBlock: false,
     direction: 'ltr',
@@ -47,7 +74,7 @@ class Profile extends Component {
   }
 
   render() {
-    console.log(this.state);
+  
     const { classes } = this.props;
     const { isLoading, displayBlock, userInfo, tabIndex, direction, userEvent } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
@@ -58,7 +85,7 @@ class Profile extends Component {
         <Box component="div" display={displayStatus} mt={2} width={1}>
           <Grid container justify="center">
             <Grid container item xs={12} justify="center">
-              <UserAvatar showAvatar={true} Name="Yako Hamm" cssClass={classes.large} />
+              <UserAvatar showAvatar={true} Name={userInfo.user_name} cssClass={classes.large} />
             </Grid>
             <Grid container item xs={12} justify="center">
               <Box Component="div" mt={6}>

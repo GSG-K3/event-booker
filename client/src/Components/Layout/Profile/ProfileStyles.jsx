@@ -2,6 +2,12 @@ import { green, red, blue } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   root: { 'text-align': 'center' },
+  large: {
+    width: theme.spacing(15),
+    height: theme.spacing(15),
+    fontSize: 48,
+    fontWeight: 800,
+  },
   btnCancel: {
     borderRadius: 15,
     width: 230,

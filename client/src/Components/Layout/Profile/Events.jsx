@@ -1,17 +1,28 @@
 import React from 'react';
-import { List, ListItem, Divider, ListItemText, ListItemAvatar, Grid, Typography, Avatar } from '@material-ui/core';
-import { EventNote } from '@material-ui/icons';
-import EventStyle from './ProfileStyles';
+import { List, ListItem, Divider, ListItemText, ListItemAvatar, makeStyles, Grid, Typography, Avatar } from '@material-ui/core';
+import { EventNote, FullscreenExit } from '@material-ui/icons';
 import clsx from 'clsx';
 
+import { green, red, blue } from '@material-ui/core/colors';
+
+const userInfoStyle = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+  },
+  inline: {
+    display: 'inline',
+  },
+  statusEvent: { display: 'flex' },
+  small: { width: 18, height: 18, margin: '5px 11px' },
+  open: { backgroundColor: blue[500], color: blue[500] },
+  Finised: { backgroundColor: green[500], color: green[500] },
+  canceled: { backgroundColor: red[500], color: red[500] },
+  hideen: { display: 'none' },
+}));
+
 export default ({ events }) => {
-  const classes = EventStyle();
-  if (!events)
-    return (
-      <Typography component="h6" variant="body1">
-        you are not registered in any events
-      </Typography>
-    );
+  const classes = userInfoStyle();
   const userEvents = events.map((event, index) => {
     const statusColor =
       event.event_status === 'open'
@@ -56,7 +67,11 @@ export default ({ events }) => {
 
   return (
     <Grid container>
+<<<<<<< HEAD
       <List className={classes.eventRoot}>{userEvents}</List>
+=======
+      <List className={classes.root}>{userEvents}</List>
+>>>>>>> master
     </Grid>
   );
 };

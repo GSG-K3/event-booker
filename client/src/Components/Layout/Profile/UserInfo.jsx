@@ -1,6 +1,16 @@
 import React from 'react';
 import { List, ListItem, Divider, ListItemText, ListItemAvatar, makeStyles, Grid } from '@material-ui/core';
-import { DateRange, Person, Phone, AlternateEmail, AccountBalance, BusinessCenter, Business, Home, BusinessSharp } from '@material-ui/icons';
+import {
+  DateRange,
+  Person,
+  Phone,
+  AlternateEmail,
+  AccountBalance,
+  BusinessCenter,
+  Business,
+  Home,
+  BusinessSharp,
+} from '@material-ui/icons';
 import userInfoStyle from './ProfileStyles';
 export default ({ userInfo }) => {
   const { user_name, phone, birth_date, email, university, address, profession } = userInfo;
