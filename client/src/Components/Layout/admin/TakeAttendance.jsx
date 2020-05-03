@@ -5,6 +5,7 @@ import { Person, EventNote } from '@material-ui/icons';
 import { orange } from '@material-ui/core/colors';
 import LoaderProgress from '../../Common/LoaderProgress';
 
+import EventMembers from './EventMembers';
 const attendanceStyle = (theme) => ({
   eventTitle: {
     color: '#686666',
@@ -96,7 +97,9 @@ class TakeAttendance extends Component {
 
             <Grid container item xs={12} justify="center">
               <Box Component="div" mt={6}>
-                <Paper square position="relative"></Paper>
+                {/* <Paper variant="outlined" position="relative"> */}
+                <EventMembers />
+                {/* </Paper> */}
               </Box>
             </Grid>
           </Grid>
