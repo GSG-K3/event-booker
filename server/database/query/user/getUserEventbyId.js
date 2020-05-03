@@ -12,6 +12,5 @@ module.exports = (eventId, userId) => {
            WHERE  events.gid=$1 AND users.gid=$2;`,
     value: [eventId, userId],
   };
-  console.log(sql);
   return connection.query(sql.text, sql.value);
 };
