@@ -1,5 +1,15 @@
 import React from 'react';
-import { List, ListItem, Divider, ListItemText, ListItemAvatar, makeStyles, Grid, Typography, Avatar } from '@material-ui/core';
+import {
+  List,
+  ListItem,
+  Divider,
+  ListItemText,
+  ListItemAvatar,
+  makeStyles,
+  Grid,
+  Typography,
+  Avatar,
+} from '@material-ui/core';
 import { EventNote, FullscreenExit } from '@material-ui/icons';
 import clsx from 'clsx';
 
@@ -44,7 +54,7 @@ export default ({ events }) => {
               <React.Fragment>
                 <Typography component="div" variant="body2" className={classes.inline} color="textPrimary">
                   DateTime
-                  {' — '} {event.event_date} {event.event_time}
+                  {' — '} {new Date(event.event_date).toLocaleDateString()} {event.event_time}
                 </Typography>
                 <Typography component="div" variant="body2" color="textPrimary">
                   Event Code {' — '} {event.code}
@@ -67,7 +77,7 @@ export default ({ events }) => {
 
   return (
     <Grid container>
-      <List className={classes.root}>{userEvents}</List>
+      <List className={classes.eventRoot}>{userEvents}</List>
     </Grid>
   );
 };

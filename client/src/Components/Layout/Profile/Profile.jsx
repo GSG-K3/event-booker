@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Box, Paper, Avatar, Tabs, Tab } from '@material-ui/core';
+
+import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import { withStyles } from '@material-ui/core/styles';
@@ -61,12 +63,18 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    this.setState({
-      isLoading: false,
+    axios.get('/api/user/profile').then((result) => {
+      console.log(result.data);
+      this.setState({
+        isLoading: false,
+        userEvent: result.data.data.userEvents,
+        userInfo: result.data.data.userInfo,
+      });
     });
   }
 
   render() {
+  
     const { classes } = this.props;
     const { isLoading, displayBlock, userInfo, tabIndex, direction, userEvent } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
@@ -88,21 +96,25 @@ class Profile extends Component {
                     {/* <Tab label="Setting" {...IndexTabProps(2)} /> */}
                   </Tabs>
                 </Paper>
-                <SwipeableViews axis={direction === 'rtl' ? 'x-reverse' : 'x'} index={tabIndex} disableLazyLoading={false}>
-                  <ProfileTabContainer value={tabIndex} index={0}>
-                    <Grid container>
-                      <UserInfo userInfo={userInfo} />
-                    </Grid>
-                  </ProfileTabContainer>
-                  <ProfileTabContainer value={tabIndex} index={1}>
-                    <Grid container>
-                      <Events events={userEvent} />
-                    </Grid>
-                  </ProfileTabContainer>
-                  {/* <ProfileTabContainer value={tabIndex} index={2}>
+                <Box mt={1}>
+                  <Paper className={classes.dataPaper}>
+                    <SwipeableViews axis={direction === 'rtl' ? 'x-reverse' : 'x'} index={tabIndex} disableLazyLoading={false} disabled={true}>
+                      <ProfileTabContainer value={tabIndex} index={0}>
+                        <Grid container>
+                          <UserInfo userInfo={userInfo} />
+                        </Grid>
+                      </ProfileTabContainer>
+                      <ProfileTabContainer value={tabIndex} index={1}>
+                        <Grid container>
+                          <Events events={userEvent} />
+                        </Grid>
+                      </ProfileTabContainer>
+                      {/* <ProfileTabContainer value={tabIndex} index={2}>
                     <Grid container>Setting</Grid>
                   </ProfileTabContainer> */}
-                </SwipeableViews>
+                    </SwipeableViews>
+                  </Paper>
+                </Box>
               </Box>
             </Grid>
           </Grid>

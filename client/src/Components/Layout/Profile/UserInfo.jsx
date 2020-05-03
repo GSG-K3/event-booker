@@ -11,23 +11,13 @@ import {
   Home,
   BusinessSharp,
 } from '@material-ui/icons';
-
-const userInfoStyle = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-  inline: {
-    display: 'inline',
-  },
-}));
-
+import userInfoStyle from './ProfileStyles';
 export default ({ userInfo }) => {
   const { user_name, phone, birth_date, email, university, address, profession } = userInfo;
   const classes = userInfoStyle();
   return (
     <Grid container>
-      <List className={classes.root}>
+      <List className={classes.userRoot}>
         <ListItem alignItems="center">
           <ListItemAvatar>
             <Person color="disabled" fontSize="large" />
@@ -53,7 +43,7 @@ export default ({ userInfo }) => {
           <ListItemAvatar>
             <DateRange color="disabled" fontSize="large" />
           </ListItemAvatar>
-          <ListItemText primary={birth_date} />
+          <ListItemText primary={new Date(birth_date).toLocaleDateString()} />
         </ListItem>
         <Divider variant="fullWidth" component="li" />
         <ListItem alignItems="center">
