@@ -16,7 +16,7 @@ role,
 profession,
 password)
 values
-('${uuidv4()}', 'Ahmad', '123456789', '1-1-1992', 'ahmad@github.com', 'PPU', 'Hebron', 'student', 'CSE', 'abcabc');
+('${uuidv4()}', 'Ahmad', '123456789', '1-1-1992', 'ahmad@github.com', 'PPU', 'Hebron', 'user', 'CSE', 'abcabc');
 
 INSERT INTO users
 (gid,
@@ -30,7 +30,21 @@ role,
 profession,
 password)
 values
-('${uuidv4()}','Ali', '987654321', '1-1-1992', 'ali@github.com', 'PPU', 'HEBRON', 'student', 'IT', '123123');
+('${uuidv4()}','Ali', '987654321', '1-1-1992', 'ali@github.com', 'PPU', 'HEBRON', 'user', 'IT', '123123');
+
+INSERT INTO users
+(gid,
+user_name,
+phone,
+birth_date,
+email,
+university,
+address,
+role,
+profession,
+password)
+values
+('${uuidv4()}','Admin', '987654321', '1-1-1990', 'admin@gsa.com', '-', 'GAZA', 'Admin', 'IT', '$2a$10$D/IX/AtYw5YHT4YWI2B2aOg5ZGMBodHNDx2x6vIbHWomyH4fsJ9SG');
 
 INSERT INTO category
 (gid,catg_name)
