@@ -14,10 +14,12 @@ const profile = require('./user/profile');
 
 const isAuth = require('../middleware/isAuth');
 
+const addUser = require('./user/signup');
+
 // get event Details => pageName : EventDetails
 router.get('/api/event/:id', getEventById);
 router.get('/api/envet/getupComingEvent', getupComingEvent);
-
+router.post('/api/user/signup', addUser);
 // get user Code of event => pageName : EventDetails , Login restricted
 router.get('/api/user/userCode/:eventId', userEvent); //isAuth;
 
