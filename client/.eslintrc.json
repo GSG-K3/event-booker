@@ -21,6 +21,12 @@
   "rules": {
     "no-unused-vars": "warn",
     "no-console": "warn",
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["error"],
+    "class-methods-use-this": "off",
+    "import/extensions": "never",
+    "import/no-unresolved": "off"
+  },
+  "settings": {
+    "import/extensions": [".js", ".jsx"]
   }
 }
