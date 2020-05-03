@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Box, Typography, Button, Paper } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
-import {
-  QueryBuilder as QueryBuilderIcon,
-  Room as RoomIcon,
-  EventNote as EventNoteIcon,
-} from '@material-ui/icons';
+import { QueryBuilder as QueryBuilderIcon, Room as RoomIcon, EventNote as EventNoteIcon } from '@material-ui/icons';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { withStyles } from '@material-ui/core/styles';
@@ -44,31 +40,21 @@ class EventDetails extends Component {
 
   getEventDetail = () => {
     const id = this.props.match.params.id;
-    console.log('start get Event Details id = > ', id);
     return axios.get(`/api/event/${id}`);
   };
 
   getUserCode = () => {
-    console.log('start user code');
     const AuthToken = Cookies.get('AuthToken');
     if (AuthToken) {
       const id = this.props.match.params.id;
-      console.log('user Auth then start => id : ', id);
       return axios.get(`/api/user/userCode/${id}`);
     }
   };
 
   componentDidMount() {
-    console.log('start component Did Mount');
     axios.all([this.getEventDetail(), this.getUserCode()]).then(
       axios.spread((eventDetail, userCode) => {
-        console.log('eventDetail : ', eventDetail.data);
-        console.log('userCode :', userCode.data.data);
-
-        console.log('!userCode.data.data.code', !userCode.data.data);
-
         const code = !userCode.data.data ? null : userCode.data.data.code;
-        console.log('code code : ', code);
         this.setState({
           eventdetail: eventDetail.data.data[0],
           userCode: code,
@@ -106,7 +92,6 @@ class EventDetails extends Component {
       .post('/api/event/takePlace', { eventId: id })
       .then((res) => {
         const result = res.data;
-        console.log(res.data);
         if (result.status === 401) {
           alert(result.messag);
           this.props.history.push({
@@ -140,9 +125,6 @@ class EventDetails extends Component {
     const { isLoading, isEnrolled, userCode, displayBlock } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
     const userEnroll = isEnrolled ? 'block' : 'none';
-
-    console.log(this.state);
-
     return (
       <Box component="div">
         <LoaderProgress isLoading={isLoading} />
@@ -150,9 +132,7 @@ class EventDetails extends Component {
           <Paper elevation={3}>
             <Box p={6}>
               <Grid item xs={12}>
-                <Typography variant="h6">
-                  {this.state.eventdetail.title}
-                </Typography>
+                <Typography variant="h6">{this.state.eventdetail.title}</Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="h7" className={classes.red}>
@@ -173,9 +153,7 @@ class EventDetails extends Component {
                   <EventNoteIcon />
                 </Grid>
                 <Grid item>
-                  <Typography variant="h7">
-                    {this.state.eventdetail.event_date}
-                  </Typography>
+                  <Typography variant="h7">{this.state.eventdetail.event_date}</Typography>
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
@@ -183,9 +161,7 @@ class EventDetails extends Component {
                   <QueryBuilderIcon />
                 </Grid>
                 <Grid item>
-                  <Typography variant="h7">
-                    {this.state.eventdetail.event_time}
-                  </Typography>
+                  <Typography variant="h7">{this.state.eventdetail.event_time}</Typography>
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
@@ -193,48 +169,27 @@ class EventDetails extends Component {
                   <RoomIcon />
                 </Grid>
                 <Grid item>
-                  <Typography variant="h7">
-                    {this.state.eventdetail.event_location}
-                  </Typography>
+                  <Typography variant="h7">{this.state.eventdetail.event_location}</Typography>
                 </Grid>
               </Grid>
               <Grid item>
-                <Box
-                  classes={{ root: classes.root }}
-                  m={4}
-                  display={isEnrolled ? 'none' : 'block'}
-                >
+                <Box classes={{ root: classes.root }} m={4} display={isEnrolled ? 'none' : 'block'}>
                   {this.renderRedirect()}
-                  <Button
-                    size="small"
-                    color="primary"
-                    variant="contained"
-                    onClick={this.EnrollEventHandler}
-                  >
+                  <Button size="small" color="primary" variant="contained" onClick={this.EnrollEventHandler}>
                     Take a place
                   </Button>
                 </Box>
               </Grid>
 
               <Grid item>
-                <Box
-                  classes={{ root: classes.root }}
-                  m={4}
-                  display={isEnrolled ? 'block' : 'none'}
-                >
+                <Box classes={{ root: classes.root }} m={4} display={isEnrolled ? 'block' : 'none'}>
                   <Box m={1} p={1}>
                     <Paper variant="outlined">
                       <Box p={1}>{userCode}</Box>
                     </Paper>
                   </Box>
                   {this.renderRedirect()}
-                  <Button
-                    size="small"
-                    color="default"
-                    variant="outlined"
-                    onClick={this.CancelRegistrationHandler}
-                    className={classes.btnCancel}
-                  >
+                  <Button size="small" color="default" variant="outlined" onClick={this.CancelRegistrationHandler} className={classes.btnCancel}>
                     Cancel Registration
                   </Button>
                 </Box>
