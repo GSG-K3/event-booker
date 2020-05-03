@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Box, Paper, Typography } from '@material-ui/core';
+import { Grid, Box, Typography, Popover } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Person, EventNote } from '@material-ui/icons';
 import { orange } from '@material-ui/core/colors';
@@ -51,6 +51,10 @@ class TakeAttendance extends Component {
   }
 
   codeClickHandler = (code) => {
+    if (!code) {
+      alert('you must enter the Code ');
+      return;
+    }
     alert(code);
   };
 
