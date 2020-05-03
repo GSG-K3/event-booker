@@ -158,6 +158,7 @@ class signUp extends Component {
                 <Grid item>
                   <TextField
                     name="password"
+                    type='password'
                     id="input-with-icon-grid"
                     label="Ente your password"
                     onChange={this.handler}
@@ -174,6 +175,7 @@ class signUp extends Component {
                 <Grid item>
                   <TextField
                     name="password2"
+                    type='password'
                     id="input-with-icon-grid"
                     label="re-enter  your password"
                     onChange={this.handler}
