@@ -3,22 +3,10 @@ import { Grid, Box, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Person, EventNote } from '@material-ui/icons';
 import { orange } from '@material-ui/core/colors';
-import LoaderProgress from '../../Common/LoaderProgress';
+import LoaderProgress from '../../../Common/LoaderProgress';
 
-import EventMembers from './EventMembers';
-const attendanceStyle = (theme) => ({
-  eventTitle: {
-    color: '#686666',
-    paddingBottom: 10,
-  },
-  atteCount: {
-    fontFamily: 'Lato',
-    fontWeight: 600,
-    fontSize: 16,
-    color: '#1C7690',
-  },
-  eventDate: { fontFamily: 'Lato', fontWeight: 600, fontSize: 14, color: '#1C7690' },
-});
+import EventMembers from '../EventMembers/EventMembers';
+import AttendanceStyle from './Style';
 
 class TakeAttendance extends Component {
   state = {
@@ -31,7 +19,23 @@ class TakeAttendance extends Component {
       member_cnt: 20,
       attendance_cnt: 5,
     },
-    userInfo: {},
+    userEvent: [
+      {
+        user_name: 'Tessst Abcd  1',
+        attendance_status: false,
+        userCode: '',
+      },
+      {
+        user_name: 'Tesssst  Abcde  2',
+        attendance_status: true,
+        userCode: 'FR7GD',
+      },
+      {
+        user_name: 'Tesss GHMFWD 3',
+        attendance_status: false,
+        userCode: '',
+      },
+    ],
     isLoading: true,
     displayBlock: false,
   };
@@ -46,17 +50,38 @@ class TakeAttendance extends Component {
     });
   }
 
+  codeClickHandler = (code) => {
+    alert(code);
+  };
+
   render() {
     const { classes } = this.props;
-    const { isLoading, displayBlock, event } = this.state;
+    const { isLoading, displayBlock, event, userEvent } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
+
+    const eventMember = userEvent.map((member, index) => {
+      return (
+        <EventMembers
+          key={index}
+          eventMembers={member}
+          showCodeField={true}
+          codeClickHandler={this.codeClickHandler}
+        />
+      );
+    });
 
     return (
       <Box component="div" p={3} width={1}>
         <LoaderProgress isLoading={isLoading} />
         <Box component="div" display={displayStatus} width={1}>
           <Grid container justify="center">
-            <Grid container item xs={12} justify="flex-start" className={classes.eventTitle}>
+            <Grid
+              container
+              item
+              xs={12}
+              justify="flex-start"
+              className={classes.eventTitle}
+            >
               <Box pb={2}>
                 <Typography variant="h6" component="h6">
                   Take Attendance
@@ -64,7 +89,12 @@ class TakeAttendance extends Component {
               </Box>
             </Grid>
             <Grid container item xs={12} justify="flex-start">
-              <Typography variant="body1" component="h6" className={classes.eventTitle} color="#686666">
+              <Typography
+                variant="body1"
+                component="h6"
+                className={classes.eventTitle}
+                color="#686666"
+              >
                 {event.title}
               </Typography>
             </Grid>
@@ -75,7 +105,12 @@ class TakeAttendance extends Component {
                     <Person style={{ fontSize: 22, color: orange[200] }} />
                   </Grid>
                   <Grid item>
-                    <Typography variant="caption" display="block" gutterBottom className={classes.atteCount}>
+                    <Typography
+                      variant="caption"
+                      display="block"
+                      gutterBottom
+                      className={classes.atteCount}
+                    >
                       {event.attendance_cnt} / {event.member_cnt}
                     </Typography>
                   </Grid>
@@ -87,8 +122,14 @@ class TakeAttendance extends Component {
                     <EventNote style={{ fontSize: 22, color: orange[200] }} />
                   </Grid>
                   <Grid item>
-                    <Typography variant="caption" display="block" gutterBottom className={classes.eventDate}>
-                      {new Date(event.event_date).toLocaleDateString()} {event.event_time}
+                    <Typography
+                      variant="caption"
+                      display="block"
+                      gutterBottom
+                      className={classes.eventDate}
+                    >
+                      {new Date(event.event_date).toLocaleDateString()}{' '}
+                      {event.event_time}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -96,9 +137,18 @@ class TakeAttendance extends Component {
             </Grid>
 
             <Grid container item xs={12} justify="center">
-              <Box Component="div" mt={6}>
+              <Box Component="div" mt={6} width={1}>
                 {/* <Paper variant="outlined" position="relative"> */}
-                <EventMembers />
+                {/* <EventMembers
+                  eventMembers={{
+                    user_name: 'Yakoob Abd Hammouri',
+                    attendance_status: true,
+                    userCode: '',
+                  }}
+                  showCodeField={true}
+                  codeClickHandler={this.codeClickHandler}
+                /> */}
+                {eventMember}
                 {/* </Paper> */}
               </Box>
             </Grid>
@@ -108,4 +158,4 @@ class TakeAttendance extends Component {
     );
   }
 }
-export default withStyles(attendanceStyle)(TakeAttendance);
+export default withStyles(AttendanceStyle)(TakeAttendance);
