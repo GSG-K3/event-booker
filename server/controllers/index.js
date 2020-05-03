@@ -2,9 +2,11 @@ const router = require('express').Router();
 
 const { getEventById, getupComingEvent, takePlace } = require('./event/');
 
+const getUserByName = require('./user/getUserByName');
+
 const userEvent = require('./user/userEvent');
 
-const isAuth = require('./../middleware/isAuth');
+const isAuth = require('../middleware/isAuth');
 
 // get event Details => pageName : EventDetails
 router.get('/api/event/:id', getEventById);
@@ -17,5 +19,7 @@ router.get('/api/user/userCode/:eventId', userEvent); //isAuth;
 
 // enroll in event  => pageName : EventDetails , Login restricted
 router.post('/api/event/takePlace', takePlace); //isAuth;
+
+router.post('/user/login', getUserByName);
 
 module.exports = router;
