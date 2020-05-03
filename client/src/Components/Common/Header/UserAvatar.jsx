@@ -10,20 +10,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserAvatar({
-  showAvatar,
-  isAvatarImage,
-  srcImage,
-  Name,
-}) {
+export default function UserAvatar({ showAvatar, isAvatarImage, srcImage, Name, cssClass }) {
   const classes = useStyles();
   if (!showAvatar) return '';
 
-  const avatar = isAvatarImage ? (
-    <Avatar alt={Name} src={srcImage} className={classes.large} />
-  ) : (
-    <Avatar className={classes.large}>{GetAvatarName(Name)}</Avatar>
-  );
+  console.log('cssClass', cssClass);
+  const css = !cssClass ? classes.large : cssClass;
+  console.log('css', css);
+  const avatar = isAvatarImage ? <Avatar alt={Name} src={srcImage} className={css} /> : <Avatar className={css}>{GetAvatarName(Name)}</Avatar>;
 
   return avatar;
 }

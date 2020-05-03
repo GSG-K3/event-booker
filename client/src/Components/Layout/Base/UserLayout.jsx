@@ -6,6 +6,7 @@ import Home from './../Home';
 import EventDetails from './../EventDetails';
 import Login from './../Login';
 import Header from './../../Common/Header/Header';
+import Profile from './../Profile/Profile';
 import { Grid } from '@material-ui/core';
 export default class UserLayout extends Component {
   render() {
@@ -29,6 +30,7 @@ export default class UserLayout extends Component {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/event/:id" component={EventDetails} />
                 <Route exact path="/user/login" component={Login} />
+                <Route exact path="/user/profile" component={Profile} />
               </Switch>
             </Grid>
             <Grid item xs={false} md={3} />
