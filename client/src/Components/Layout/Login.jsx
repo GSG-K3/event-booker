@@ -88,6 +88,7 @@ class Login extends Component {
                 <Grid item>
                   <TextField
                     id="password"
+                    type="password"
                     name="password"
                     placeholder="Enter your password..."
                     onChange={this.texthandler}
