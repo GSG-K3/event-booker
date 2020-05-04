@@ -16,8 +16,8 @@ module.exports = async (req, res) => {
           .json(
             responseMessage.InternalErrorMessage(
               null,
-              'Sorry some Error happened at Cancel Registration , please try again'
-            )
+              'Sorry some Error happened at Cancel Registration , please try again',
+            ),
           );
       }
 
@@ -33,8 +33,8 @@ module.exports = async (req, res) => {
           .json(
             responseMessage.InternalErrorMessage(
               null,
-              'Sorry some Error happened at Cancel Registration , please try again'
-            )
+              'Sorry some Error happened at Cancel Registration , please try again',
+            ),
           );
       }
 
@@ -43,19 +43,20 @@ module.exports = async (req, res) => {
         .json(
           responseMessage.successMessage(
             null,
-            'your Registration successfully cancelled'
-          )
+            'your Registration successfully cancelled',
+          ),
         );
     })
+    // hello from the other side
     .catch((err) => {
-      console.log('Error in Cancle place Deelte user Event : ', err);
+      console.log('Error in Cancle place Deelte user Events: ', err);
       return res
         .status(501)
         .json(
           responseMessage.InternalErrorMessage(
             null,
-            'internal error with the server'
-          )
+            'internal error with the server',
+          ),
         );
     });
 };
