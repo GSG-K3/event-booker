@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { Grid } from '@material-ui/core';
-
+import AddNewEvent from './../AddNewEvent';
 import Home from '../Home';
 import Header from '../../Common/Header/Header';
 import SignUp from '../SignUp';
@@ -34,6 +34,11 @@ export default class UserLayout extends Component {
                 <Route exact path="/user/SignUp" component={SignUp} />
                 <Route exact path="/event/:id" component={EventDetails} />
                 <Route exact path="/user/login" component={Login} />
+                <Route
+                  exact
+                  path="/admin/Event/NewEvent"
+                  component={AddNewEvent}
+                />
                 <Route exact path="/user/profile" component={Profile} />
                 <Route
                   exact

@@ -1,64 +1,64 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Box, Grid, TextField, Button, Typography } from "@material-ui/core";
-import { Person, AlternateEmail, Phone, Lock } from "@material-ui/icons";
-import { orange } from "@material-ui/core/colors/";
-import { withStyles } from "@material-ui/core/styles";
-import DateFnsUtils from "@date-io/date-fns";
-import axios from "axios";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Box, Grid, TextField, Button, Typography } from '@material-ui/core';
+import { Person, AlternateEmail, Phone, Lock } from '@material-ui/icons';
+import { orange } from '@material-ui/core/colors/';
+import { withStyles } from '@material-ui/core/styles';
+import DateFnsUtils from '@date-io/date-fns';
+import axios from 'axios';
 
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from "@material-ui/pickers";
-import "date-fns";
+} from '@material-ui/pickers';
+import 'date-fns';
 
 const userStyle = (theme) => ({
   loginLink: {
     color: orange[500],
-    "text-decoration": "none",
-    "&:hover": { color: theme.palette.primary.main },
+    'text-decoration': 'none',
+    '&:hover': { color: theme.palette.primary.main },
   },
   signUpBtn: {
-    "border-radius": "25px",
-    position: "absolute",
-    width: "184px",
-    height: "37px",
+    'border-radius': '25px',
+    position: 'absolute',
+    width: '184px',
+    height: '37px',
   },
 });
 
 class signUp extends Component {
   state = {
     userdetails: {
-      name: "",
-      phone: "",
-      email: "",
-      password: "",
-      password2: "",
-      selectedDate: new Date("1990-1-1T21:11:54"),
+      name: '',
+      phone: '',
+      email: '',
+      password: '',
+      password2: '',
+      selectedDate: new Date('1990-1-1T21:11:54'),
     },
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.userdetails.name.trim() === "")
-      alert("Enter your name, please");
-    else if (this.state.userdetails.phone.trim() === "")
-      alert("Enter your phone number,please");
-    else if (this.state.userdetails.email.trim() === "")
-      alert("Enter your email, please");
+    if (this.state.userdetails.name.trim() === '')
+      alert('Enter your name, please');
+    else if (this.state.userdetails.phone.trim() === '')
+      alert('Enter your phone number,please');
+    else if (this.state.userdetails.email.trim() === '')
+      alert('Enter your email, please');
     else if (
-      this.state.userdetails.password.trim() === "" ||
-      this.state.userdetails.password2.trim() === ""
+      this.state.userdetails.password.trim() === '' ||
+      this.state.userdetails.password2.trim() === ''
     )
-      alert("Enter password, pleas");
+      alert('Enter password, pleas');
 
     if (this.state.userdetails.password === this.state.userdetails.password2) {
       console.log(this.state);
-      console.log("helllooooo");
+      console.log('helllooooo');
       axios
-        .post("/api/user/signup", this.state.userdetails)
+        .post('/api/user/signup', this.state.userdetails)
         .then((res) => {
           console.log(res);
         })
@@ -66,7 +66,7 @@ class signUp extends Component {
           console.log(error);
         });
     } else {
-      alert("Password not match");
+      alert('Password not match');
     }
   };
 
@@ -158,7 +158,7 @@ class signUp extends Component {
                 <Grid item>
                   <TextField
                     name="password"
-                    type='password'
+                    type="password"
                     id="input-with-icon-grid"
                     label="Ente your password"
                     onChange={this.handler}
@@ -175,7 +175,7 @@ class signUp extends Component {
                 <Grid item>
                   <TextField
                     name="password2"
-                    type='password'
+                    type="password"
                     id="input-with-icon-grid"
                     label="re-enter  your password"
                     onChange={this.handler}
@@ -194,7 +194,7 @@ class signUp extends Component {
                   value={selectedDate}
                   onChange={this.handleDateChange}
                   KeyboardButtonProps={{
-                    "aria-label": "change date",
+                    'aria-label': 'change date',
                   }}
                 />
               </Grid>
@@ -212,8 +212,8 @@ class signUp extends Component {
             </Box>
             <Box m={3}>
               <Typography variant="h7" color="primary">
-                {"Have an account?  "}
-                <Link className={classes.loginLink} to={`/user/login}`}>
+                {'Have an account?  '}
+                <Link className={classes.loginLink} to={`/user/login`}>
                   Login
                 </Link>
               </Typography>

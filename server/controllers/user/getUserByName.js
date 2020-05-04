@@ -16,8 +16,8 @@ const getUserByName = (req, res) => {
           .json(
             responsemessage.FaildLoginMessage(
               null,
-              'make sure of your email or password'
-            )
+              'make sure of your email or password',
+            ),
           );
       }
       bcrypt
@@ -29,13 +29,13 @@ const getUserByName = (req, res) => {
               .json(
                 responsemessage.FaildLoginMessage(
                   null,
-                  'make sure of your email or password'
-                )
+                  'make sure of your email or password',
+                ),
               );
           }
           const auth = jwt.sign(
             { id: data.rows[0].gid },
-            process.env.acces_Token_secret
+            process.env.acces_Token_secret,
           );
           res.cookie('AuthToken', auth);
           res
@@ -48,8 +48,8 @@ const getUserByName = (req, res) => {
             .json(
               responsemessage.InternalErrorMessage(
                 null,
-                'internal error with the server'
-              )
+                'internal error with the server',
+              ),
             );
         });
       res
@@ -63,8 +63,8 @@ const getUserByName = (req, res) => {
         .json(
           responsemessage.InternalErrorMessage(
             null,
-            'internal error with the server'
-          )
+            'internal error with the server',
+          ),
         );
     });
 };
