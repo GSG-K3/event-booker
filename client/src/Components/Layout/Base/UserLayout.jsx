@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import { Grid } from '@material-ui/core';
+
 import Home from '../Home';
 import Header from '../../Common/Header/Header';
 import SignUp from '../SignUp';
 import EventDetails from '../EventDetails';
 import Login from '../Login';
 import Profile from '../Profile/Profile';
-import { Grid } from '@material-ui/core';
-
+import TakeAttendance from '../../Layout/admin/Attendance/TakeAttendance';
 export default class UserLayout extends Component {
   render() {
     return (
@@ -34,6 +35,11 @@ export default class UserLayout extends Component {
                 <Route exact path="/event/:id" component={EventDetails} />
                 <Route exact path="/user/login" component={Login} />
                 <Route exact path="/user/profile" component={Profile} />
+                <Route
+                  exact
+                  path="/admin/TakeAttendance"
+                  component={TakeAttendance}
+                />
               </Switch>
             </Grid>
             <Grid item xs={false} md={3} />
