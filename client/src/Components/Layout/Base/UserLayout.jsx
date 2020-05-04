@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Home from './../Home';
-import EventDetails from './../EventDetails';
-import Login from './../Login';
-import Header from './../../Common/Header/Header';
-import AddNewEvent from './../AddNewEvent';
 import { Grid } from '@material-ui/core';
-
+import AddNewEvent from './../AddNewEvent';
 import Home from '../Home';
 import Header from '../../Common/Header/Header';
 import SignUp from '../SignUp';

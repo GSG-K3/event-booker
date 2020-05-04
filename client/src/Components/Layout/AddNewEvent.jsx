@@ -48,17 +48,42 @@ class AddNewEvent extends Component {
       event_date: new Date(),
       event_time: new Date(),
     },
+    category: [],
     // selectedDate: new Date('2014-08-18T21:11:54'),
   };
-  // deletevalue = () => {
-  //   // const form = this.state.Eventdata;
-  //   // form[e.target.name] = e.target.value;
-  //   this.state.Eventdata.map((e) => {
-  //     e.target.value = '';
-  //   });
-  // };
+  deletevalue = () => {
+    this.setState({
+      Eventdata: {
+        title: '',
+        host: '',
+        category_id: 0,
+        event_location: '',
+        description: '',
+        event_date: new Date(),
+        event_time: new Date(),
+      },
+    });
+  };
 
-  componentDidMount() {}
+  componentDidMount() {
+    axios
+      .get('/api/admin/getcategory')
+      .then((res) => {
+        console.log(res.data.data);
+        const resdata = res.data.data;
+        const category = resdata.map((e, index) => {
+          return (
+            <option name="category_id" value={e.id} key={index}>
+              {e.catg_name}
+            </option>
+          );
+        });
+        this.setState({ category: category });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   handleDateChange = (event, date) => {
     console.log(date);
@@ -86,20 +111,42 @@ class AddNewEvent extends Component {
 
     axios
       .post(`/api/admin/event/addEvent`, this.state.Eventdata)
-      .then((req) => {
-        const datalog = req.data;
-        console.log(datalog);
-        if (datalog.status !== 200) {
-          alert(datalog.messag);
+      .then((res) => {
+        console.log(res);
+        if (res.data.status !== 200) {
+          alert(res.data.messg);
           return;
         }
-        alert(datalog.messag);
+        alert('event added succesfully');
+        this.setState({
+          Eventdata: {
+            title: '',
+            host: '',
+            category_id: 0,
+            event_location: '',
+            description: '',
+            event_date: new Date(),
+            event_time: new Date(),
+          },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
+    // const datalog = req.data;
+    // console.log(datalog);
+    // if (datalog.status !== 200) {
+    //   alert(datalog.messag);
+    //   return;
+    // }
+    // alert(datalog.messag);
+    // });
   };
 
   render() {
     const { classes } = this.props;
     const { selectedDate } = this.state;
+    const data = this.state.Eventdata;
     return (
       <Box mt={4}>
         <Box p={2} m={4}>
@@ -111,18 +158,23 @@ class AddNewEvent extends Component {
 
           <form onSubmit={this.handleSubmit} noValidate autoComplete="off">
             <Grid container>
-              <Grid item>
+              <Grid item xs={12}>
                 <TextField
+                  value={data.title}
                   id="title"
                   name="title"
                   onChange={this.texthandler}
                   placeholder="Event Name"
+                  fullWidth
+                  // labelWidth={260}
                 />
               </Grid>
             </Grid>
             <Grid container>
-              <Grid item>
+              <Grid item xs={12}>
                 <TextField
+                  value={data.host}
+                  fullWidth
                   id="host"
                   name="host"
                   onChange={this.texthandler}
@@ -130,10 +182,11 @@ class AddNewEvent extends Component {
                 />
               </Grid>
             </Grid>
-            <Grid>
+            <Grid xs={12}>
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">Program </InputLabel>
                 <Select
+                  labelWidth={276}
                   native
                   value={this.state.Eventdata.category_id}
                   onChange={this.texthandler}
@@ -141,44 +194,36 @@ class AddNewEvent extends Component {
                     name: 'category_id',
                     id: 'category_id',
                   }}
-                  width={400}
                 >
                   <option aria-label="None" value="" />
-                  <option name="category_id" value={10}>
-                    Code academy
-                  </option>
-                  <option name="category_id" value={20}>
-                    Freelancers
-                  </option>
-                  <option name="category_id" value={30}>
-                    Start UP
-                  </option>
-                  <option name="category_id" value={40}>
-                    Public
-                  </option>
+                  {this.state.category}
                 </Select>
               </FormControl>
             </Grid>
 
             <Grid container>
-              <Grid item>
+              <Grid item xs={12}>
                 <TextField
+                  value={data.event_location}
                   id="event_location"
                   name="event_location"
                   onChange={this.texthandler}
                   placeholder="Location"
+                  fullWidth
                 />
               </Grid>
             </Grid>
             <Grid container>
-              <Grid item>
+              <Grid item xs={12}>
                 <TextField
+                  value={data.description}
                   multiline
                   rows={4}
                   id="description"
                   name="description"
                   onChange={this.texthandler}
                   placeholder="Description"
+                  fullWidth
                 />
               </Grid>
             </Grid>
@@ -196,7 +241,7 @@ class AddNewEvent extends Component {
               </Grid> */}
             <Grid container xs={12} spacing={1} alignItems="flex-end">
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid item>
+                <Grid item xs={12}>
                   <KeyboardDatePicker
                     color="secondary"
                     margin="normal"

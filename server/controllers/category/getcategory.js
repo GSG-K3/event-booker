@@ -1,17 +1,19 @@
-const PostEventBydata = require('../../database/query/event/postEvent');
+const getcategory = require('../../database/query/category/getAllcategory');
 const responsemessage = require('../../helpers/responseMessage');
 
-const PostEvent = (req, res) => {
-  const Evndata = req.body;
-  console.log(Evndata);
-  PostEventBydata(Evndata)
+const getCategory = (req, res) => {
+  getcategory()
     .then((data) => {
       res
         .status(200)
-        .json(responsemessage.successMessage(null, 'event added succesfuly'));
+        .json(
+          responsemessage.successMessage(
+            data.rows,
+            'category added succesfuly',
+          ),
+        );
     })
     .catch((err) => {
-      console.log(err);
       res
         .status(501)
         .json(
@@ -22,4 +24,4 @@ const PostEvent = (req, res) => {
         );
     });
 };
-module.exports = PostEvent;
+module.exports = getCategory;
