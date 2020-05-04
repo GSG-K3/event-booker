@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AddNewEvent from './../AddNewEvent';
+
 import Header from './../../Common/Header/Header';
 import { Grid } from '@material-ui/core';
 
@@ -23,11 +24,7 @@ export default class AdminLayout extends Component {
             <Grid item xs={false} sm={3} />
             <Grid item container xs={12} sm={6}>
               <Switch>
-                {/* <Route
-                  exact
-                  path="/admin/Event/NewEvent"
-                  component={AddNewEvent}
-                /> */}
+                <h1>Hi , you are in Admin Palne</h1>
               </Switch>
             </Grid>
             <Grid item xs={false} sm={3} />

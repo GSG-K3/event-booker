@@ -30,11 +30,7 @@ export default class UserLayout extends Component {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/event/:id" component={EventDetails} />
                 <Route exact path="/user/login" component={Login} />
-                <Route
-                  exact
-                  path="/admin/Event/NewEvent"
-                  component={AddNewEvent}
-                />
+                <Route exact path="/admin/Event/NewEvent" component={AddNewEvent} />
               </Switch>
             </Grid>
             <Grid item xs={false} md={3} />

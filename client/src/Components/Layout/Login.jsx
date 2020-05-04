@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  Paper,
-  TextField,
-} from '@material-ui/core';
+import { Grid, Box, Typography, Button, Paper, TextField } from '@material-ui/core';
 import { Person as PersonIcon, Lock as LockIcon } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { deepOrange } from '@material-ui/core/colors';
@@ -73,12 +66,7 @@ class Login extends Component {
                   <PersonIcon color="textSecondary" />
                 </Grid>
                 <Grid item>
-                  <TextField
-                    id="email"
-                    name="email"
-                    onChange={this.texthandler}
-                    placeholder="Enter your name..."
-                  />
+                  <TextField id="email" name="email" onChange={this.texthandler} placeholder="Enter your name..." />
                 </Grid>
               </Grid>
               <Grid container spacing={1} alignItems="flex-end">
@@ -87,8 +75,8 @@ class Login extends Component {
                 </Grid>
                 <Grid item>
                   <TextField
-                    type="password"
                     id="password"
+                    type="password"
                     name="password"
                     placeholder="Enter your password..."
                     onChange={this.texthandler}
@@ -97,23 +85,14 @@ class Login extends Component {
               </Grid>
               <Grid>
                 <Box mt={1} align="right">
-                  <Typography
-                    variant="button"
-                    align="right"
-                    className={classes.deepOrange}
-                  >
+                  <Typography variant="button" align="right" className={classes.deepOrange}>
                     Forgot
                   </Typography>
                 </Box>
               </Grid>
               <Grid item>
                 <Box classes={{ root: classes.root }} m={4}>
-                  <Button
-                    size="large"
-                    color="primary"
-                    variant="contained"
-                    type="submit"
-                  >
+                  <Button size="large" color="primary" variant="contained" type="submit">
                     Login
                   </Button>
                 </Box>
