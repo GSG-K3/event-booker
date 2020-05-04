@@ -12,7 +12,7 @@ const PostEventBydata = (eventDetails) => {
     host,
   } = eventDetails;
   const time = new Date(event_time);
-  const time1 =
+  const eventTime =
     time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
   const sql = {
     text:
@@ -23,7 +23,7 @@ const PostEventBydata = (eventDetails) => {
       category_id,
       description,
       event_date,
-      time1,
+      eventTime,
       event_location,
 
       host,
