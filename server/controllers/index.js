@@ -5,15 +5,13 @@ const {
   getupComingEvent,
   takePlace,
   cancelPlace,
+  postEvent,
 } = require('./event/');
-
+const getcategory = require('./category/getcategory');
 const getUserByName = require('./user/getUserByName');
 const userEvent = require('./user/userEvent');
-
 const profile = require('./user/profile');
-
 const isAuth = require('../middleware/isAuth');
-
 const addUser = require('./user/signup');
 
 // get event Details => pageName : EventDetails
@@ -32,4 +30,6 @@ router.delete('/api/event/cancelPlace', cancelPlace); //isAuth;
 router.get('/api/user/profile', profile);
 router.post('/user/login', getUserByName);
 
+router.get('/api/admin/getcategory', getcategory);
+router.post('/api/admin/event/addEvent', postEvent);
 module.exports = router;
