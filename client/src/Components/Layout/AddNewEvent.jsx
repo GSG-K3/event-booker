@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, Box, Typography, Button, Paper, TextField, FormControl, Select, InputLabel } from '@material-ui/core';
+import {
+  Grid,
+  Box,
+  Typography,
+  Button,
+  Paper,
+  TextField,
+  FormControl,
+  Select,
+  InputLabel,
+} from '@material-ui/core';
 import { Person as PersonIcon, Lock as LockIcon } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { deepOrange } from '@material-ui/core/colors';
-import { QueryBuilder as QueryBuilderIcon, Room as RoomIcon, EventNote as EventNoteIcon } from '@material-ui/icons';
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
+import {
+  QueryBuilder as QueryBuilderIcon,
+  Room as RoomIcon,
+  EventNote as EventNoteIcon,
+} from '@material-ui/icons';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import 'date-fns';
 import '../../Theme/Css/App.css';
@@ -40,6 +58,8 @@ class AddNewEvent extends Component {
   //   });
   // };
 
+  componentDidMount() {}
+
   handleDateChange = (event, date) => {
     console.log(date);
 
@@ -64,15 +84,17 @@ class AddNewEvent extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    axios.post(`/api/admin/event/addEvent`, this.state.Eventdata).then((req) => {
-      const datalog = req.data;
-      console.log(datalog);
-      if (datalog.status !== 200) {
+    axios
+      .post(`/api/admin/event/addEvent`, this.state.Eventdata)
+      .then((req) => {
+        const datalog = req.data;
+        console.log(datalog);
+        if (datalog.status !== 200) {
+          alert(datalog.messag);
+          return;
+        }
         alert(datalog.messag);
-        return;
-      }
-      alert(datalog.messag);
-    });
+      });
   };
 
   render() {
@@ -90,12 +112,22 @@ class AddNewEvent extends Component {
           <form onSubmit={this.handleSubmit} noValidate autoComplete="off">
             <Grid container>
               <Grid item>
-                <TextField id="title" name="title" onChange={this.texthandler} placeholder="Event Name" />
+                <TextField
+                  id="title"
+                  name="title"
+                  onChange={this.texthandler}
+                  placeholder="Event Name"
+                />
               </Grid>
             </Grid>
             <Grid container>
               <Grid item>
-                <TextField id="host" name="host" onChange={this.texthandler} placeholder="Host" />
+                <TextField
+                  id="host"
+                  name="host"
+                  onChange={this.texthandler}
+                  placeholder="Host"
+                />
               </Grid>
             </Grid>
             <Grid>
@@ -112,16 +144,16 @@ class AddNewEvent extends Component {
                   width={400}
                 >
                   <option aria-label="None" value="" />
-                  <option name="1" value={10}>
+                  <option name="category_id" value={10}>
                     Code academy
                   </option>
-                  <option name="2" value={20}>
+                  <option name="category_id" value={20}>
                     Freelancers
                   </option>
-                  <option name="3" value={30}>
+                  <option name="category_id" value={30}>
                     Start UP
                   </option>
-                  <option name="4" value={40}>
+                  <option name="category_id" value={40}>
                     Public
                   </option>
                 </Select>
@@ -199,7 +231,12 @@ class AddNewEvent extends Component {
 
             <Grid item>
               <Box classes={{ root: classes.root }} m={4}>
-                <Button size="large" color="primary" variant="contained" type="submit">
+                <Button
+                  size="large"
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                >
                   ADD EVENT
                 </Button>
               </Box>
@@ -207,7 +244,12 @@ class AddNewEvent extends Component {
           </form>
           <Grid item>
             <Box classes={{ root: classes.root }} m={4}>
-              <Button size="large" color="secondary" variant="contained" onClick={this.deletevalue}>
+              <Button
+                size="large"
+                color="secondary"
+                variant="contained"
+                onClick={this.deletevalue}
+              >
                 CANCEL
               </Button>
             </Box>
