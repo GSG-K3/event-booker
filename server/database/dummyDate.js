@@ -1,5 +1,7 @@
 const connection = require('./connection');
 
+const { addUser } = require('../database/query/user');
+const ROLE = require('../helpers/Constants');
 const { v4: uuidv4 } = require('uuid');
 
 const gid = uuidv4();
@@ -176,7 +178,25 @@ values
 
 `;
 
-connection
-  .query(sql)
-  .then(() => console.log('Add Data!'))
-  .catch((e) => console.error('failed to build', e.stack));
+// connection
+//   .query(sql)
+//   .then(() => console.log('Add Data!'))
+//   .catch((e) => console.error('failed to build', e.stack));
+
+addUser({
+  name: 'Admin',
+  phone: '059000000',
+  email: 'admin@no.com',
+  password: '0.123456',
+  selectedDate: '1/1/2000',
+  role: ROLE.ADMIN,
+});
+
+addUser({
+  name: 'test',
+  phone: '051000000',
+  email: 'test@no.com',
+  password: '0.123456',
+  selectedDate: '10/10/2010',
+  role: ROLE.USER,
+});
