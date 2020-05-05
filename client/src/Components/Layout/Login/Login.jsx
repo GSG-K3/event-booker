@@ -36,11 +36,11 @@ class Login extends Component {
     displayBlock: true,
     showPassword: false,
     email: {
-      Message: '',
+      message: '',
       isValid: true,
     },
     password: {
-      Message: '',
+      message: '',
       isValid: true,
       minLength: 3,
     },
@@ -51,9 +51,6 @@ class Login extends Component {
 
   componentDidMount() {
     const AuthToken = Cookies.get('AuthToken');
-
-    console.log(AuthToken);
-    console.log(!AuthToken);
     const qstring = queryString.parse(this.props.history.location.search);
     if (qstring.ReturnUrl) {
       this.setState({
@@ -74,7 +71,7 @@ class Login extends Component {
     }
   };
 
-  texthandler = (e) => {
+  handleTextInput = (e) => {
     const form = this.state.logindata;
     form[e.target.name] = e.target.value;
     this.setState({ logindata: form });
@@ -97,25 +94,25 @@ class Login extends Component {
     const { email, password, logindata } = this.state;
 
     if (!logindata.email) {
-      email.Message = 'The Email is Required';
+      email.message = 'The Email is Required';
       email.isValid = false;
     } else if (!validateEmail(logindata.email)) {
       // the Email is not Valid
-      email.Message = 'Please Enter Valid Email';
+      email.message = 'Please Enter Valid Email';
       email.isValid = false;
     } else {
-      email.Message = '';
+      email.message = '';
       email.isValid = true;
     }
 
     if (!logindata.password) {
-      password.Message = 'The Password is Required';
+      password.message = 'The Password is Required';
       password.isValid = false;
     } else if (logindata.password.length < password.minLength) {
-      password.Message = `The Password must contains at least ${password.minLength} chart `;
+      password.message = `The Password must contains at least ${password.minLength} chart `;
       password.isValid = false;
     } else {
-      password.Message = '';
+      password.message = '';
       password.isValid = true;
     }
 
@@ -126,18 +123,17 @@ class Login extends Component {
 
     this.setState({ email: email, password: password, isLoading: true });
 
-    axios.post(`/user/login/`, logindata).then((req) => {
-      const datalog = req.data;
-
-      if (datalog.status !== 200) {
+    axios
+      .post(`/user/login/`, logindata)
+      .then((req) => {
+        const datalog = req.data;
+        this.setState({ redirect: true });
         alert(datalog.messag);
+      })
+      .catch((err) => {
+        alert(err.response.data.messag);
         this.setState({ isLoading: false });
-        return;
-      }
-
-      this.setState({ redirect: true });
-      alert(datalog.messag);
-    });
+      });
   };
 
   render() {
@@ -194,7 +190,7 @@ class Login extends Component {
                         error={!email.isValid}
                         color="secondary"
                         value={logindata.email}
-                        onChange={this.texthandler}
+                        onChange={this.handleTextInput}
                         autoFocus={true}
                         margin={'dense'}
                         required={true}
@@ -207,7 +203,7 @@ class Login extends Component {
                           id="email-error-text"
                           className={classes.textError}
                         >
-                          {email.Message}
+                          {email.message}
                         </FormHelperText>
                       </FormControl>
                     </Grid>
@@ -232,7 +228,7 @@ class Login extends Component {
                           id="password"
                           type={showPassword ? 'text' : 'password'}
                           value={logindata.password}
-                          onChange={this.texthandler}
+                          onChange={this.handleTextInput}
                           required={true}
                           name="password"
                           error={!password.isValid}
@@ -263,7 +259,7 @@ class Login extends Component {
                           id="password-error-text"
                           className={classes.textError}
                         >
-                          {password.Message}
+                          {password.message}
                         </FormHelperText>
                       </FormControl>
                     </Grid>

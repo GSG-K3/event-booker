@@ -5,13 +5,14 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const logindb = require('../../database/query/login/login');
+
 const responsemessage = require('../../helpers/responseMessage');
 
 const { logInValidation } = require('../../helpers/Validation');
 
 const login = (req, res) => {
-  const userDate = req.body;
-  const { error } = logInValidation(userDate);
+  const userData = req.body;
+  const { error } = logInValidation(userData);
 
   if (error !== undefined) {
     // return error message if not valid
@@ -19,15 +20,15 @@ const login = (req, res) => {
       ? 'the password must including Upper/lowercase and numbers characters'
       : error.toString().replace('ValidationError:', '');
     return res
-      .status(200)
+      .status(400)
       .json(responsemessage.FailedMessage(null, `Oops ! ${errorMessage}`));
   }
 
-  logindb(userDate)
+  logindb(userData)
     .then((data) => {
       if (data.rowCount === 0) {
         return res
-          .status(200)
+          .status(404)
           .json(
             responsemessage.FaildLoginMessage(
               null,
@@ -36,11 +37,11 @@ const login = (req, res) => {
           );
       }
       bcrypt
-        .compare(userDate.password, data.rows[0].password)
+        .compare(userData.password, data.rows[0].password)
         .then((checkPss) => {
           if (!checkPss) {
             return res
-              .status(200)
+              .status(403)
               .json(
                 responsemessage.FaildLoginMessage(
                   null,
