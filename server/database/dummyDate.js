@@ -187,7 +187,7 @@ addUser({
   name: 'Admin',
   phone: '059000000',
   email: 'admin@no.com',
-  password: '0.123456',
+  password: 'Gs123456',
   selectedDate: '1/1/2000',
   role: ROLE.ADMIN,
 });
@@ -196,7 +196,7 @@ addUser({
   name: 'test',
   phone: '051000000',
   email: 'test@no.com',
-  password: '0.123456',
+  password: 'Gs123456',
   selectedDate: '10/10/2010',
   role: ROLE.USER,
 });
