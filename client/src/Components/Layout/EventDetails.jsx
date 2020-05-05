@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Grid, Box, Typography, Button, Paper } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
-import { QueryBuilder as QueryBuilderIcon, Room as RoomIcon, EventNote as EventNoteIcon } from '@material-ui/icons';
+import {
+  QueryBuilder as QueryBuilderIcon,
+  Room as RoomIcon,
+  EventNote as EventNoteIcon,
+} from '@material-ui/icons';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { withStyles } from '@material-ui/core/styles';
@@ -65,7 +69,7 @@ class EventDetails extends Component {
           isEnrolled: !code ? false : true,
           isLoading: false,
         });
-      })
+      }),
     );
   }
 
@@ -83,7 +87,7 @@ class EventDetails extends Component {
       // user not login
       this.props.history.push({
         pathname: '/user/login',
-        search: `?redirecturl=/event/${id}`,
+        search: `?ReturnUrl=/event/${id}`,
       });
       return;
     }
@@ -100,7 +104,7 @@ class EventDetails extends Component {
           alert(result.messag);
           this.props.history.push({
             pathname: '/user/login',
-            search: `?redirecturl=/event/${id}`,
+            search: `?ReturnUrl=/event/${id}`,
           });
           return;
         }
@@ -135,7 +139,7 @@ class EventDetails extends Component {
           alert(result.messag);
           this.props.history.push({
             pathname: '/user/login',
-            search: `?redirecturl=/event/${id}`,
+            search: `?ReturnUrl=/event/${id}`,
           });
           return;
         }
@@ -170,7 +174,9 @@ class EventDetails extends Component {
           <Paper elevation={3}>
             <Box p={6}>
               <Grid item xs={12}>
-                <Typography variant="h6">{this.state.eventdetail.title}</Typography>
+                <Typography variant="h6">
+                  {this.state.eventdetail.title}
+                </Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="h7" className={classes.red}>
@@ -191,7 +197,9 @@ class EventDetails extends Component {
                   <EventNoteIcon />
                 </Grid>
                 <Grid item>
-                  <Typography variant="h7">{this.state.eventdetail.event_date}</Typography>
+                  <Typography variant="h7">
+                    {this.state.eventdetail.event_date}
+                  </Typography>
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
@@ -199,7 +207,9 @@ class EventDetails extends Component {
                   <QueryBuilderIcon />
                 </Grid>
                 <Grid item>
-                  <Typography variant="h7">{this.state.eventdetail.event_time}</Typography>
+                  <Typography variant="h7">
+                    {this.state.eventdetail.event_time}
+                  </Typography>
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
@@ -207,27 +217,48 @@ class EventDetails extends Component {
                   <RoomIcon />
                 </Grid>
                 <Grid item>
-                  <Typography variant="h7">{this.state.eventdetail.event_location}</Typography>
+                  <Typography variant="h7">
+                    {this.state.eventdetail.event_location}
+                  </Typography>
                 </Grid>
               </Grid>
               <Grid item>
-                <Box classes={{ root: classes.root }} m={4} display={isEnrolled ? 'none' : 'block'}>
+                <Box
+                  classes={{ root: classes.root }}
+                  m={4}
+                  display={isEnrolled ? 'none' : 'block'}
+                >
                   {this.renderRedirect()}
-                  <Button size="small" color="primary" variant="contained" onClick={this.EnrollEventHandler}>
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="contained"
+                    onClick={this.EnrollEventHandler}
+                  >
                     Take a place
                   </Button>
                 </Box>
               </Grid>
 
               <Grid item>
-                <Box classes={{ root: classes.root }} m={4} display={isEnrolled ? 'block' : 'none'}>
+                <Box
+                  classes={{ root: classes.root }}
+                  m={4}
+                  display={isEnrolled ? 'block' : 'none'}
+                >
                   <Box m={1} p={1}>
                     <Paper variant="outlined">
                       <Box p={1}>{userCode}</Box>
                     </Paper>
                   </Box>
                   {this.renderRedirect()}
-                  <Button size="small" color="default" variant="outlined" onClick={this.CancelRegistrationHandler} className={classes.btnCancel}>
+                  <Button
+                    size="small"
+                    color="default"
+                    variant="outlined"
+                    onClick={this.CancelRegistrationHandler}
+                    className={classes.btnCancel}
+                  >
                     Cancel Registration
                   </Button>
                 </Box>
