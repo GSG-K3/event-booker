@@ -8,7 +8,7 @@ import Home from '../Home';
 import Header from '../../Common/Header/Header';
 import SignUp from '../SignUp';
 import EventDetails from '../EventDetails';
-import Login from '../Login';
+import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import TakeAttendance from '../../Layout/admin/Attendance/TakeAttendance';
 export default class UserLayout extends Component {
