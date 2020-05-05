@@ -7,7 +7,7 @@ const {
   cancelPlace,
 } = require('./event/');
 
-const getUserByName = require('./user/getUserByName');
+const login = require('./user/login');
 const userEvent = require('./user/userEvent');
 
 const profile = require('./user/profile');
@@ -30,6 +30,6 @@ router.post('/api/event/takePlace', takePlace); //isAuth;
 router.delete('/api/event/cancelPlace', cancelPlace); //isAuth;
 
 router.get('/api/user/profile', profile);
-router.post('/user/login', getUserByName);
+router.post('/user/login', login);
 
 module.exports = router;
