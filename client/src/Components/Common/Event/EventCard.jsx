@@ -16,11 +16,15 @@ import { EventNote } from '@material-ui/icons';
 import cardStyle from './CardStyle';
 
 export default function EventCard(props) {
-  const { id, title, hostBy, eventDate, eventTime, imageurl } = props;
+  const { id, title, hostBy, eventDate, eventTime, imageurl, type } = props;
   const classes = cardStyle();
+  const link =
+    type === 'takeAttendance'
+      ? `/admin/Event/takeAttendance/${id}`
+      : `/event/${id}`;
   return (
     <div>
-      <Link className={classes.eventLink} to={`/event/${id}`}>
+      <Link className={classes.eventLink} to={link}>
         <Box m={2}>
           <Card className={classes.root}>
             <CardActionArea>
