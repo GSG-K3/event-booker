@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import AddNewEvent from './../AddNewEvent';
 
 import Header from './../../Common/Header/Header';
 import { Grid } from '@material-ui/core';
