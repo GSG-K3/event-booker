@@ -24,7 +24,7 @@ import { CheckCircle } from '@material-ui/icons';
 import CodeTextField from './CodeTextField';
 import EventMemberStyle from './EventMemberStyle';
 
-export default ({ eventMembers, codeClickHandler, showCodeField }) => {
+export default ({ eventMembers, onClick, showCodeField }) => {
   const { attendance_status, user_name, userCode } = eventMembers;
   const classes = EventMemberStyle();
   const [code, setCode] = useState(userCode);
@@ -60,7 +60,7 @@ export default ({ eventMembers, codeClickHandler, showCodeField }) => {
               edge="end"
               aria-label="Take Attendance"
               color="secondary"
-              onClick={() => codeClickHandler(code)}
+              onClick={() => onClick(code)}
               disabled={attendance_status}
             >
               <CheckCircle />

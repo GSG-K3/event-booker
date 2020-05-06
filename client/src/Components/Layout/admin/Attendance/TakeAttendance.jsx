@@ -7,6 +7,7 @@ import LoaderProgress from '../../../Common/LoaderProgress';
 
 import EventMembers from '../EventMembers/EventMembers';
 import AttendanceStyle from './Style';
+import Axios from 'axios';
 
 class TakeAttendance extends Component {
   state = {
@@ -19,7 +20,7 @@ class TakeAttendance extends Component {
       member_cnt: 20,
       attendance_cnt: 5,
     },
-    userEvent: [
+    EventMember: [
       {
         user_name: 'Tessst Abcd  1',
         attendance_status: false,
@@ -40,17 +41,22 @@ class TakeAttendance extends Component {
     displayBlock: false,
   };
 
-  TabChangeHandler = (event, index) => {
-    this.setState({ tabIndex: index });
-  };
-
   componentDidMount() {
-    this.setState({
-      isLoading: false,
-    });
+    const { id } = this.props.match.params;
+    Axios.get(`/api/admin/event/TakeAttendance/${id}`)
+      .then((result) => {
+        console.log(result.data);
+        this.setState({
+          isLoading: false,
+        });
+      })
+      .catch((err) => {
+        alert(err.response.data.messag);
+        this.setState({ isLoading: false });
+      });
   }
 
-  codeClickHandler = (code) => {
+  handlerAttendanceCode = (code) => {
     if (!code) {
       alert('you must enter the Code ');
       return;
@@ -60,16 +66,16 @@ class TakeAttendance extends Component {
 
   render() {
     const { classes } = this.props;
-    const { isLoading, displayBlock, event, userEvent } = this.state;
+    const { isLoading, displayBlock, event, EventMember } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
 
-    const eventMember = userEvent.map((member, index) => {
+    const eventMember = EventMember.map((member, index) => {
       return (
         <EventMembers
           key={index}
           eventMembers={member}
           showCodeField={true}
-          codeClickHandler={this.codeClickHandler}
+          onClick={this.handlerAttendanceCode}
         />
       );
     });
