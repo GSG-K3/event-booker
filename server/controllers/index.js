@@ -5,6 +5,7 @@ const {
   getupComingEvent,
   takePlace,
   cancelPlace,
+  getEventMembers,
 } = require('./event');
 
 const { postEvent, getEventsDay } = require('./admin');
@@ -34,4 +35,7 @@ router.post('/user/login', getUserByName);
 router.get('/api/admin/getcategory', getcategory);
 router.post('/api/admin/event/addEvent', postEvent);
 router.get('/api/admin/getEventsDay', getEventsDay);
+
+router.get('/api/admin/event/TakeAttendance/:id', getEventMembers);
+
 module.exports = router;
