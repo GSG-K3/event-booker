@@ -30,6 +30,7 @@ router.delete('/api/event/cancelPlace', cancelPlace); //isAuth;
 router.get('/api/user/profile', profile);
 router.post('/user/login', getUserByName);
 
+router.get('/api/admin/event/:id', getEventById);
 router.get('/api/admin/getcategory', getcategory);
 router.post('/api/admin/event/addEvent', postEvent);
 module.exports = router;
