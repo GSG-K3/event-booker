@@ -11,13 +11,11 @@ const {
 
 module.exports = async (req, res) => {
   try {
-    console.log(req.params);
     const { id } = req.params;
     const eventMember = (await getEventMemberById(id)).rows;
     const eventMemberInfo = (await getEventMemberInfoById(id)).rows;
-    const eventInfo = (await getEventById(id)).rows;
-    console.log('eventMember', eventMember);
-    console.log('eventMemberInfo', eventMemberInfo);
+    const eventInfo = (await getEventById(id)).rows[0];
+
     return res
       .status(200)
       .json(
@@ -27,6 +25,7 @@ module.exports = async (req, res) => {
         ),
       );
   } catch (err) {
+    console.log(err);
     return res
       .status(501)
       .json(InternalErrorMessage(null, 'internal error with the server'));

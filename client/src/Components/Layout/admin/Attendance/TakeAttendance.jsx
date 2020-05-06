@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Grid, Box, Typography, Popover } from '@material-ui/core';
+import { Grid, Box, Typography, List } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Person, EventNote } from '@material-ui/icons';
 import { orange } from '@material-ui/core/colors';
 import LoaderProgress from '../../../Common/LoaderProgress';
-
+import UserInfoDialog from './UserInfoDialog';
 import EventMembers from '../EventMembers/EventMembers';
 import AttendanceStyle from './Style';
 import Axios from 'axios';
@@ -20,33 +20,54 @@ class TakeAttendance extends Component {
       member_cnt: 20,
       attendance_cnt: 5,
     },
-    EventMember: [
+    eventMember: [
       {
-        user_name: 'Tessst Abcd  1',
+        gid: '324',
+        user_name: 'Yakoob Hamo',
         attendance_status: false,
         userCode: '',
       },
       {
+        gid: '341',
         user_name: 'Tesssst  Abcde  2',
         attendance_status: true,
         userCode: 'FR7GD',
       },
       {
+        gid: '13',
         user_name: 'Tesss GHMFWD 3',
         attendance_status: false,
         userCode: '',
       },
     ],
+    eventMemberInfo: [
+      {
+        gid: '324',
+        user_name: 'Yakoob Hamo',
+        phone: '0598235641',
+        birth_date: '5/5/2020',
+        email: 'test@no.com',
+        university: 'PPU',
+        address: 'Hebron',
+        profession: 'Developer',
+      },
+    ],
     isLoading: true,
     displayBlock: false,
+    open: false,
   };
 
   componentDidMount() {
     const { id } = this.props.match.params;
     Axios.get(`/api/admin/event/TakeAttendance/${id}`)
       .then((result) => {
-        console.log(result.data);
+        console.log(result.data.data);
+        //eventInfo, eventMember, eventMemberInfo;
+        const data = result.data.data;
         this.setState({
+          // event: data.eventInfo,
+          // eventMember: data.eventMember,
+          // eventMemberInfo: data.eventMemberInfo,
           isLoading: false,
         });
       })
@@ -56,25 +77,42 @@ class TakeAttendance extends Component {
       });
   }
 
-  handlerAttendanceCode = (code) => {
+  handlerAttendanceCode = (code, gid) => {
     if (!code) {
       alert('you must enter the Code ');
       return;
     }
-    alert(code);
+    alert(code + ' ' + gid);
+    this.setState({ open: true });
+  };
+  handlerOk = () => {
+    alert('ok');
+    this.setState({ open: false });
   };
 
+  handleUpdate = () => {
+    alert('cnacel');
+    this.setState({ open: false });
+  };
   render() {
     const { classes } = this.props;
-    const { isLoading, displayBlock, event, EventMember } = this.state;
+    const {
+      isLoading,
+      displayBlock,
+      event,
+      eventMember,
+      open,
+      eventMemberInfo,
+    } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
 
-    const eventMember = EventMember.map((member, index) => {
+    const members = eventMember.map((member, index) => {
       return (
         <EventMembers
           key={index}
           eventMembers={member}
           showCodeField={true}
+          gid={member.gid}
           onClick={this.handlerAttendanceCode}
         />
       );
@@ -82,6 +120,13 @@ class TakeAttendance extends Component {
 
     return (
       <Box component="div" p={3} width={1}>
+        <UserInfoDialog
+          open={open}
+          handleClose={this.handleClose}
+          handlerOk={this.handlerOk}
+          handleUpdate={this.handleUpdate}
+          userInfo={eventMemberInfo[0]}
+        />
         <LoaderProgress isLoading={isLoading} />
         <Box component="div" display={displayStatus} width={1}>
           <Grid container justify="center">
@@ -148,18 +193,9 @@ class TakeAttendance extends Component {
 
             <Grid container item xs={12} justify="center">
               <Box Component="div" mt={6} width={1}>
-                {/* <Paper variant="outlined" position="relative"> */}
-                {/* <EventMembers
-                  eventMembers={{
-                    user_name: 'Yakoob Abd Hammouri',
-                    attendance_status: true,
-                    userCode: '',
-                  }}
-                  showCodeField={true}
-                  codeClickHandler={this.codeClickHandler}
-                /> */}
-                {eventMember}
-                {/* </Paper> */}
+                <Grid container justify="center">
+                  <List className={classes.root}>{members}</List>
+                </Grid>
               </Box>
             </Grid>
           </Grid>
