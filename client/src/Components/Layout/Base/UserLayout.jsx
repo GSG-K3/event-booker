@@ -11,6 +11,7 @@ import EventDetails from '../EventDetails';
 import Login from '../Login';
 import Profile from '../Profile/Profile';
 import TakeAttendance from '../../Layout/admin/Attendance/TakeAttendance';
+import AdminEventDetails from '../AdminEventDetails';
 export default class UserLayout extends Component {
   render() {
     return (
@@ -40,10 +41,16 @@ export default class UserLayout extends Component {
                   component={AddNewEvent}
                 />
                 <Route exact path="/user/profile" component={Profile} />
+
                 <Route
                   exact
                   path="/admin/TakeAttendance"
                   component={TakeAttendance}
+                />
+                <Route
+                  exact
+                  path="/admin/Event/Detail/:id"
+                  component={AdminEventDetails}
                 />
               </Switch>
             </Grid>
