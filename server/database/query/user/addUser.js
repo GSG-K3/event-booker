@@ -1,10 +1,11 @@
 const connection = require('../../connection');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
+const ROLE = require('../../../helpers/Constants');
 
 const addUser = (userDetails, callback) => {
   const { name, phone, email, password, selectedDate } = userDetails;
-  const role = !userDetails.role ? 'user' : userDetails.role;
+  const role = !userDetails.role ? ROLE.USER : userDetails.role;
 
   bcrypt
     .hash(password, 10)
