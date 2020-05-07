@@ -38,4 +38,6 @@ router.get('/api/admin/getEventsDay', getEventsDay);
 
 router.get('/api/admin/event/TakeAttendance/:id', getEventMembers);
 
+router.get('/api/admin/event/:id', getEventById);
+
 module.exports = router;
