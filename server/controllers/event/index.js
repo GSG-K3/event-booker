@@ -1,7 +1,7 @@
 const getEventById = require('./getEventById');
 // hello from the other side
 const getupComingEvent = require('./getupComingEvent');
-const postEvent = require('./postEvent');
+
 const takePlace = require('./takePlace');
 const cancelPlace = require('./cancelPlace');
 module.exports = {
@@ -9,5 +9,4 @@ module.exports = {
   getupComingEvent,
   takePlace,
   cancelPlace,
-  postEvent,
 };

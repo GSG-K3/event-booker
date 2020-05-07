@@ -4,6 +4,10 @@ BEGIN;
     cascade;
 
 
+-- Add Jerusalem Time Zone
+set TIMEZONE
+='Asia/Jerusalem';
+
 -- create extension to user uuid_generate_v4 ()
 --https://www.postgresql.org/docs/9.4/uuid-ossp.html
 -- CREATE EXTENSION

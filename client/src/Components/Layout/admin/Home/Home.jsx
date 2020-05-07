@@ -1,6 +1,6 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Grid, Box, Typography, Card, CardContent } from '@material-ui/core';
-
 import { withStyles } from '@material-ui/core/styles';
 import { EventNote } from '@material-ui/icons';
 import EventCard from '../../../Common/Event/EventCard';
@@ -31,7 +31,16 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    this.setState({ isLoading: false });
+    axios
+      .get('/api/admin/getEventsDay')
+      .then((result) => {
+        console.log(result.data.data);
+        this.setState({ eventInDay: result.data.data, isLoading: false });
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Sorry Some Error Happened , please try again');
+      });
   }
   render() {
     const { classes } = this.props;
