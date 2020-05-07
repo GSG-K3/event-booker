@@ -44,6 +44,6 @@ router.get('/api/admin/getcategory', isAuth, getcategory);
 
 router.post('/api/admin/event/addEvent', isAuth, postEvent);
 
-router.get('/api/admin/getcategory', getcategory);
-router.post('/api/admin/event/addEvent', postEvent);
+router.get('/api/admin/getcategory', isAuth, getcategory);
+router.post('/api/admin/event/addEvent', isAuth, postEvent);
 module.exports = router;
