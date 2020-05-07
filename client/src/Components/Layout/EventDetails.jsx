@@ -79,7 +79,7 @@ class EventDetails extends Component {
     }
   };
 
-  EnrollEventHandler = () => {
+  handleEnrollEvent = () => {
     const id = this.props.match.params.id;
     const AuthToken = Cookies.get('AuthToken');
 
@@ -87,7 +87,7 @@ class EventDetails extends Component {
       // user not login
       this.props.history.push({
         pathname: '/user/login',
-        search: `?redirecturl=/event/${id}`,
+        search: `?ReturnUrl=/event/${id}`,
       });
       return;
     }
@@ -104,7 +104,7 @@ class EventDetails extends Component {
           alert(result.messag);
           this.props.history.push({
             pathname: '/user/login',
-            search: `?redirecturl=/event/${id}`,
+            search: `?ReturnUrl=/event/${id}`,
           });
           return;
         }
@@ -126,7 +126,7 @@ class EventDetails extends Component {
       });
   };
 
-  CancelRegistrationHandler = () => {
+  handleCancelRegistration = () => {
     // update state to diplay loading progress
     this.setState({ isLoading: true, displayBlock: true });
 
@@ -139,7 +139,7 @@ class EventDetails extends Component {
           alert(result.messag);
           this.props.history.push({
             pathname: '/user/login',
-            search: `?redirecturl=/event/${id}`,
+            search: `?ReturnUrl=/event/${id}`,
           });
           return;
         }
@@ -163,9 +163,14 @@ class EventDetails extends Component {
 
   render() {
     const { classes } = this.props;
-    const { isLoading, isEnrolled, userCode, displayBlock } = this.state;
+    const {
+      isLoading,
+      isEnrolled,
+      userCode,
+      displayBlock,
+      eventdetail,
+    } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
-    const userEnroll = isEnrolled ? 'block' : 'none';
 
     return (
       <Box component="div">
@@ -174,20 +179,18 @@ class EventDetails extends Component {
           <Paper elevation={3}>
             <Box p={6}>
               <Grid item xs={12}>
-                <Typography variant="h6">
-                  {this.state.eventdetail.title}
-                </Typography>
+                <Typography variant="h6">{eventdetail.title}</Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="h7" className={classes.red}>
-                  Hosted by: {this.state.eventdetail.host}
+                  Hosted by: {eventdetail.host}
                 </Typography>
               </Grid>
 
               <Grid item xs={12}>
                 <Box my={3}>
                   <Typography variant="body1" align="justify">
-                    {this.state.eventdetail.description}
+                    {eventdetail.description}
                   </Typography>
                 </Box>
               </Grid>
@@ -197,9 +200,7 @@ class EventDetails extends Component {
                   <EventNoteIcon />
                 </Grid>
                 <Grid item>
-                  <Typography variant="h7">
-                    {this.state.eventdetail.event_date}
-                  </Typography>
+                  <Typography variant="h7">{eventdetail.event_date}</Typography>
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
@@ -207,9 +208,7 @@ class EventDetails extends Component {
                   <QueryBuilderIcon />
                 </Grid>
                 <Grid item>
-                  <Typography variant="h7">
-                    {this.state.eventdetail.event_time}
-                  </Typography>
+                  <Typography variant="h7">{eventdetail.event_time}</Typography>
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
@@ -218,7 +217,7 @@ class EventDetails extends Component {
                 </Grid>
                 <Grid item>
                   <Typography variant="h7">
-                    {this.state.eventdetail.event_location}
+                    {eventdetail.event_location}
                   </Typography>
                 </Grid>
               </Grid>
@@ -233,7 +232,7 @@ class EventDetails extends Component {
                     size="small"
                     color="primary"
                     variant="contained"
-                    onClick={this.EnrollEventHandler}
+                    onClick={this.handleEnrollEvent}
                   >
                     Take a place
                   </Button>
@@ -256,7 +255,7 @@ class EventDetails extends Component {
                     size="small"
                     color="default"
                     variant="outlined"
-                    onClick={this.CancelRegistrationHandler}
+                    onClick={this.handleCancelRegistration}
                     className={classes.btnCancel}
                   >
                     Cancel Registration
