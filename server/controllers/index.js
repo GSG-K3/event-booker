@@ -36,6 +36,8 @@ router.post('/api/event/takePlace', isAuth, takePlace);
 // cancel Registration  in event  => pageName : EventDetails , Login restricted
 router.delete('/api/event/cancelPlace', isAuth, cancelPlace);
 
+//================================================================
+//============== Admin Endpoint ==================================
 // open user Profile , contains userInfo , Event of user
 router.get('/api/user/profile', isAuth, profile);
 
