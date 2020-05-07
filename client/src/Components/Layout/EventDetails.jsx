@@ -87,7 +87,7 @@ class EventDetails extends Component {
       // user not login
       this.props.history.push({
         pathname: '/user/login',
-        search: `?ReturnUrl=/event/${id}`,
+        search: `?redirecturl=/event/${id}`,
       });
       return;
     }
@@ -104,7 +104,7 @@ class EventDetails extends Component {
           alert(result.messag);
           this.props.history.push({
             pathname: '/user/login',
-            search: `?ReturnUrl=/event/${id}`,
+            search: `?redirecturl=/event/${id}`,
           });
           return;
         }
@@ -139,7 +139,7 @@ class EventDetails extends Component {
           alert(result.messag);
           this.props.history.push({
             pathname: '/user/login',
-            search: `?ReturnUrl=/event/${id}`,
+            search: `?redirecturl=/event/${id}`,
           });
           return;
         }

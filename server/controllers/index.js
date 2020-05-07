@@ -6,29 +6,43 @@ const {
   takePlace,
   cancelPlace,
   postEvent,
-} = require('./event/');
+} = require('./event');
+
+const { login, profile, signup, userEvent } = require('./user');
+
 const getcategory = require('./category/getcategory');
-const getUserByName = require('./user/getUserByName');
-const userEvent = require('./user/userEvent');
-const profile = require('./user/profile');
+
 const isAuth = require('../middleware/isAuth');
-const addUser = require('./user/signup');
+
+// login user , Create Auth Token Cookies
+router.post('/user/login', login);
+
+// post new User
+router.post('/api/user/signup', signup);
 
 // get event Details => pageName : EventDetails
 router.get('/api/event/:id', getEventById);
+
+// get up Coming Event to Display in Home Page
 router.get('/api/envet/getupComingEvent', getupComingEvent);
-router.post('/api/user/signup', addUser);
+
 // get user Code of event => pageName : EventDetails , Login restricted
-router.get('/api/user/userCode/:eventId', userEvent); //isAuth;
+router.get('/api/user/userCode/:eventId', isAuth, userEvent);
 
 // enroll in event  => pageName : EventDetails , Login restricted
-router.post('/api/event/takePlace', takePlace); //isAuth;
+router.post('/api/event/takePlace', isAuth, takePlace);
 
 // cancel Registration  in event  => pageName : EventDetails , Login restricted
-router.delete('/api/event/cancelPlace', cancelPlace); //isAuth;
+router.delete('/api/event/cancelPlace', isAuth, cancelPlace);
 
-router.get('/api/user/profile', profile);
-router.post('/user/login', getUserByName);
+// open user Profile , contains userInfo , Event of user
+router.get('/api/user/profile', isAuth, profile);
+
+router.get('/api/admin/event/:id', isAuth, getEventById);
+
+router.get('/api/admin/getcategory', isAuth, getcategory);
+
+router.post('/api/admin/event/addEvent', isAuth, postEvent);
 
 router.get('/api/admin/getcategory', getcategory);
 router.post('/api/admin/event/addEvent', postEvent);
