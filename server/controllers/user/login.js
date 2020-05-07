@@ -1,18 +1,34 @@
-const logindb = require('../../database/query/login/login');
-const responsemessage = require('../../helpers/responseMessage');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const getUserByName = (req, res) => {
-  let reqbody = req.body;
-  console.log(req.body);
 
-  logindb(reqbody)
+const bcrypt = require('bcrypt');
+
+const jwt = require('jsonwebtoken');
+
+const logindb = require('../../database/query/login/login');
+
+const responsemessage = require('../../helpers/responseMessage');
+
+const { logInValidation } = require('../../helpers/Validation');
+
+const login = (req, res) => {
+  const userData = req.body;
+  const { error } = logInValidation(userData);
+
+  if (error !== undefined) {
+    // return error message if not valid
+    const errorMessage = error.toString().includes('^[a-zA-Z0-9]{3,30}$')
+      ? 'the password must including Upper/lowercase and numbers characters'
+      : error.toString().replace('ValidationError:', '');
+    return res
+      .status(400)
+      .json(responsemessage.FailedMessage(null, `Oops ! ${errorMessage}`));
+  }
+
+  logindb(userData)
     .then((data) => {
-      console.log(data);
       if (data.rowCount === 0) {
         return res
-          .status(200)
+          .status(404)
           .json(
             responsemessage.FaildLoginMessage(
               null,
@@ -21,11 +37,11 @@ const getUserByName = (req, res) => {
           );
       }
       bcrypt
-        .compare(reqbody.password, data.rows[0].password)
+        .compare(userData.password, data.rows[0].password)
         .then((checkPss) => {
           if (!checkPss) {
             return res
-              .status(200)
+              .status(403)
               .json(
                 responsemessage.FaildLoginMessage(
                   null,
@@ -40,7 +56,12 @@ const getUserByName = (req, res) => {
           res.cookie('AuthToken', auth);
           res
             .status(200)
-            .json(responsemessage.successMessage(auth, 'welcome   '));
+            .json(
+              responsemessage.successMessage(
+                auth,
+                'welcome , you are login Successfully',
+              ),
+            );
         })
         .catch((err) => {
           res
@@ -52,9 +73,6 @@ const getUserByName = (req, res) => {
               ),
             );
         });
-      res
-        .status(200)
-        .json(responsemessage.successMessage(req.body, 'you are logged in '));
     })
 
     .catch((err) => {
@@ -68,12 +86,4 @@ const getUserByName = (req, res) => {
         );
     });
 };
-module.exports = getUserByName;
-
-//   if (
-//     bcrypt.compareSync(req.body.user_password, response[0].user_password) ==
-//     true
-// ) {
-//     res.cookie(req.body.user_name, response[0].user_password);
-//     res.redirect('/event/:id');
-// }
+module.exports = login;
