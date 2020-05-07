@@ -21,7 +21,6 @@ module.exports = async (req, res) => {
       );
   }
   const data = GetEventsOfCategory(category, upComingEvent);
-  res.cookie('AuthToken', 'auth');
   return res
     .status(200)
     .json(
