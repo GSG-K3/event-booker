@@ -8,6 +8,7 @@ import LoaderProgress from '../../../Common/LoaderProgress';
 import EventDefaultImg from '../../../../assets/eventDefaultimg.svg';
 
 import HomeStyle from './HomeStyle';
+import Axios from 'axios';
 
 class Home extends Component {
   state = {
@@ -31,6 +32,11 @@ class Home extends Component {
   };
 
   componentDidMount() {
+    Axios.get('/api/admin/getEventsDay')
+      .then((result) => {
+        console.log('getEventsDay : ', result);
+      })
+      .catch((err) => console.log({ ...err }));
     this.setState({ isLoading: false });
   }
   render() {

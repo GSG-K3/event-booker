@@ -35,7 +35,6 @@ module.exports = (req, res, next) => {
     getUserById(payload.id)
       .then((result) => {
         req.user = result.rows[0];
-        console.log(req.user);
         return next();
       })
       .catch((err) =>

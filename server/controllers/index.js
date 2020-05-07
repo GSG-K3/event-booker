@@ -14,6 +14,9 @@ const getcategory = require('./category/getcategory');
 
 const isAuth = require('../middleware/isAuth');
 
+const checkPermissions = require('../middleware/checkPermissions');
+
+const ROLE = require('../helpers/Constants');
 // login user , Create Auth Token Cookies
 router.post('/user/login', login);
 
@@ -46,4 +49,17 @@ router.post('/api/admin/event/addEvent', isAuth, postEvent);
 
 router.get('/api/admin/getcategory', isAuth, getcategory);
 router.post('/api/admin/event/addEvent', isAuth, postEvent);
+
+// quick test of permissions
+// rest of code in admin home back end branch
+// is not mearged yet
+router.get(
+  '/api/admin/getEventsDay',
+  isAuth,
+  checkPermissions(ROLE.USER),
+  (req, res) => {
+    res.json('Hi getEventsDay');
+  },
+);
+
 module.exports = router;
