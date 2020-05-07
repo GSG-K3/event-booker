@@ -5,10 +5,11 @@ const {
   getupComingEvent,
   takePlace,
   cancelPlace,
-  postEvent,
 } = require('./event');
 
 const { login, profile, signup, userEvent } = require('./user');
+
+const { postEvent } = require('./admin');
 
 const getcategory = require('./category/getcategory');
 
