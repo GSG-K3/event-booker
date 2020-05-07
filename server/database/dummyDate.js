@@ -2,7 +2,9 @@ const connection = require('./connection');
 
 const { v4: uuidv4 } = require('uuid');
 
-const gid = uuidv4();
+const { addUser } = require('./query/user');
+
+const ROLE = require('../helpers/Constants');
 
 const sql = `INSERT INTO users
 (gid,
@@ -171,12 +173,27 @@ event_time,
 event_location,
 host )
 values
-('${uuidv4()}','JS workshop', '1', 'abcdefghijklmnobqrstvwxyz', '6-14-2020', '5:00:00', 'Hebron', 'YDRC');
-
-
-`;
+('${uuidv4()}','JS workshop', '1', 'abcdefghijklmnobqrstvwxyz', '6-14-2020', '5:00:00', 'Hebron', 'YDRC');`;
 
 connection
   .query(sql)
   .then(() => console.log('Add Data!'))
   .catch((e) => console.error('failed to build', e.stack));
+
+addUser({
+  name: 'Admin',
+  phone: '059000000',
+  email: 'admin@no.com',
+  password: 'Gs123456',
+  selectedDate: '1/1/2000',
+  role: ROLE.ADMIN,
+});
+
+addUser({
+  name: 'test',
+  phone: '051000000',
+  email: 'test@no.com',
+  password: 'Gs123456',
+  selectedDate: '10/10/2010',
+  role: ROLE.USER,
+});
