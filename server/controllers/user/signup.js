@@ -1,4 +1,4 @@
-const addUser = require('./../../database/query/addUser');
+const { addUser } = require('./../../database/query/user');
 const responsemessage = require('./../../helpers/responseMessage');
 const signup = (req, res) => {
   const data = req.body;
