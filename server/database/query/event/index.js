@@ -1,13 +1,12 @@
 const getEventById = require('./getEventById');
 // hello from the other side
 const getupComingEvent = require('./getupComingEvent');
-const postEvent = require('./postEvent');
 const takePlace = require('./takePlace');
-const cancelPlace = require('./cancelPlace');
+const getEventsDay = require('./getEventsDay');
+
 module.exports = {
   getEventById,
   getupComingEvent,
   takePlace,
-  cancelPlace,
-  postEvent,
+  getEventsDay,
 };
