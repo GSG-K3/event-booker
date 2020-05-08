@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import { Grid, Box, Typography, Card, CardContent } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
