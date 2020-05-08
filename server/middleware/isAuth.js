@@ -39,7 +39,7 @@ module.exports = (req, res, next) => {
       })
       .catch((err) =>
         res
-          .status(200)
+          .status(403)
           .clearCookie('AuthToken')
           .json(
             responseMessage.UnauthorizedMessage(
