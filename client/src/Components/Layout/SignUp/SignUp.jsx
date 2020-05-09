@@ -320,11 +320,12 @@ class SignUp extends Component {
                       alignItems="flex-end"
                       justify="flex-start"
                       className={classes.gutterBottom}
+                      justify="center"
                     >
                       <Grid item>
                         <Person color="disabled" />
                       </Grid>
-                      <Grid item>
+                      <Grid item className={classes.textFieldGrid}>
                         <TextField
                           name="name"
                           id="input-with-icon-grid"
@@ -346,18 +347,18 @@ class SignUp extends Component {
                         </FormHelperText>
                       </FormControl>
                     </Grid>
-
                     <Grid
                       container
                       justify="flex-start"
                       spacing={1}
                       alignItems="flex-end"
+                      justify="center"
                       className={classes.gutterBottom}
                     >
                       <Grid item>
                         <Phone color="disabled" />
                       </Grid>
-                      <Grid item>
+                      <Grid item className={classes.textFieldGrid}>
                         <TextField
                           name="phone"
                           id="input-with-icon-grid"
@@ -367,6 +368,7 @@ class SignUp extends Component {
                           error={!phone.isValid}
                           margin={'dense'}
                           required={true}
+                          fullWidth={true}
                           onChange={this.handleTextInput}
                         />
                       </Grid>
@@ -383,17 +385,19 @@ class SignUp extends Component {
                       justify="flex-start"
                       spacing={1}
                       alignItems="flex-end"
+                      justify="center"
                       className={classes.gutterBottom}
                     >
                       <Grid item>
                         <AlternateEmail color="disabled" />
                       </Grid>
-                      <Grid item>
+                      <Grid item className={classes.textFieldGrid}>
                         <TextField
                           id="input-with-icon-grid"
                           label="Enter your email"
                           name="email"
                           color="secondary"
+                          fullWidth={true}
                           value={email.value}
                           error={!email.isValid}
                           margin={'dense'}
@@ -415,25 +419,13 @@ class SignUp extends Component {
                       spacing={1}
                       alignItems="flex-end"
                       className={classes.gutterBottom}
+                      justify="center"
                     >
                       <Grid item>
                         <Lock color="disabled" />
                       </Grid>
-                      <Grid item>
-                        {/* <TextField
-                          name="password"
-                          type="password"
-                          id="input-with-icon-grid"
-                          label="Ente your password"
-                          color="secondary"
-                          value={password.value}
-                          error={!password.isValid}
-                          margin={'dense'}
-                          required={true}
-                          onChange={this.handleTextInput}
-                        /> */}
-
-                        <FormControl className={classes.PasswordText}>
+                      <Grid item className={classes.textFieldGrid}>
+                        <FormControl fullWidth={true}>
                           <InputLabel htmlFor="standard-adornment-password">
                             Enter your password
                           </InputLabel>
@@ -445,6 +437,7 @@ class SignUp extends Component {
                             onChange={this.handleTextInput}
                             required={true}
                             name="password"
+                            fullWidth={true}
                             color="secondary"
                             label="Enter your password"
                             endAdornment={
@@ -479,26 +472,13 @@ class SignUp extends Component {
                       spacing={1}
                       alignItems="flex-end"
                       className={classes.gutterBottom}
+                      justify="center"
                     >
                       <Grid item>
                         <Lock color="disabled" />
                       </Grid>
-                      <Grid item>
-                        {/* <TextField
-                          name="rePassword"
-                          type="password"
-                          id="input-with-icon-grid"
-                          label="re-enter your password"
-                          fullWidth={true}
-                          color="secondary"
-                          value={rePassword.value}
-                          error={!rePassword.isValid}
-                          margin={'dense'}
-                          required={true}
-                          onChange={this.handleTextInput}
-                          style={{ width: '102%' }}
-                        /> */}
-                        <FormControl className={classes.PasswordText}>
+                      <Grid item className={classes.textFieldGrid}>
+                        <FormControl fullWidth={true}>
                           <InputLabel htmlFor="standard-adornment-password">
                             Enter your password
                           </InputLabel>
@@ -544,11 +524,12 @@ class SignUp extends Component {
                       spacing={1}
                       alignItems="flex-end"
                       className={classes.gutterBottom}
+                      justify="center"
                     >
                       <Grid item>
                         <DateRange color="disabled" />
                       </Grid>
-                      <Grid item>
+                      <Grid item className={classes.textFieldGrid}>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                           <DatePicker
                             name="birthDate"
@@ -559,6 +540,7 @@ class SignUp extends Component {
                             format="MM/dd/yyyy"
                             value={birthDate}
                             variant="dialog"
+                            fullWidth={true}
                             openTo="year"
                             minDate={minDate}
                             maxDate={maxDate}
