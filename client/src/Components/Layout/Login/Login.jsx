@@ -23,7 +23,7 @@ import {
 } from '@material-ui/icons';
 import Cookies from 'js-cookie';
 import { withStyles } from '@material-ui/core/styles';
-
+import { validateEmail } from '../../../helpers/Validation';
 import LoaderProgress from '../../Common/LoaderProgress';
 
 import axios from 'axios';
@@ -220,6 +220,7 @@ class Login extends Component {
                       />
                     </Grid>
                     <Grid item>
+
                       <FormControl className={classes.PasswordText}>
                         <InputLabel htmlFor="standard-adornment-password">
                           Enter your password
@@ -252,6 +253,7 @@ class Login extends Component {
                           }
                         />
                       </FormControl>
+                   
                     </Grid>
                     <Grid item>
                       <FormControl error>
@@ -319,9 +321,5 @@ class Login extends Component {
       </Box>
     );
   }
-}
-function validateEmail(email) {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
 }
 export default withStyles(LoginStyles)(Login);
