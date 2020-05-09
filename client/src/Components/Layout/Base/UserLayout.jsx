@@ -6,7 +6,7 @@ import { Grid } from '@material-ui/core';
 import AddNewEvent from './../AddNewEvent';
 import Home from '../Home';
 import Header from '../../Common/Header/Header';
-import SignUp from '../SignUp';
+import SignUp from '../SignUp/SignUp';
 import EventDetails from '../EventDetails';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
