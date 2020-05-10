@@ -302,7 +302,7 @@ class SignUp extends Component {
               </Grid>
               <Grid item xs={12}>
                 <Box mb={1}>
-                  <Typography variant="h8" color="textSecondary">
+                  <Typography variant="subtitle1" color="textSecondary">
                     Please enter your info to continue.
                   </Typography>
                 </Box>
@@ -576,7 +576,7 @@ class SignUp extends Component {
                       spacing={1}
                       alignItems="flex-end"
                     >
-                      <Typography variant="h7" color="primary">
+                      <Typography variant="subtitle2" color="primary">
                         {'Have an account?  '}
                         <Link className={classes.loginLink} to={loginLink}>
                           Login
