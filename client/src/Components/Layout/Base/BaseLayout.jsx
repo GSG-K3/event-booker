@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
 import { Grid } from '@material-ui/core';
 import AddNewEvent from './../AddNewEvent';
 import Home from '../Home';
@@ -13,11 +11,8 @@ import Profile from '../Profile/Profile';
 import TakeAttendance from '../../Layout/admin/Attendance/TakeAttendance';
 import AdminEventDetails from '../AdminEventDetails';
 import AdminHome from '../../Layout/admin/Home/Home';
+import AuthRouter from './AuthRouter';
 export default class UserLayout extends Component {
-  componentDidUpdate(prevProps) {
-    console.log('DidUpdate : ', prevProps);
-  }
-
   render() {
     return (
       <Router>
@@ -37,27 +32,37 @@ export default class UserLayout extends Component {
             <Grid item container xs={12} md={6}>
               <Switch>
                 <Route exact path="/" component={Home} />
+                <Route exact path="/user/login" component={Login} />
                 <Route exact path="/user/SignUp" component={SignUp} />
                 <Route exact path="/event/:id" component={EventDetails} />
-                <Route exact path="/user/login" component={Login} />
-                <Route
-                  exact
-                  path="/admin/Event/NewEvent"
-                  component={AddNewEvent}
-                />
-                <Route exact path="/user/profile" component={Profile} />
 
                 <Route
                   exact
-                  path="/admin/Event/takeAttendance/:id"
-                  component={TakeAttendance}
+                  path="/user/profile"
+                  component={AuthRouter(Profile, '')}
+                />
+
+                <Route
+                  exact
+                  path="/admin/"
+                  component={AuthRouter(AdminHome, 'admin')}
+                />
+                <Route
+                  exact
+                  path="/admin/event/newEvent"
+                  component={AuthRouter(AddNewEvent, 'admin')}
+                />
+
+                <Route
+                  exact
+                  path="/admin/event/takeAttendance/:id"
+                  component={AuthRouter(TakeAttendance, 'admin')}
                 />
                 <Route
                   exact
                   path="/admin/Event/Detail/:id"
-                  component={AdminEventDetails}
+                  component={AuthRouter(AdminEventDetails, 'admin')}
                 />
-                <Route exact path="/admin/" component={AdminHome} />
               </Switch>
             </Grid>
             <Grid item xs={false} md={3} />
