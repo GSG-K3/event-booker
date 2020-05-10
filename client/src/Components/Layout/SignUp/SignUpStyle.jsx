@@ -13,7 +13,8 @@ export default (theme) => ({
   content: {
     padding: '33px 0 33px 20px;',
     width: '100%',
-    maxWidth: 290,
+    minWidth: 290,
+    maxWidth: 390,
   },
   textError: {
     marginLeft: 32,
@@ -26,5 +27,8 @@ export default (theme) => ({
   },
   PasswordText: {
     width: 215,
+  },
+  textFieldGrid: {
+    width: '75%',
   },
 });
