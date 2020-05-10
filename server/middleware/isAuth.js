@@ -7,7 +7,9 @@ const { verify } = require('jsonwebtoken');
 const { getUserById } = require('../database/query/user');
 
 module.exports = (req, res, next) => {
+  console.log('start Auth');
   const token = !req.cookies ? null : req.cookies.AuthToken;
+  console.log(token);
   if (!token) {
     return res
       .status(403)
