@@ -1,7 +1,7 @@
 const connection = require('../../connection');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
-const ROLE = require('../../../helpers/Constants');
+const { ROLE } = require('../../../helpers/Constants');
 
 const addUser = (userDetails, callback) => {
   const { name, phone, email, password, selectedDate } = userDetails;

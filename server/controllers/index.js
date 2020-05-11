@@ -18,7 +18,7 @@ const checkToken = require('../middleware/checkToken');
 
 const checkPermissions = require('../middleware/checkPermissions');
 
-const ROLE = require('../helpers/Constants');
+const { ROLE } = require('../helpers/Constants');
 
 router.post('/isAuth/', isAuth, checkToken);
 router.post('/isAccess/', isAuth, checkPermissions(), checkToken);
