@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const { addUser } = require('./query/user');
 
-const ROLE = require('../helpers/Constants');
+const { ROLE } = require('../helpers/Constants');
 
 const sql = `
 
