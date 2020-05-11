@@ -58,9 +58,12 @@ class EventDetails extends Component {
   componentDidMount() {
     axios.all([this.getEventDetail(), this.getUserCode()]).then(
       axios.spread((eventDetail, userCode) => {
+        console.log('userCode : ', userCode);
         let code = null;
         if (userCode) {
-          code = !userCode.data.data ? null : userCode.data.data.code;
+          code = !userCode.data.data.userEvent
+            ? null
+            : userCode.data.data.userEvent.code;
         }
 
         this.setState({
@@ -200,7 +203,9 @@ class EventDetails extends Component {
                   <EventNoteIcon />
                 </Grid>
                 <Grid item>
-                  <Typography variant="h7">{eventdetail.event_date}</Typography>
+                  <Typography variant="h7">
+                    {new Date(eventdetail.event_date).toLocaleDateString()}
+                  </Typography>
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
@@ -208,7 +213,11 @@ class EventDetails extends Component {
                   <QueryBuilderIcon />
                 </Grid>
                 <Grid item>
-                  <Typography variant="h7">{eventdetail.event_time}</Typography>
+                  <Typography variant="h7">
+                    {new Date(
+                      '1970-01-01T' + eventdetail.event_time,
+                    ).toLocaleTimeString()}
+                  </Typography>
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
