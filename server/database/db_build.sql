@@ -49,7 +49,7 @@ CREATE TABLE events
     event_date DATE NOT NULL,
     event_time TIME NOT NULL,
     event_location TEXT NOT NULL,
-    event_status BOOLEAN,
+    event_status TEXT,
     host TEXT NOT NULL,
     member_cnt INT,
     attendance_cnt INT
