@@ -1,74 +1,63 @@
 const randomize = require('randomatic');
-const responseMessage = require('./../../helpers/responseMessage');
-const dbGetEventById = require('./../../database/query/event/getEventById');
-const dbTakePlace = require('./../../database/query/event/takePlace');
-const { getUserById } = require('./../../database/query/user');
+const {
+  UnauthorizedMessage,
+  InternalErrorMessage,
+  successMessage,
+} = require('../../helpers/responseMessage');
+const {
+  takePlace,
+  getEventById,
+  updateEventMemberCount,
+} = require('../../database/query/event');
 
 module.exports = async (req, res) => {
-  const eventId = req.body.eventId;
+  const { eventId } = req.body;
 
-  console.log(req.user);
-
-  const user = req.user;
-
-  let event = null;
+  const { user } = req;
 
   try {
-    event = (await dbGetEventById(eventId)).rows[0];
+    const event = (await getEventById(eventId)).rows[0];
+    if (!event || !user) {
+      return res
+        .status(401)
+        .clearCookie('AuthToken')
+        .json(UnauthorizedMessage(null, 'please login to continue... '));
+    }
+
+    const count = event.member_cnt + 1;
+    await updateEventMemberCount(eventId, count);
+    const code = randomize('00000000', 6);
+    takePlace(event.id, user.id, code)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          return res
+            .status(200)
+            .json(
+              InternalErrorMessage(
+                null,
+                'Sorry some Error happened at Enroll in Event , please try again',
+              ),
+            );
+        }
+        return res
+          .status(200)
+          .json(
+            successMessage(
+              { userCode: code },
+              'you are successfully Enroll in Event Enjoy',
+            ),
+          );
+      })
+      .catch((err) => {
+        console.log('Error in Take Blace insert user Event : ', err);
+        return res
+          .status(501)
+          .json(InternalErrorMessage(null, 'internal error with the server'));
+      });
   } catch (err) {
     console.log('Error in Take Blace get user and Event : ', err);
     return res
       .status(501)
-      .json(
-        responseMessage.InternalErrorMessage(
-          null,
-          'internal error with the server',
-        ),
-      );
+      .json(InternalErrorMessage(null, 'internal error with the server'));
   }
-  if (!event || !user) {
-    return res
-      .status(401)
-      .clearCookie('AuthToken')
-      .json(
-        responseMessage.UnauthorizedMessage(
-          null,
-          'please login to continue... ',
-        ),
-      );
-  }
-
-  const code = randomize('0aA', 6);
-  dbTakePlace(event.id, user.id, code)
-    .then((result) => {
-      if (result.rowCount === 0) {
-        return res
-          .status(200)
-          .json(
-            responseMessage.InternalErrorMessage(
-              null,
-              'Sorry some Error happened at Enroll in Event , please try again',
-            ),
-          );
-      }
-      return res
-        .status(200)
-        .json(
-          responseMessage.successMessage(
-            { userCode: code },
-            'you are successfully Enroll in Event Enjoy',
-          ),
-        );
-    })
-    .catch((err) => {
-      console.log('Error in Take Blace insert user Event : ', err);
-      return res
-        .status(501)
-        .json(
-          responseMessage.InternalErrorMessage(
-            null,
-            'internal error with the server',
-          ),
-        );
-    });
 };
