@@ -19,14 +19,14 @@ const addUser = (userDetails, callback) => {
           phone,
           selectedDate,
           email,
-          'UNI',
-          'Add',
+          'Unknown',
+          'Unknown',
           role,
-          'pro',
+          'Unknown',
           passwordHash,
         ],
       };
-      console.log(sql);
+
       connection
         .query(sql.text, sql.values)
         .then((result) => {
