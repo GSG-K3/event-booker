@@ -58,7 +58,7 @@ router.post('/api/admin/event/addEvent', isAuth, postEvent);
 router.get(
   '/api/admin/getEventsDay',
   isAuth,
-  checkPermissions(ROLE.USER),
+  checkPermissions(ROLE.ADMIN),
   getEventsDay,
 );
 
