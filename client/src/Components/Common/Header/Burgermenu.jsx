@@ -13,21 +13,14 @@ import {
   IconButton,
   Icon,
 } from '@material-ui/core';
-
-import {
-  userMenuItems,
-  anonymousMenuItems,
-  adminMenuItems,
-} from './Burgermenu.config';
+import MenuIcon from '@material-ui/icons/Menu';
 
 import Styles from './style';
-
 class BurgerMenu extends React.Component {
   state = {
     right: false,
     isAuth: false,
     isAdmin: false,
-    menu: [],
   };
 
   toggleDrawer = (anchor, open) => (event) => {
@@ -41,24 +34,27 @@ class BurgerMenu extends React.Component {
     this.setState({ [anchor]: open });
   };
 
-  componentDidMount() {
-    console.log();
-    const { isLogin, isAdmin } = this.props;
+  // componentDidMount() {
+  //   console.log('componentDidMount Menu', this.props);
+  //   const { isLogin, isAdmin } = this.props;
 
-    if (isAdmin == true) {
-      this.setState({
-        isAuth: isLogin,
-        isAdmin: isAdmin,
-        menu: adminMenuItems,
-      });
-    } else if (isLogin === true) {
-      this.setState({ menu: userMenuItems });
-    } else {
-      this.setState({ menu: anonymousMenuItems });
-    }
-  }
+  //   console.log('isLogin', isLogin, 'isAdmin', isAdmin);
 
-  list = (anchor, classes) => (
+  //   if (isAdmin === true) {
+  //     this.setState({
+  //       isAuth: isLogin,
+  //       isAdmin: isAdmin,
+  //       menu: adminMenuItems(),
+  //     });
+  //   } else if (isLogin === true) {
+  //     console.log('isLogin', isLogin);
+  //     this.setState({ menu: userMenuItems() });
+  //   } else {
+  //     this.setState({ menu: anonymousMenuItems() });
+  //   }
+  // }
+
+  list = (anchor, classes, menu) => (
     <div
       className={classes.list}
       role="presentation"
@@ -66,7 +62,7 @@ class BurgerMenu extends React.Component {
       onKeyDown={this.toggleDrawer(anchor, false)}
     >
       <List>
-        {this.state.menu.map((e, index) => (
+        {menu.map((e, index) => (
           <div>
             <ListItem key={index} button={true}>
               <ListItemIcon className={classes.iconStyle}>
@@ -87,8 +83,8 @@ class BurgerMenu extends React.Component {
   );
 
   render() {
-    const { classes } = this.props;
-
+    const { classes, menu } = this.props;
+    console.log('this.props : ', this.props);
     return (
       <React.Fragment>
         <IconButton
@@ -104,7 +100,7 @@ class BurgerMenu extends React.Component {
           open={this.state['right']}
           onClose={this.toggleDrawer('right', false)}
         >
-          {this.list('right', classes)}
+          {this.list('right', classes, menu)}
         </Drawer>
       </React.Fragment>
     );
