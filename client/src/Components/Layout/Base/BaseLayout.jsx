@@ -12,19 +12,74 @@ import TakeAttendance from '../../Layout/admin/Attendance/TakeAttendance';
 import AdminEventDetails from '../AdminEventDetails';
 import AdminHome from '../../Layout/admin/Home/Home';
 import AuthRouter from './AuthRouter';
+import isAuth from '../../../helpers/isAuth';
 export default class UserLayout extends Component {
+  state = {
+    showlogo: true,
+    showMeun: true,
+    showAvatar: false,
+    isAvatarImage: false,
+    srcImage: null,
+    isLogin: false,
+    isAdmin: false,
+    Name: 'User',
+  };
+
+  componentDidMount() {
+    isAuth()
+      .then((result) => {
+        console.log({ ...result });
+        const user = result.data.user;
+        this.setState({
+          showlogo: false,
+          showMeun: true,
+          showAvatar: true,
+          isAvatarImage: false,
+          srcImage: null,
+          isLogin: true,
+          isAdmin: user.role,
+          Name: user.name,
+        });
+      })
+      .catch((err) => {
+        console.log({ ...err });
+        this.setState({
+          showlogo: true,
+          showMeun: true,
+          showAvatar: false,
+          isAvatarImage: false,
+          srcImage: null,
+          isLogin: false,
+          isAdmin: false,
+          Name: '',
+        });
+      });
+  }
+
   render() {
+    const {
+      showlogo,
+      showMeun,
+      showAvatar,
+      isAvatarImage,
+      srcImage,
+      isLogin,
+      isAdmin,
+      Name,
+    } = this.state;
     return (
-      <Router>
+      <Router onChange={this.onRouteChanged}>
         <Grid direction="column" container>
           <Grid item xs={12}>
             <Header
-              showlogo={true}
-              showMeun={true}
-              showAvatar={false}
-              isAvatarImage={false}
-              srcImage={null}
-              Name="User"
+              showlogo={showlogo}
+              showMeun={showMeun}
+              showAvatar={showAvatar}
+              isAvatarImage={isAvatarImage}
+              srcImage={srcImage}
+              isLogin={isLogin}
+              isAdmin={isAdmin}
+              Name={Name}
             />
           </Grid>
           <Grid item container>
