@@ -17,21 +17,22 @@ class BurgerMenu extends React.Component {
   state = {
     right: false,
     userLogin: [
+      { icon: 'fas fa-home', to: '/', text: 'Home' },
       {
         icon: 'fas fa-address-card',
         to: '/user/profile',
         text: 'Profile',
       },
-      { icon: 'far fa-calendar-alt', to: '/', text: ' Events' },
-
       { icon: 'fas fa-sign-out-alt', to: '/', text: ' Logout' },
     ],
     userNotLogin: [
+      { icon: 'fas fa-home', to: '/', text: 'Home' },
       { icon: 'fas fa-sign-in-alt', to: '/user/login', text: ' Login' },
       { icon: 'fas fa-child', to: '/user/SignUp', text: ' signUp' },
     ],
 
     UserAdmin: [
+      { icon: 'fas fa-home', to: '/admin/', text: 'Home' },
       {
         icon: 'far fa-calendar-plus',
         to: '/admin/Event/NewEvent',
@@ -44,7 +45,6 @@ class BurgerMenu extends React.Component {
       },
       { icon: 'fas fa-sign-out-alt', to: '/', text: ' Logout' },
     ],
-    drawer: [],
     isAuth: false,
     isAdmin: false,
     menu: [],
@@ -102,14 +102,6 @@ class BurgerMenu extends React.Component {
             <Divider />
           </div>
         ))}
-        {/* <ListItem>
-          <ListItemIcon>
-            <Icon className="fas fa-envelope" color="primary" />
-          </ListItemIcon>
-          <a href="mailto:someone@example.com" target="_top">
-            Contact us
-          </a>
-        </ListItem> */}
       </List>
     </div>
   );
@@ -118,26 +110,23 @@ class BurgerMenu extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
-        <React.Fragment>
-          <IconButton
-            color="secondary"
-            aria-label="menu"
-            edge="end"
-            onClick={this.toggleDrawer('right', true)}
-            // className={classes.menuButton}
-          >
-            <MenuIcon classes={{ root: classes.root }} />
-          </IconButton>
-          <Drawer
-            anchor={'right'}
-            open={this.state['right']}
-            onClose={this.toggleDrawer('right', false)}
-          >
-            {this.list('right', classes)}
-          </Drawer>
-        </React.Fragment>
-      </div>
+      <React.Fragment>
+        <IconButton
+          color="secondary"
+          aria-label="menu"
+          edge="end"
+          onClick={this.toggleDrawer('right', true)}
+        >
+          <MenuIcon classes={{ root: classes.root }} />
+        </IconButton>
+        <Drawer
+          anchor={'right'}
+          open={this.state['right']}
+          onClose={this.toggleDrawer('right', false)}
+        >
+          {this.list('right', classes)}
+        </Drawer>
+      </React.Fragment>
     );
   }
 }
