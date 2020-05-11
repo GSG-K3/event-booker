@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import { Grid, Box, Typography, Card, CardContent } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,6 +7,7 @@ import LoaderProgress from '../../../Common/LoaderProgress';
 import EventDefaultImg from '../../../../assets/eventDefaultimg.svg';
 
 import HomeStyle from './HomeStyle';
+import axios from 'axios';
 
 class Home extends Component {
   state = {

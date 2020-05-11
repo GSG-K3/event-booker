@@ -16,43 +16,8 @@ import Events from './Events';
 class Profile extends Component {
   state = {
     tabIndex: 0,
-    userEvent: [
-      {
-        gid: 'sdfdsf',
-        title: 'event title',
-        event_date: '18/8/2020',
-        event_time: '5:00',
-        event_status: 'open',
-        code: 'f4d5sdf',
-      },
-      {
-        gid: 'sdfdsf',
-        title: 'event title',
-        event_date: '18/8/2020',
-        event_time: '5:00',
-        event_status: 'Finised',
-        code: 'Qdfg345',
-      },
-      {
-        gid: 'sdfdsf',
-        title: 'event title',
-        event_date: '18/8/2020',
-        event_time: '5:00',
-        event_status: 'canceled',
-        code: '45gRSrf',
-      },
-    ],
-    userInfo: {
-      user_name: 'Mohamend AAAAA',
-      phone: '0598522552',
-      birth_date: '15/8/1990',
-      email: 'test@no.com',
-      university: 'PPu',
-      address: 'Hebron',
-      profession: 'Potato',
-      email_activate: false,
-      phone_activate: false,
-    },
+    userEvent: [],
+    userInfo: {},
     isLoading: true,
     displayBlock: false,
     direction: 'ltr',
@@ -63,20 +28,31 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    axios.get('/api/user/profile').then((result) => {
-      console.log(result.data);
-      this.setState({
-        isLoading: false,
-        userEvent: result.data.data.userEvents,
-        userInfo: result.data.data.userInfo,
+    axios
+      .get('/api/user/profile')
+      .then((result) => {
+        this.setState({
+          isLoading: false,
+          userEvent: result.data.data.userEvents,
+          userInfo: result.data.data.userInfo,
+        });
+      })
+      .catch((err) => {
+        alert(err.response.data.messag);
+        this.setState({ isLoading: false });
       });
-    });
   }
 
   render() {
-  
     const { classes } = this.props;
-    const { isLoading, displayBlock, userInfo, tabIndex, direction, userEvent } = this.state;
+    const {
+      isLoading,
+      displayBlock,
+      userInfo,
+      tabIndex,
+      direction,
+      userEvent,
+    } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
 
     return (
@@ -85,12 +61,22 @@ class Profile extends Component {
         <Box component="div" display={displayStatus} mt={2} width={1}>
           <Grid container justify="center">
             <Grid container item xs={12} justify="center">
-              <UserAvatar showAvatar={true} Name={userInfo.user_name} cssClass={classes.large} />
+              <UserAvatar
+                showAvatar={true}
+                Name={userInfo.user_name}
+                cssClass={classes.large}
+              />
             </Grid>
             <Grid container item xs={12} justify="center">
               <Box Component="div" mt={6}>
                 <Paper square position="relative">
-                  <Tabs value={tabIndex} indicatorColor="secondary" textColor="primary" onChange={this.TabChangeHandler} variant="fullWidth">
+                  <Tabs
+                    value={tabIndex}
+                    indicatorColor="secondary"
+                    textColor="primary"
+                    onChange={this.TabChangeHandler}
+                    variant="fullWidth"
+                  >
                     <Tab label="info" {...IndexTabProps(0)} />
                     <Tab label="Events" {...IndexTabProps(1)} />
                     {/* <Tab label="Setting" {...IndexTabProps(2)} /> */}
@@ -98,7 +84,12 @@ class Profile extends Component {
                 </Paper>
                 <Box mt={1}>
                   <Paper className={classes.dataPaper}>
-                    <SwipeableViews axis={direction === 'rtl' ? 'x-reverse' : 'x'} index={tabIndex} disableLazyLoading={false} disabled={true}>
+                    <SwipeableViews
+                      axis={direction === 'rtl' ? 'x-reverse' : 'x'}
+                      index={tabIndex}
+                      disableLazyLoading={false}
+                      disabled={true}
+                    >
                       <ProfileTabContainer value={tabIndex} index={0}>
                         <Grid container>
                           <UserInfo userInfo={userInfo} />
