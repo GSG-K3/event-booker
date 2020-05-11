@@ -21,11 +21,11 @@ const adminMenuItems = () => [
     to: '/admin/Event/NewEvent',
     text: ' New event',
   },
-  {
-    icon: 'fas fa-user-plus',
-    to: '/admin/user/NewMember',
-    text: 'New member',
-  },
+  // {
+  //   icon: 'fas fa-user-plus',
+  //   to: '/admin/user/NewMember',
+  //   text: 'New member',
+  // },
   { icon: 'fas fa-sign-out-alt', to: '/', text: ' Logout' },
 ];
 
