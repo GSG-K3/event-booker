@@ -11,6 +11,8 @@ export default ({
   isAvatarImage,
   srcImage,
   Name,
+  isLogin,
+  isAdmin,
 }) => {
   return (
     <Grid item container>
@@ -25,7 +27,7 @@ export default ({
         <Logo showlogo={showlogo} />
       </Grid>
       <Grid item xs={2} sm={1}>
-        <BurgerMenu showMeun={showMeun} />
+        <BurgerMenu showMeun={showMeun} isLogin={isLogin} isAdmin={isAdmin} />
       </Grid>
       <Grid item xs={false} sm={2} />
     </Grid>

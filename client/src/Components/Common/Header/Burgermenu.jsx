@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import './icons.css';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -12,17 +12,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
-
-const useStyles = {
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-};
-
-export default class BurgerMenu extends React.Component {
+import Styles from './style';
+class BurgerMenu extends React.Component {
   state = {
     right: false,
     userLogin: [
@@ -37,7 +28,7 @@ export default class BurgerMenu extends React.Component {
     ],
     userNotLogin: [
       { icon: 'fas fa-sign-in-alt', to: '/user/login', text: ' Login' },
-      { icon: 'fas fa-sign-in-alt', to: '/user/SignUp', text: ' signUp' },
+      { icon: 'fas fa-child', to: '/user/SignUp', text: ' signUp' },
     ],
 
     UserAdmin: [
@@ -71,42 +62,55 @@ export default class BurgerMenu extends React.Component {
   };
 
   componentDidMount() {
-    if (this.state.isAdmin == true) {
-      this.setState({ menu: this.state.UserAdmin });
-    } else if (this.state.isAuth === true) {
+    console.log();
+    const { isLogin, isAdmin } = this.props;
+
+    if (isAdmin == true) {
+      this.setState({
+        isAuth: isLogin,
+        isAdmin: isAdmin,
+        menu: this.state.UserAdmin,
+      });
+    } else if (isLogin === true) {
       this.setState({ menu: this.state.userLogin });
     } else {
       this.setState({ menu: this.state.userNotLogin });
     }
   }
 
-  list = (anchor) => (
+  list = (anchor, classes) => (
     <div
+      className={classes.list}
       role="presentation"
       onClick={this.toggleDrawer(anchor, false)}
       onKeyDown={this.toggleDrawer(anchor, false)}
     >
       <List>
-        {this.state.menu.map((e) => (
-          <ListItem button={true}>
-            <ListItemIcon>
-              <Icon className={e.icon} color="primary" />
-            </ListItemIcon>
-            <Link to={e.to}>
-              <ListItemText primary={e.text} />
-            </Link>
-          </ListItem>
+        {this.state.menu.map((e, index) => (
+          <div>
+            <ListItem key={index} button={true}>
+              <ListItemIcon className={classes.iconStyle}>
+                <Icon
+                  className={clsx(e.icon, classes.iconStyle)}
+                  color="secondary"
+                />
+              </ListItemIcon>
+              <Link className={classes.link} to={e.to}>
+                <ListItemText primary={e.text} />
+              </Link>
+            </ListItem>
+            <Divider />
+          </div>
         ))}
-        <ListItem>
+        {/* <ListItem>
           <ListItemIcon>
             <Icon className="fas fa-envelope" color="primary" />
           </ListItemIcon>
           <a href="mailto:someone@example.com" target="_top">
             Contact us
           </a>
-        </ListItem>
+        </ListItem> */}
       </List>
-      <Divider />
     </div>
   );
 
@@ -117,23 +121,24 @@ export default class BurgerMenu extends React.Component {
       <div>
         <React.Fragment>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
+            color="secondary"
+            aria-label="menu"
+            edge="end"
             onClick={this.toggleDrawer('right', true)}
             // className={classes.menuButton}
           >
-            <MenuIcon />
+            <MenuIcon classes={{ root: classes.root }} />
           </IconButton>
           <Drawer
             anchor={'right'}
             open={this.state['right']}
             onClose={this.toggleDrawer('right', false)}
           >
-            {this.list('right')}
+            {this.list('right', classes)}
           </Drawer>
         </React.Fragment>
       </div>
     );
   }
 }
+export default withStyles(Styles)(BurgerMenu);

@@ -13,7 +13,13 @@ import Profile from '../Profile/Profile';
 import TakeAttendance from '../../Layout/admin/Attendance/TakeAttendance';
 import AdminEventDetails from '../AdminEventDetails';
 import AdminHome from '../../Layout/admin/Home/Home';
+
 export default class UserLayout extends Component {
+  componentDidMount() {
+    // call isAuth
+    // but the isAuth is in Access control branch
+    // add code after branch merge
+  }
   render() {
     return (
       <Router>
@@ -25,6 +31,8 @@ export default class UserLayout extends Component {
               showAvatar={false}
               isAvatarImage={false}
               srcImage={null}
+              isLogin={true}
+              isAdmin={true}
               Name="User"
             />
           </Grid>
