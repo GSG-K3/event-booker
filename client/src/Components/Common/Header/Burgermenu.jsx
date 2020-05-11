@@ -3,48 +3,28 @@ import clsx from 'clsx';
 import './icons.css';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuIcon from '@material-ui/icons/Menu';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
+import {
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  IconButton,
+  Icon,
+} from '@material-ui/core';
+
+import {
+  userMenuItems,
+  anonymousMenuItems,
+  adminMenuItems,
+} from './Burgermenu.config';
+
 import Styles from './style';
+
 class BurgerMenu extends React.Component {
   state = {
     right: false,
-    userLogin: [
-      { icon: 'fas fa-home', to: '/', text: 'Home' },
-      {
-        icon: 'fas fa-address-card',
-        to: '/user/profile',
-        text: 'Profile',
-      },
-      { icon: 'fas fa-sign-out-alt', to: '/', text: ' Logout' },
-    ],
-    userNotLogin: [
-      { icon: 'fas fa-home', to: '/', text: 'Home' },
-      { icon: 'fas fa-sign-in-alt', to: '/user/login', text: ' Login' },
-      { icon: 'fas fa-child', to: '/user/SignUp', text: ' signUp' },
-    ],
-
-    UserAdmin: [
-      { icon: 'fas fa-home', to: '/admin/', text: 'Home' },
-      {
-        icon: 'far fa-calendar-plus',
-        to: '/admin/Event/NewEvent',
-        text: ' New event',
-      },
-      {
-        icon: 'fas fa-user-plus',
-        to: '/admin/user/NewMember',
-        text: 'New member',
-      },
-      { icon: 'fas fa-sign-out-alt', to: '/', text: ' Logout' },
-    ],
     isAuth: false,
     isAdmin: false,
     menu: [],
@@ -69,12 +49,12 @@ class BurgerMenu extends React.Component {
       this.setState({
         isAuth: isLogin,
         isAdmin: isAdmin,
-        menu: this.state.UserAdmin,
+        menu: adminMenuItems,
       });
     } else if (isLogin === true) {
-      this.setState({ menu: this.state.userLogin });
+      this.setState({ menu: userMenuItems });
     } else {
-      this.setState({ menu: this.state.userNotLogin });
+      this.setState({ menu: anonymousMenuItems });
     }
   }
 
