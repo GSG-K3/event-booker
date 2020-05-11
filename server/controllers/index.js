@@ -7,14 +7,21 @@ const {
   cancelPlace,
   getEventMembers,
 } = require('./event');
-
 const { postEvent, getEventsDay } = require('./admin');
-
 const { login, profile, signup, userEvent } = require('./user');
 
 const getcategory = require('./category/getcategory');
 
 const isAuth = require('../middleware/isAuth');
+
+const checkToken = require('../middleware/checkToken');
+
+const checkPermissions = require('../middleware/checkPermissions');
+
+const ROLE = require('../helpers/Constants');
+
+router.post('/isAuth/', isAuth, checkToken);
+router.post('/isAccess/', isAuth, checkPermissions(), checkToken);
 
 // login user , Create Auth Token Cookies
 router.post('/user/login', login);
@@ -48,7 +55,12 @@ router.get('/api/admin/getcategory', isAuth, getcategory);
 
 router.post('/api/admin/event/addEvent', isAuth, postEvent);
 
-router.get('/api/admin/getEventsDay', getEventsDay);
+router.get(
+  '/api/admin/getEventsDay',
+  isAuth,
+  checkPermissions(ROLE.USER),
+  getEventsDay,
+);
 
 router.get('/api/admin/event/TakeAttendance/:id', getEventMembers);
 

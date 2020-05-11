@@ -4,13 +4,15 @@ const responseMessage = require('../helpers/responseMessage');
 
 const { verify } = require('jsonwebtoken');
 
-const { getUserById } = require('../database/query/user/');
+const { getUserById } = require('../database/query/user');
 
 module.exports = (req, res, next) => {
+  console.log('start Auth');
   const token = !req.cookies ? null : req.cookies.AuthToken;
+  console.log(token);
   if (!token) {
     return res
-      .status(200)
+      .status(403)
       .json(
         responseMessage.UnauthorizedMessage(
           null,
@@ -22,7 +24,7 @@ module.exports = (req, res, next) => {
   verify(token, process.env.acces_Token_secret, (err, payload) => {
     if (err) {
       return res
-        .status(200)
+        .status(403)
         .clearCookie('AuthToken')
         .json(
           responseMessage.UnauthorizedMessage(
@@ -35,12 +37,11 @@ module.exports = (req, res, next) => {
     getUserById(payload.id)
       .then((result) => {
         req.user = result.rows[0];
-        console.log(req.user);
         return next();
       })
       .catch((err) =>
         res
-          .status(200)
+          .status(403)
           .clearCookie('AuthToken')
           .json(
             responseMessage.UnauthorizedMessage(

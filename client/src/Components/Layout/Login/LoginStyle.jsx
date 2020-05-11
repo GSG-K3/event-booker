@@ -2,6 +2,8 @@ import { deepOrange } from '@material-ui/core/colors';
 export default (theme) => ({
   content: {
     padding: 33,
+    width: '100%',
+    maxWidth: 250,
   },
   //   gutterBottom: { paddingBottom: 8 },
 

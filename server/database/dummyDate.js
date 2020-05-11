@@ -1,10 +1,10 @@
 const connection = require('./connection');
 
-const { addUser } = require('../database/query/user');
-const ROLE = require('../helpers/Constants');
 const { v4: uuidv4 } = require('uuid');
 
-const gid = uuidv4();
+const { addUser } = require('./query/user');
+
+const ROLE = require('../helpers/Constants');
 
 const sql = `INSERT INTO users
 (gid,
@@ -173,15 +173,12 @@ event_time,
 event_location,
 host )
 values
-('${uuidv4()}','JS workshop', '1', 'abcdefghijklmnobqrstvwxyz', '6-14-2020', '5:00:00', 'Hebron', 'YDRC');
+('${uuidv4()}','JS workshop', '1', 'abcdefghijklmnobqrstvwxyz', '6-14-2020', '5:00:00', 'Hebron', 'YDRC');`;
 
-
-`;
-
-// connection
-//   .query(sql)
-//   .then(() => console.log('Add Data!'))
-//   .catch((e) => console.error('failed to build', e.stack));
+connection
+  .query(sql)
+  .then(() => console.log('Add Data!'))
+  .catch((e) => console.error('failed to build', e.stack));
 
 addUser({
   name: 'Admin',
