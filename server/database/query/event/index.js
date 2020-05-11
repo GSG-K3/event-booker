@@ -7,6 +7,8 @@ const getEventsDay = require('./getEventsDay');
 const getEventMemberById = require('./getEventMemberById');
 const getEventMemberInfoById = require('./getEventMemberInfoById');
 
+const updateEventMemberCount = require('./updateEventMemberCount');
+
 module.exports = {
   getEventById,
   getupComingEvent,
@@ -14,4 +16,5 @@ module.exports = {
   getEventsDay,
   getEventMemberById,
   getEventMemberInfoById,
+  updateEventMemberCount,
 };
