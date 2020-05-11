@@ -1,9 +1,17 @@
 import React from 'react';
-import { Grid, AppBar } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+
 import Logo from './Logo';
 import BurgerMenu from './Burgermenu';
 
+import {
+  userMenuItems,
+  anonymousMenuItems,
+  adminMenuItems,
+} from './Burgermenu.config';
+
 import UserAvatar from './UserAvatar';
+
 export default ({
   showlogo,
   showMeun,
@@ -14,6 +22,13 @@ export default ({
   isLogin,
   isAdmin,
 }) => {
+  const menu =
+    isAdmin === true
+      ? adminMenuItems()
+      : isLogin === true
+      ? userMenuItems()
+      : anonymousMenuItems();
+  console.log(isLogin, isAdmin, menu);
   return (
     <Grid item container>
       <Grid item xs={false} md={2} />
@@ -27,7 +42,7 @@ export default ({
         <Logo showlogo={showlogo} />
       </Grid>
       <Grid item xs={2} sm={1}>
-        <BurgerMenu showMeun={showMeun} isLogin={isLogin} isAdmin={isAdmin} />
+        <BurgerMenu showMeun={showMeun} menu={menu} />
       </Grid>
       <Grid item xs={false} sm={2} />
     </Grid>
