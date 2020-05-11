@@ -3,4 +3,10 @@ const ROLE = {
   USER: 'user',
 };
 
-module.exports = ROLE;
+const EVENTSTATUS = {
+  OPEN: 'open',
+  FINISED: 'finised',
+  CANCELED: 'canceled',
+  STARTED: 'started',
+};
+module.exports = { ROLE, EVENTSTATUS };
