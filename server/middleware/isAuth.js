@@ -1,36 +1,54 @@
 require('dotenv').config();
 
-const responseMessage = require('./../helpers/responseMessage');
+const responseMessage = require('../helpers/responseMessage');
 
 const { verify } = require('jsonwebtoken');
 
+const { getUserById } = require('../database/query/user');
+
 module.exports = (req, res, next) => {
+  console.log('start Auth');
   const token = !req.cookies ? null : req.cookies.AuthToken;
+  console.log(token);
   if (!token) {
     return res
-      .status(200)
+      .status(403)
       .json(
         responseMessage.UnauthorizedMessage(
           null,
-          'please login to continue... '
-        )
+          'please login to continue... ',
+        ),
       );
   }
 
   verify(token, process.env.acces_Token_secret, (err, payload) => {
     if (err) {
       return res
-        .status(200)
+        .status(403)
         .clearCookie('AuthToken')
         .json(
           responseMessage.UnauthorizedMessage(
             null,
-            'please login to continue... '
-          )
+            'please login to continue... ',
+          ),
         );
     }
 
-    req.user = payload;
-    return next();
+    getUserById(payload.id)
+      .then((result) => {
+        req.user = result.rows[0];
+        return next();
+      })
+      .catch((err) =>
+        res
+          .status(403)
+          .clearCookie('AuthToken')
+          .json(
+            responseMessage.UnauthorizedMessage(
+              null,
+              'please login to continue... ',
+            ),
+          ),
+      );
   });
 };

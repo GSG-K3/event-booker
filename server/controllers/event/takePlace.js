@@ -6,34 +6,35 @@ const { getUserById } = require('./../../database/query/user');
 
 module.exports = async (req, res) => {
   const eventId = req.body.eventId;
-  const userId = '2b8a3b7a-1d77-4660-87ce-3155b3e7cadf'; //req.user;
+
+  console.log(req.user);
+
+  const user = req.user;
 
   let event = null;
-  let user = null;
 
   try {
     event = (await dbGetEventById(eventId)).rows[0];
-    user = (await getUserById(userId)).rows[0];
   } catch (err) {
     console.log('Error in Take Blace get user and Event : ', err);
     return res
-      .status(200)
+      .status(501)
       .json(
         responseMessage.InternalErrorMessage(
           null,
-          'internal error with the server'
-        )
+          'internal error with the server',
+        ),
       );
   }
   if (!event || !user) {
     return res
-      .status(200)
+      .status(401)
       .clearCookie('AuthToken')
       .json(
         responseMessage.UnauthorizedMessage(
           null,
-          'please login to continue... '
-        )
+          'please login to continue... ',
+        ),
       );
   }
 
@@ -46,8 +47,8 @@ module.exports = async (req, res) => {
           .json(
             responseMessage.InternalErrorMessage(
               null,
-              'Sorry some Error happened at Enroll in Event , please try again'
-            )
+              'Sorry some Error happened at Enroll in Event , please try again',
+            ),
           );
       }
       return res
@@ -55,8 +56,8 @@ module.exports = async (req, res) => {
         .json(
           responseMessage.successMessage(
             { userCode: code },
-            'you are sussfully Enroll in Event Enjoy'
-          )
+            'you are successfully Enroll in Event Enjoy',
+          ),
         );
     })
     .catch((err) => {
@@ -66,8 +67,8 @@ module.exports = async (req, res) => {
         .json(
           responseMessage.InternalErrorMessage(
             null,
-            'internal error with the server'
-          )
+            'internal error with the server',
+          ),
         );
     });
 };
