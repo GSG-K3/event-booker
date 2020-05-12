@@ -16,4 +16,7 @@ export default makeStyles((theme) => ({
     fontSize: 16,
     fontWeight: 900,
   },
+  nameText: {
+    margin: '4px 8px',
+  },
 }));
