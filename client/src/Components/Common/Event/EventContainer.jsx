@@ -106,6 +106,7 @@ export default class EventContainer extends Component {
               variant="scrollable"
               scrollButtons="on"
               aria-label="scrollable force tabs example"
+              style={{ width: '100%', maxWidth: 670 }}
             >
               {eventTab}
             </Tabs>
