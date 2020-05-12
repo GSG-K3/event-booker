@@ -7,51 +7,16 @@ import LoaderProgress from '../../../Common/LoaderProgress';
 import UserInfoDialog from './UserInfoDialog';
 import EventMembers from '../EventMembers/EventMembers';
 import AttendanceStyle from './Style';
-import Axios from 'axios';
+import axios from 'axios';
 
 class TakeAttendance extends Component {
   state = {
     tabIndex: 0,
-    event: {
-      title: 'Code for everyone',
-      host: 'Rubaaaaa',
-      event_date: '5/24/2020',
-      event_time: '5:30 PM',
-      member_cnt: 20,
-      attendance_cnt: 5,
-    },
-    eventMember: [
-      {
-        gid: '324',
-        user_name: 'Yakoob Hamo',
-        attendance_status: false,
-        userCode: '',
-      },
-      {
-        gid: '341',
-        user_name: 'Tesssst  Abcde  2',
-        attendance_status: true,
-        userCode: 'FR7GD',
-      },
-      {
-        gid: '13',
-        user_name: 'Tesss GHMFWD 3',
-        attendance_status: false,
-        userCode: '',
-      },
-    ],
-    eventMemberInfo: [
-      {
-        gid: '324',
-        user_name: 'Yakoob Hamo',
-        phone: '0598235641',
-        birth_date: '5/5/2020',
-        email: 'test@no.com',
-        university: 'PPU',
-        address: 'Hebron',
-        profession: 'Developer',
-      },
-    ],
+    event: {},
+    eventMember: [],
+    eventMemberInfo: [],
+    currentMemberInfo: {},
+    currentCode: '',
     isLoading: true,
     displayBlock: false,
     open: false,
@@ -59,15 +24,15 @@ class TakeAttendance extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    Axios.get(`/api/admin/event/TakeAttendance/${id}`)
+    axios.get(`/api/admin/event/TakeAttendance/${id}`)
       .then((result) => {
-        console.log(result.data.data);
         //eventInfo, eventMember, eventMemberInfo;
         const data = result.data.data;
+        console.log('data.eventMember', data.eventMember);
         this.setState({
-          // event: data.eventInfo,
-          // eventMember: data.eventMember,
-          // eventMemberInfo: data.eventMemberInfo,
+          event: data.eventInfo,
+          eventMember: data.eventMember,
+          eventMemberInfo: data.eventMemberInfo,
           isLoading: false,
         });
       })
@@ -82,16 +47,50 @@ class TakeAttendance extends Component {
       alert('you must enter the Code ');
       return;
     }
-    alert(code + ' ' + gid);
-    this.setState({ open: true });
+    const { eventMemberInfo } = this.state;
+    const currentMember = eventMemberInfo.filter(
+      (member) => member.gid === gid,
+    );
+    this.setState({
+      open: true,
+      currentCode: code,
+      currentMemberInfo: currentMember[0],
+    });
   };
-  handlerOk = () => {
-    alert('ok');
-    this.setState({ open: false });
+  handlerOk = (code) => {
+    const { event, currentMemberInfo } = this.state;
+    this.setState({ isLoading: true, displayBlock: true, open: false });
+
+    axios.post(`/api/admin/event/TakeAttendance/`, {
+      eventId: event.gid,
+      userId: currentMemberInfo.gid,
+      code: code,
+    })
+      .then((result) => {
+        console.log(result.data.data);
+        const data = result.data.data;
+        const { eventMember, event } = this.state;
+        // get index of member to update attend status
+        const index = eventMember.findIndex((x) => x.gid === data.userId);
+        eventMember[index].attendance_status = '1';
+        event.attendance_cnt = data.count;
+        alert(result.data.messag);
+        this.setState({
+          isLoading: false,
+          displayBlock: true,
+          eventMember: eventMember,
+          event: event,
+        });
+      })
+      .catch((err) => {
+        console.log({ ...err });
+        alert(err.response.data.messag);
+        this.setState({ isLoading: false, displayBlock: true });
+      });
   };
 
-  handleUpdate = () => {
-    alert('cnacel');
+  handleUpdate = (code) => {
+    alert('cnacel' + code);
     this.setState({ open: false });
   };
   render() {
@@ -102,7 +101,8 @@ class TakeAttendance extends Component {
       event,
       eventMember,
       open,
-      eventMemberInfo,
+      currentMemberInfo,
+      currentCode,
     } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
 
@@ -125,7 +125,8 @@ class TakeAttendance extends Component {
           handleClose={this.handleClose}
           handlerOk={this.handlerOk}
           handleUpdate={this.handleUpdate}
-          userInfo={eventMemberInfo[0]}
+          userInfo={currentMemberInfo}
+          code={currentCode}
         />
         <LoaderProgress isLoading={isLoading} />
         <Box component="div" display={displayStatus} width={1}>
@@ -184,7 +185,9 @@ class TakeAttendance extends Component {
                       className={classes.eventDate}
                     >
                       {new Date(event.event_date).toLocaleDateString()}{' '}
-                      {event.event_time}
+                      {new Date(
+                        '1970-01-01T' + event.event_time,
+                      ).toLocaleTimeString()}
                     </Typography>
                   </Grid>
                 </Grid>
