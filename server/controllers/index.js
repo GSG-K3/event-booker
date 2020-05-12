@@ -5,9 +5,13 @@ const {
   getupComingEvent,
   takePlace,
   cancelPlace,
-  getEventMembers,
 } = require('./event');
-const { postEvent, getEventsDay } = require('./admin');
+const {
+  postEvent,
+  getEventsDay,
+  takeMemberCode,
+  getEventMembers,
+} = require('./admin');
 const { login, profile, signup, userEvent } = require('./user');
 
 const getcategory = require('./category/getcategory');
@@ -62,6 +66,17 @@ router.get(
   getEventsDay,
 );
 
-router.get('/api/admin/event/TakeAttendance/:id', getEventMembers);
+router.get(
+  '/api/admin/event/TakeAttendance/:id',
+  isAuth,
+  checkPermissions(ROLE.ADMIN),
+  getEventMembers,
+);
+router.post(
+  '/api/admin/event/TakeAttendance/',
+  isAuth,
+  checkPermissions(ROLE.ADMIN),
+  takeMemberCode,
+);
 
 module.exports = router;
