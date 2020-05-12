@@ -13,7 +13,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default ({ open, handleClose, handlerOk, handleUpdate, userInfo }) => {
+export default ({ open, handlerOk, handleUpdate, userInfo, code }) => {
   console.log(userInfo);
   return (
     <div>
@@ -33,10 +33,10 @@ export default ({ open, handleClose, handlerOk, handleUpdate, userInfo }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleUpdate} color="primary">
+          {/* <Button onClick={() => handleUpdate(code)} color="primary">
             Update Data
-          </Button>
-          <Button onClick={handlerOk} color="primary">
+          </Button> */}
+          <Button onClick={() => handlerOk(code)} color="primary">
             Ok
           </Button>
         </DialogActions>
