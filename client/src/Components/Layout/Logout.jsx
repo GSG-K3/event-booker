@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-
+import LoaderProgress from '../Common/LoaderProgress';
 export default () => {
   useEffect(() => {
     console.log('run logout');
@@ -15,5 +15,5 @@ export default () => {
       });
   }, []);
 
-  return null;
+  return <LoaderProgress isLoading={true} />;
 };
