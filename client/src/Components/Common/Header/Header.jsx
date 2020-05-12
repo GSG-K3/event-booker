@@ -28,7 +28,6 @@ export default ({
       : isLogin === true
       ? userMenuItems()
       : anonymousMenuItems();
-  console.log(isLogin, isAdmin, menu);
   return (
     <Grid item container>
       <Grid item xs={false} md={2} />

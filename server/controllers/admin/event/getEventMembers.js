@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
         ),
       );
   } catch (err) {
-    console.log(err);
+    console.log('Error in get Event Members : ', err);
     return res
       .status(501)
       .json(InternalErrorMessage(null, 'internal error with the server'));

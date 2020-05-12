@@ -26,7 +26,6 @@ class Home extends Component {
     axios
       .get('/api/admin/getEventsDay')
       .then((result) => {
-        console.log(result.data.data);
         this.setState({ eventInDay: result.data.data, isLoading: false });
       })
       .catch((err) => {

@@ -3,7 +3,6 @@ import axios from 'axios';
 import LoaderProgress from '../Common/LoaderProgress';
 export default () => {
   useEffect(() => {
-    console.log('run logout');
     axios
       .post('/user/logout')
       .then((result) => {

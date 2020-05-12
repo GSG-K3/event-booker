@@ -4,7 +4,6 @@
 // otherwise the isAuth will Return status 403
 const { ROLE } = require('../helpers/Constants');
 module.exports = (req, res) => {
-  console.log(req.user);
   res.status(200).json({
     user: {
       name: req.user.user_name,

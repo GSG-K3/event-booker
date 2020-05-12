@@ -37,7 +37,7 @@ const addUser = (userDetails, callback) => {
         });
     })
     .catch((error) => {
-      console.log(error);
+      console.log('Error in add user : ', error);
       return callback(error);
     });
 };

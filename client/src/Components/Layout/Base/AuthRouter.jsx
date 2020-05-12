@@ -11,7 +11,6 @@ export default (AuthComponent, role) => {
     componentDidMount() {
       isAuth(role)
         .then((result) => {
-          console.log('Finish Auith : ', result);
           this.setState({ isLoading: false, isAuthenticated: true });
         })
         .catch((err) => {

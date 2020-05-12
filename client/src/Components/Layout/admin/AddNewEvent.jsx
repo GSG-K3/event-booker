@@ -68,7 +68,6 @@ class AddNewEvent extends Component {
     axios
       .get('/api/admin/getcategory')
       .then((res) => {
-        console.log(res.data.data);
         const resdata = res.data.data;
         const category = resdata.map((e, index) => {
           return (
@@ -81,23 +80,19 @@ class AddNewEvent extends Component {
       })
       .catch((err) => {
         console.log(err);
+        alert(err.response.data.messag);
       });
   }
 
   handleDateChange = (event, date) => {
-    console.log(date);
-
     const form = this.state.Eventdata;
     form.event_date = date;
     this.setState({ Eventdata: form });
   };
   handleTimeChange = (event, date) => {
-    console.log(date);
-
     const form = this.state.Eventdata;
     form.event_time = new Date('0 ' + date);
     this.setState({ Eventdata: form });
-    console.log(this.state.Eventdata.event_time);
   };
   texthandler = (e) => {
     const form = this.state.Eventdata;
@@ -111,7 +106,6 @@ class AddNewEvent extends Component {
     axios
       .post(`/api/admin/event/addEvent`, this.state.Eventdata)
       .then((res) => {
-        console.log(res);
         if (res.data.status !== 200) {
           alert(res.data.messg);
           return;
@@ -130,16 +124,9 @@ class AddNewEvent extends Component {
         });
       })
       .catch((error) => {
+        alert(err.response.data.messag);
         console.log(error);
       });
-    // const datalog = req.data;
-    // console.log(datalog);
-    // if (datalog.status !== 200) {
-    //   alert(datalog.messag);
-    //   return;
-    // }
-    // alert(datalog.messag);
-    // });
   };
 
   render() {

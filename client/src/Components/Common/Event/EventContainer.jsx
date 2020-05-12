@@ -35,12 +35,11 @@ export default class EventContainer extends Component {
     axios
       .get('/api/envet/getupComingEvent')
       .then((result) => {
-        console.log('Data from Server : ', result.data.data);
         this.setState({ eventData: result.data.data });
       })
       .catch((err) => {
         console.log('Error ', err);
-        alert('Sorry Some Error Happened , try to contact us');
+        alert(err.response.data.messag);
       });
   }
 
@@ -53,7 +52,6 @@ export default class EventContainer extends Component {
     const displayStatus = isLoading ? 'none' : 'block';
     const eventCardContainer = [];
     // build Tab with Event Card Container
-    console.log('mpa is starte');
     const eventTab = eventData.map((item, index) => {
       // Create Event Card for each Tab
       const eventCard = item.events.map((event, eventIndex) => {
@@ -83,7 +81,6 @@ export default class EventContainer extends Component {
         </EventCardContainer>,
       );
       if (index === eventData.length - 1) {
-        console.log('last time');
         this.finishLoading();
       }
       return (

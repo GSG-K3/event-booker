@@ -14,7 +14,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default ({ open, handlerOk, handleUpdate, userInfo, code }) => {
-  console.log(userInfo);
   return (
     <div>
       <Dialog

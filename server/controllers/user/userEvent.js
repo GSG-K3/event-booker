@@ -11,7 +11,6 @@ module.exports = async (req, res) => {
   const { eventId } = req.params;
   const userId = req.user.gid;
 
-  console.log('user Event');
   getUserEventById(eventId, userId)
     .then((result) => {
       return res

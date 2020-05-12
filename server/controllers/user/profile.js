@@ -7,7 +7,6 @@ const {
 
 module.exports = async (req, res) => {
   const user = req.user;
-  console.log('start profile');
   try {
     let userEvents = null;
     if (user !== 'admin') {
@@ -17,7 +16,6 @@ module.exports = async (req, res) => {
       if userinfo not found ,
       the user must be login again to continue  
     */
-    console.log(user);
     if (!user) {
       return res
         .status(403)

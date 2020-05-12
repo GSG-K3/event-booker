@@ -56,24 +56,29 @@ class EventDetails extends Component {
   };
 
   componentDidMount() {
-    axios.all([this.getEventDetail(), this.getUserCode()]).then(
-      axios.spread((eventDetail, userCode) => {
-        console.log('userCode : ', userCode);
-        let code = null;
-        if (userCode) {
-          code = !userCode.data.data.userEvent
-            ? null
-            : userCode.data.data.userEvent.code;
-        }
+    axios
+      .all([this.getEventDetail(), this.getUserCode()])
+      .then(
+        axios.spread((eventDetail, userCode) => {
+          let code = null;
+          if (userCode) {
+            code = !userCode.data.data.userEvent
+              ? null
+              : userCode.data.data.userEvent.code;
+          }
 
-        this.setState({
-          eventdetail: eventDetail.data.data[0],
-          userCode: code,
-          isEnrolled: !code ? false : true,
-          isLoading: false,
-        });
-      }),
-    );
+          this.setState({
+            eventdetail: eventDetail.data.data[0],
+            userCode: code,
+            isEnrolled: !code ? false : true,
+            isLoading: false,
+          });
+        }),
+      )
+      .catch((err) => {
+        alert(err.response.data.messag);
+        console.log({ ...err });
+      });
   }
 
   renderRedirect = () => {
@@ -125,6 +130,7 @@ class EventDetails extends Component {
         });
       })
       .catch((err) => {
+        alert(err.response.data.messag);
         console.log('axios Error Enroll Event : ', err);
       });
   };
@@ -160,6 +166,7 @@ class EventDetails extends Component {
         });
       })
       .catch((err) => {
+        alert(err.response.data.messag);
         console.log('axios Error Cancle Place in  Event : ', err);
       });
   };
