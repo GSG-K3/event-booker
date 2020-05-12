@@ -7,6 +7,7 @@ import Header from '../../Common/Header/Header';
 import SignUp from '../SignUp/SignUp';
 import EventDetails from '../EventDetails';
 import Login from '../Login/Login';
+import Logout from '../Logout';
 import Profile from '../Profile/Profile';
 import TakeAttendance from '../../Layout/admin/Attendance/TakeAttendance';
 import AdminEventDetails from '../admin/AdminEventDetails';
@@ -88,6 +89,7 @@ export default class UserLayout extends Component {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/user/login" component={Login} />
+                <Route exact path="/user/Logout" component={Logout} />
                 <Route exact path="/user/SignUp" component={SignUp} />
                 <Route exact path="/event/:id" component={EventDetails} />
 
