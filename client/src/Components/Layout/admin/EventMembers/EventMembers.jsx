@@ -13,11 +13,16 @@ import { CheckCircle } from '@material-ui/icons';
 import CodeTextField from './CodeTextField';
 import EventMemberStyle from './EventMemberStyle';
 
-export default ({ gid, eventMembers, onClick, showCodeField }) => {
+export default ({
+  gid,
+  attendance_status,
+  user_name,
+  code,
+  onClick,
+  showCodeField,
+}) => {
   const classes = EventMemberStyle();
-  const { attendance_status, user_name, code } = eventMembers;
-  const takeCode = attendance_status ? code : '';
-  const [userCode, setCode] = useState(takeCode);
+  const [userCode, setCode] = useState(code);
   const codeHandleChange = (event) => {
     setCode(event.target.value);
   };
@@ -27,7 +32,7 @@ export default ({ gid, eventMembers, onClick, showCodeField }) => {
       <ListItemAvatar>
         <UserAvatar
           showAvatar={true}
-          Name={eventMembers.user_name}
+          Name={user_name}
           cssClass={classes.avatarSmall}
         />
       </ListItemAvatar>
@@ -48,7 +53,7 @@ export default ({ gid, eventMembers, onClick, showCodeField }) => {
           edge="end"
           aria-label="Take Attendance"
           color="secondary"
-          onClick={() => onClick(code, gid)}
+          onClick={() => onClick(userCode, gid)}
           disabled={attendance_status}
         >
           <CheckCircle />

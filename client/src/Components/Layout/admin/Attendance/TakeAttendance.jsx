@@ -24,11 +24,12 @@ class TakeAttendance extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    axios.get(`/api/admin/event/TakeAttendance/${id}`)
+    axios
+      .get(`/api/admin/event/TakeAttendance/${id}`)
       .then((result) => {
         //eventInfo, eventMember, eventMemberInfo;
         const data = result.data.data;
-        console.log('data.eventMember', data.eventMember);
+
         this.setState({
           event: data.eventInfo,
           eventMember: data.eventMember,
@@ -61,13 +62,13 @@ class TakeAttendance extends Component {
     const { event, currentMemberInfo } = this.state;
     this.setState({ isLoading: true, displayBlock: true, open: false });
 
-    axios.post(`/api/admin/event/TakeAttendance/`, {
-      eventId: event.gid,
-      userId: currentMemberInfo.gid,
-      code: code,
-    })
+    axios
+      .post(`/api/admin/event/TakeAttendance/`, {
+        eventId: event.gid,
+        userId: currentMemberInfo.gid,
+        code: code,
+      })
       .then((result) => {
-        console.log(result.data.data);
         const data = result.data.data;
         const { eventMember, event } = this.state;
         // get index of member to update attend status
@@ -107,12 +108,15 @@ class TakeAttendance extends Component {
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
 
     const members = eventMember.map((member, index) => {
+      const takeCode = member.attendance_status ? member.code : '';
       return (
         <EventMembers
           key={index}
-          eventMembers={member}
-          showCodeField={true}
           gid={member.gid}
+          user_name={member.user_name}
+          code={takeCode}
+          attendance_status={member.attendance_status}
+          showCodeField={true}
           onClick={this.handlerAttendanceCode}
         />
       );
