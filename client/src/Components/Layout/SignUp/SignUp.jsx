@@ -77,15 +77,17 @@ class SignUp extends Component {
         isValid: true,
         isRequired: true,
       },
-      showPassword: false,
-      showRePassword: false,
-      returnUrlText: '/',
-      redirect: false,
-      loginLink: '/user/login',
-      birthDate: '',
-      minDate: '',
-      maxDate: '',
     },
+    showPassword: false,
+    showRePassword: false,
+    returnUrlText: '/',
+    redirect: false,
+    loginLink: '/user/login',
+    birthDate: '',
+    minDate: '',
+    maxDate: '',
+    isLoading: false,
+    displayBlock: true,
   };
 
   componentDidMount() {
@@ -121,18 +123,18 @@ class SignUp extends Component {
     }
   }
 
+  // it form password show icon , from materil ui documentaion
   handleClickShowPassword = () => {
     const showPassword = this.state.showPassword;
-
     this.setState({
       showPassword: !showPassword,
     });
   };
-
+  // it form password show icon , from material ui documentation
   handleMouseDownRePassword = (event) => {
     event.preventDefault();
   };
-
+  // it form password show icon , from material ui documentation
   handleClickShowRePassword = () => {
     const showRePassword = this.state.showRePassword;
 
@@ -140,7 +142,7 @@ class SignUp extends Component {
       showRePassword: !showRePassword,
     });
   };
-
+  // it form password show icon , from material ui documentation
   handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -157,7 +159,8 @@ class SignUp extends Component {
       formValid = false;
     } else if (!stringValidation(name.value)) {
       // the name  is not Valid
-      name.message = 'Name just contains alphabet characters, Please';
+      name.message =
+        'Name just contains alphabet characters and just one space between words, Please';
       name.isValid = false;
     } else {
       name.message = '';
@@ -200,7 +203,7 @@ class SignUp extends Component {
     }
 
     if (!rePassword.value.trim()) {
-      rePassword.message = 'Enter re-password, please';
+      rePassword.message = 'Re-enter your password';
       rePassword.isValid = false;
       formValid = false;
     } else {
@@ -241,18 +244,37 @@ class SignUp extends Component {
       email: email.value,
       password: password.value,
       rePassword: rePassword.value,
-      selectedDate: this.state.birthDate,
+      birthDate: this.state.birthDate,
     };
+
+    // create axios request to check if email used in db or not
     axios
-      .post('/api/user/signup', data)
-      .then((req) => {
-        const datalog = req.data;
-        this.setState({ redirect: true });
-        alert(datalog.messag);
+      .get(`/api/user/checkUserEmail/${email.value}`)
+      .then(() => {
+        email.message = '';
+        email.isValid = true;
+        email.isAvailable = true;
+
+        // axios to Create User
+        axios
+          .post('/api/user/signup', data)
+          .then((req) => {
+            const datalog = req.data;
+            this.setState({ redirect: true });
+            alert(datalog.messag);
+          })
+          .catch((err) => {
+            alert(err.response.data.messag);
+            this.setState({ isLoading: false });
+          });
       })
       .catch((err) => {
-        alert(err.response.data.messag);
-        this.setState({ isLoading: false });
+        email.message = err.response.data.messag;
+        email.isValid = false;
+        formValid = false;
+        email.isAvailable = false;
+        this.setState({ userDetails: fromInput, isLoading: false });
+        console.log({ ...err });
       });
   };
 
@@ -271,7 +293,8 @@ class SignUp extends Component {
 
   renderAction = () => {
     if (this.state.redirect) {
-      return <Redirect to={this.state.returnUrlText} />;
+      return window.location.replace(`${this.state.returnUrlText}`);
+      // return <Redirect to={this.state.returnUrlText} />;
     }
   };
   render() {
@@ -289,6 +312,16 @@ class SignUp extends Component {
     } = this.state;
     const { name, phone, email, password, rePassword } = userDetails;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
+    console.log(
+      'displayStatus : ',
+      displayStatus,
+      ' | isLoading :  ',
+      isLoading,
+      '| !displayBlock :',
+      !displayBlock,
+      ' |  isLoading && !displayBlock : ',
+      isLoading && !displayBlock,
+    );
     return (
       <Box component="div" p={3} width={1}>
         <LoaderProgress isLoading={isLoading} />
@@ -491,7 +524,7 @@ class SignUp extends Component {
                             required={true}
                             name="rePassword"
                             color="secondary"
-                            label="Enter your re-password"
+                            label="Re-enter your password"
                             endAdornment={
                               <InputAdornment position="end">
                                 <IconButton
