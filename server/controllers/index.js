@@ -6,10 +6,13 @@ const {
   takePlace,
   cancelPlace,
 } = require('./event');
-
+const {
+  postEvent,
+  getEventsDay,
+  takeMemberCode,
+  getEventMembers,
+} = require('./admin');
 const { login, profile, signup, userEvent } = require('./user');
-
-const { postEvent } = require('./admin');
 
 const getcategory = require('./category/getcategory');
 
@@ -19,7 +22,7 @@ const checkToken = require('../middleware/checkToken');
 
 const checkPermissions = require('../middleware/checkPermissions');
 
-const ROLE = require('../helpers/Constants');
+const { ROLE } = require('../helpers/Constants');
 
 router.post('/isAuth/', isAuth, checkToken);
 router.post('/isAccess/', isAuth, checkPermissions(), checkToken);
@@ -56,19 +59,24 @@ router.get('/api/admin/getcategory', isAuth, getcategory);
 
 router.post('/api/admin/event/addEvent', isAuth, postEvent);
 
-router.get('/api/admin/getcategory', isAuth, getcategory);
-router.post('/api/admin/event/addEvent', isAuth, postEvent);
-
-// quick test of permissions
-// rest of code in admin home back end branch
-// is not mearged yet
 router.get(
   '/api/admin/getEventsDay',
   isAuth,
-  checkPermissions(ROLE.USER),
-  (req, res) => {
-    res.json('Hi getEventsDay');
-  },
+  checkPermissions(ROLE.ADMIN),
+  getEventsDay,
+);
+
+router.get(
+  '/api/admin/event/TakeAttendance/:id',
+  isAuth,
+  checkPermissions(ROLE.ADMIN),
+  getEventMembers,
+);
+router.post(
+  '/api/admin/event/TakeAttendance/',
+  isAuth,
+  checkPermissions(ROLE.ADMIN),
+  takeMemberCode,
 );
 
 module.exports = router;

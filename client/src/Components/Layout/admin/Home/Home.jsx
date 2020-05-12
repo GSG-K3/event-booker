@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Grid, Box, Typography, Card, CardContent } from '@material-ui/core';
+import {
+  Grid,
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  Paper,
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { EventNote } from '@material-ui/icons';
 import EventCard from '../../../Common/Event/EventCard';
@@ -11,22 +18,7 @@ import axios from 'axios';
 
 class Home extends Component {
   state = {
-    eventInDay: [
-      {
-        id: '1',
-        title: 'code for everyone',
-        host: 'Ruba',
-        event_date: '5/5/2020',
-        event_time: '5:00 PM',
-      },
-      {
-        id: '1',
-        title: 'code for everyone',
-        host: 'Ruba',
-        event_date: '5/5/2020',
-        event_time: '5:00 PM',
-      },
-    ],
+    eventInDay: [],
     isLoading: true,
   };
 
@@ -38,8 +30,8 @@ class Home extends Component {
         this.setState({ eventInDay: result.data.data, isLoading: false });
       })
       .catch((err) => {
-        console.log(err);
-        alert('Sorry Some Error Happened , please try again');
+        console.log({ ...err });
+        alert(err.response.data.messag);
       });
   }
   render() {
@@ -47,20 +39,31 @@ class Home extends Component {
     const { eventInDay, isLoading } = this.state;
     const displayStatus = isLoading ? 'none' : 'block';
 
-    const cardEvent = eventInDay.map((event, index) => {
-      return (
-        <EventCard
-          key={index}
-          id={event.gid}
-          type="takeAttendance"
-          title={event.title}
-          hostBy={event.host}
-          eventDate={new Date(event.event_date).toLocaleDateString()}
-          eventTime={event.event_time}
-          imageurl={EventDefaultImg}
-        />
+    const cardEvent =
+      eventInDay.length === 0 ? (
+        <Paper elevation={6}>
+          <Box p={3}>
+            <Typography variant="h6" gutterBottom align="center">
+              There is not Any Event Today
+            </Typography>
+          </Box>
+        </Paper>
+      ) : (
+        eventInDay.map((event, index) => {
+          return (
+            <EventCard
+              key={index}
+              id={event.gid}
+              type="takeAttendance"
+              title={event.title}
+              hostBy={event.host}
+              eventDate={new Date(event.event_date).toLocaleDateString()}
+              eventTime={event.event_time}
+              imageurl={EventDefaultImg}
+            />
+          );
+        })
       );
-    });
 
     return (
       <Box component="div" p={3} width={1}>

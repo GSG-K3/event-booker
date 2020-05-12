@@ -1,81 +1,137 @@
 import React, { Component } from 'react';
-import { Grid, Box, Typography, Popover } from '@material-ui/core';
+import { Grid, Box, Typography, List } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Person, EventNote } from '@material-ui/icons';
 import { orange } from '@material-ui/core/colors';
 import LoaderProgress from '../../../Common/LoaderProgress';
-
+import UserInfoDialog from './UserInfoDialog';
 import EventMembers from '../EventMembers/EventMembers';
 import AttendanceStyle from './Style';
+import axios from 'axios';
 
 class TakeAttendance extends Component {
   state = {
     tabIndex: 0,
-    event: {
-      title: 'Code for everyone',
-      host: 'Rubaaaaa',
-      event_date: '5/24/2020',
-      event_time: '5:30 PM',
-      member_cnt: 20,
-      attendance_cnt: 5,
-    },
-    userEvent: [
-      {
-        user_name: 'Tessst Abcd  1',
-        attendance_status: false,
-        userCode: '',
-      },
-      {
-        user_name: 'Tesssst  Abcde  2',
-        attendance_status: true,
-        userCode: 'FR7GD',
-      },
-      {
-        user_name: 'Tesss GHMFWD 3',
-        attendance_status: false,
-        userCode: '',
-      },
-    ],
+    event: {},
+    eventMember: [],
+    eventMemberInfo: [],
+    currentMemberInfo: {},
+    currentCode: '',
     isLoading: true,
     displayBlock: false,
-  };
-
-  TabChangeHandler = (event, index) => {
-    this.setState({ tabIndex: index });
+    open: false,
   };
 
   componentDidMount() {
-    this.setState({
-      isLoading: false,
-    });
+    const { id } = this.props.match.params;
+    axios
+      .get(`/api/admin/event/TakeAttendance/${id}`)
+      .then((result) => {
+        //eventInfo, eventMember, eventMemberInfo;
+        const data = result.data.data;
+
+        this.setState({
+          event: data.eventInfo,
+          eventMember: data.eventMember,
+          eventMemberInfo: data.eventMemberInfo,
+          isLoading: false,
+        });
+      })
+      .catch((err) => {
+        alert(err.response.data.messag);
+        this.setState({ isLoading: false });
+      });
   }
 
-  codeClickHandler = (code) => {
+  handlerAttendanceCode = (code, gid) => {
     if (!code) {
       alert('you must enter the Code ');
       return;
     }
-    alert(code);
+    const { eventMemberInfo } = this.state;
+    const currentMember = eventMemberInfo.filter(
+      (member) => member.gid === gid,
+    );
+    this.setState({
+      open: true,
+      currentCode: code,
+      currentMemberInfo: currentMember[0],
+    });
+  };
+  handlerOk = (code) => {
+    const { event, currentMemberInfo } = this.state;
+    this.setState({ isLoading: true, displayBlock: true, open: false });
+
+    axios
+      .post(`/api/admin/event/TakeAttendance/`, {
+        eventId: event.gid,
+        userId: currentMemberInfo.gid,
+        code: code,
+      })
+      .then((result) => {
+        const data = result.data.data;
+        const { eventMember, event } = this.state;
+        // get index of member to update attend status
+        const index = eventMember.findIndex((x) => x.gid === data.userId);
+        eventMember[index].attendance_status = '1';
+        event.attendance_cnt = data.count;
+        alert(result.data.messag);
+        this.setState({
+          isLoading: false,
+          displayBlock: true,
+          eventMember: eventMember,
+          event: event,
+        });
+      })
+      .catch((err) => {
+        console.log({ ...err });
+        alert(err.response.data.messag);
+        this.setState({ isLoading: false, displayBlock: true });
+      });
   };
 
+  handleUpdate = (code) => {
+    alert('cnacel' + code);
+    this.setState({ open: false });
+  };
   render() {
     const { classes } = this.props;
-    const { isLoading, displayBlock, event, userEvent } = this.state;
+    const {
+      isLoading,
+      displayBlock,
+      event,
+      eventMember,
+      open,
+      currentMemberInfo,
+      currentCode,
+    } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
 
-    const eventMember = userEvent.map((member, index) => {
+    const members = eventMember.map((member, index) => {
+      const takeCode = member.attendance_status ? member.code : '';
       return (
         <EventMembers
           key={index}
-          eventMembers={member}
+          gid={member.gid}
+          user_name={member.user_name}
+          code={takeCode}
+          attendance_status={member.attendance_status}
           showCodeField={true}
-          codeClickHandler={this.codeClickHandler}
+          onClick={this.handlerAttendanceCode}
         />
       );
     });
 
     return (
       <Box component="div" p={3} width={1}>
+        <UserInfoDialog
+          open={open}
+          handleClose={this.handleClose}
+          handlerOk={this.handlerOk}
+          handleUpdate={this.handleUpdate}
+          userInfo={currentMemberInfo}
+          code={currentCode}
+        />
         <LoaderProgress isLoading={isLoading} />
         <Box component="div" display={displayStatus} width={1}>
           <Grid container justify="center">
@@ -133,7 +189,9 @@ class TakeAttendance extends Component {
                       className={classes.eventDate}
                     >
                       {new Date(event.event_date).toLocaleDateString()}{' '}
-                      {event.event_time}
+                      {new Date(
+                        '1970-01-01T' + event.event_time,
+                      ).toLocaleTimeString()}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -142,18 +200,9 @@ class TakeAttendance extends Component {
 
             <Grid container item xs={12} justify="center">
               <Box Component="div" mt={6} width={1}>
-                {/* <Paper variant="outlined" position="relative"> */}
-                {/* <EventMembers
-                  eventMembers={{
-                    user_name: 'Yakoob Abd Hammouri',
-                    attendance_status: true,
-                    userCode: '',
-                  }}
-                  showCodeField={true}
-                  codeClickHandler={this.codeClickHandler}
-                /> */}
-                {eventMember}
-                {/* </Paper> */}
+                <Grid container justify="center">
+                  <List className={classes.root}>{members}</List>
+                </Grid>
               </Box>
             </Grid>
           </Grid>
