@@ -64,7 +64,7 @@ CREATE TABLE userEvent
     FOREIGN KEY (event_id) REFERENCES events (id),
     user_id INTEGER,
     FOREIGN KEY(user_id) REFERENCES users (id),
-    code VARCHAR(6),
+    code VARCHAR(24),
     attendance_status bit,
     note TEXT
 
