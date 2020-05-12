@@ -14,9 +14,10 @@ import CodeTextField from './CodeTextField';
 import EventMemberStyle from './EventMemberStyle';
 
 export default ({ gid, eventMembers, onClick, showCodeField }) => {
-  const { attendance_status, user_name, userCode } = eventMembers;
   const classes = EventMemberStyle();
-  const [code, setCode] = useState(userCode);
+  const { attendance_status, user_name, code } = eventMembers;
+  const takeCode = attendance_status ? code : '';
+  const [userCode, setCode] = useState(takeCode);
   const codeHandleChange = (event) => {
     setCode(event.target.value);
   };
@@ -30,12 +31,12 @@ export default ({ gid, eventMembers, onClick, showCodeField }) => {
           cssClass={classes.avatarSmall}
         />
       </ListItemAvatar>
-      <ListItemText primary={user_name} />
+      <ListItemText primary={user_name} className={classes.nameText} />
       {showCodeField ? (
         <CodeTextField
           variant="outlined"
-          id="custom-css-outlined-input"
-          value={code}
+          id={user_name}
+          value={userCode}
           onChange={codeHandleChange}
           disabled={attendance_status}
         />
