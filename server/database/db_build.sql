@@ -27,8 +27,8 @@ CREATE TABLE users
     role VARCHAR(100) NOT NULL,
     profession VARCHAR(500) NOT NULL,
     password TEXT NOT NULL,
-    email_activate bit,
-    phone_activate bit
+    email_activate boolean,
+    phone_activate boolean
 );
 
 CREATE TABLE category
@@ -65,7 +65,7 @@ CREATE TABLE userEvent
     user_id INTEGER,
     FOREIGN KEY(user_id) REFERENCES users (id),
     code VARCHAR(24),
-    attendance_status bit,
+    attendance_status boolean,
     note TEXT
 
 );
