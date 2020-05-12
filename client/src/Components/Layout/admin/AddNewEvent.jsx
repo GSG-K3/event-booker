@@ -124,7 +124,7 @@ class AddNewEvent extends Component {
         });
       })
       .catch((error) => {
-        alert(err.response.data.messag);
+        alert(error.response.data.messag);
         console.log(error);
       });
   };
