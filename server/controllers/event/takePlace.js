@@ -5,10 +5,11 @@ const {
   successMessage,
 } = require('../../helpers/responseMessage');
 const {
-  takePlace,
   getEventById,
   updateEventMemberCount,
 } = require('../../database/query/event');
+
+const { takePlace } = require('../../database/query/userEvent');
 
 module.exports = async (req, res) => {
   const { eventId } = req.body;

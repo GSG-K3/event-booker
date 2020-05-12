@@ -1,10 +1,8 @@
 const responseMessage = require('../../helpers/responseMessage');
 const { updateEventMemberCount } = require('../../database/query/event');
-const {
-  getUserEventById,
-  deleteUserEventbyId,
-} = require('../../database/query/user');
+const { getUserEventById } = require('../../database/query/user');
 
+const { deleteUserEventbyId } = require('../../database/query/userEvent');
 module.exports = async (req, res) => {
   const { eventId } = req.body;
 
