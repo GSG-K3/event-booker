@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
     })
     .then(async (row) => {
       const count = row.member_cnt - 1;
-      await updateEventMemberCount(eventId, count);
+      await updateEventMemberCount(eventId, count, false);
       return deleteUserEventbyId(row.id);
     })
     .then((deleteResult) => {

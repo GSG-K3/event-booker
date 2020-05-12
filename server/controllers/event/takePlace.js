@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
     }
 
     const count = event.member_cnt + 1;
-    await updateEventMemberCount(eventId, count);
+    await updateEventMemberCount(eventId, count, false);
     const code = randomize('00000000', 6);
     takePlace(event.id, user.id, code)
       .then((result) => {
