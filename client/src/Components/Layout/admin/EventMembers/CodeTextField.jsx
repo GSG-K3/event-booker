@@ -7,8 +7,8 @@ export default withStyles({
       borderRadius: 35,
       height: 30,
       width: '100%',
-      minWidth: 75,
-      maxWidth: 160,
+      minWidth: 70,
+      maxWidth: 140,
       textAlinet: 'center',
       backgroundColor: '#ffffff',
       '&.Mui-focused fieldset': {
