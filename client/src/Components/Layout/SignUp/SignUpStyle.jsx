@@ -17,7 +17,7 @@ export default (theme) => ({
     maxWidth: 390,
   },
   textError: {
-    marginLeft: 32,
+    marginLeft: 66,
   },
   errorTitle: {
     width: '100%',
