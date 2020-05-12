@@ -46,13 +46,13 @@ class AdminEventDetails extends Component {
     axios
       .get(`/api/admin/event/${id}`)
       .then((res) => {
-        console.log(res.data.data);
         const resdata = res.data.data[0];
 
         this.setState({ eventdetail: resdata });
       })
       .catch((err) => {
         console.log(err);
+        alert(err.response.data.messag);
       });
   }
 

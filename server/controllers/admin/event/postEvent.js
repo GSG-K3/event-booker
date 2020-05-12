@@ -11,7 +11,7 @@ const PostEvent = (req, res) => {
         .json(responsemessage.successMessage(null, 'event added succesfuly'));
     })
     .catch((err) => {
-      console.log(err);
+      console.log('Error in post Event : ', err);
       res
         .status(501)
         .json(

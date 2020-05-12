@@ -29,7 +29,6 @@ export default class UserLayout extends Component {
   componentDidMount() {
     isAuth()
       .then((result) => {
-        console.log({ ...result });
         const user = result.data.user;
         this.setState({
           showlogo: false,

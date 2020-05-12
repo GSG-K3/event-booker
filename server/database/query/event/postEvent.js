@@ -30,7 +30,6 @@ const PostEventBydata = (eventDetails) => {
       0,
     ],
   };
-  console.log(sql);
   return connection.query(sql.text, sql.values);
 };
 module.exports = PostEventBydata;
