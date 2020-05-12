@@ -2,12 +2,12 @@ const {
   getEventMemberById,
   getEventMemberInfoById,
   getEventById,
-} = require('../../database/query/event');
+} = require('../../../database/query/event');
 
 const {
   InternalErrorMessage,
   successMessage,
-} = require('../../helpers/responseMessage');
+} = require('../../../helpers/responseMessage');
 
 module.exports = async (req, res) => {
   try {
