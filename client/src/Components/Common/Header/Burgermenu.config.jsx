@@ -5,7 +5,7 @@ const userMenuItems = () => [
     to: '/user/profile',
     text: 'Profile',
   },
-  { icon: 'fas fa-sign-out-alt', to: '/', text: ' Logout' },
+  { icon: 'fas fa-sign-out-alt', to: '/user/Logout', text: ' Logout' },
 ];
 
 const anonymousMenuItems = () => [
@@ -26,7 +26,7 @@ const adminMenuItems = () => [
   //   to: '/admin/user/NewMember',
   //   text: 'New member',
   // },
-  { icon: 'fas fa-sign-out-alt', to: '/', text: ' Logout' },
+  { icon: 'fas fa-sign-out-alt', to: '/user/Logout', text: ' Logout' },
 ];
 
 export { userMenuItems, anonymousMenuItems, adminMenuItems };
