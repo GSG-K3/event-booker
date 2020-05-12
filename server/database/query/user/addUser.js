@@ -1,7 +1,7 @@
 const connection = require('../../connection');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
-const ROLE = require('../../../helpers/Constants');
+const { ROLE } = require('../../../helpers/Constants');
 
 const addUser = (userDetails, callback) => {
   const { name, phone, email, password, birthDate } = userDetails;
@@ -20,13 +20,14 @@ const addUser = (userDetails, callback) => {
           phone,
           birthDate,
           email,
-          'UNI',
-          'Add',
+          'Unknown',
+          'Unknown',
           role,
-          'pro',
+          'Unknown',
           passwordHash,
         ],
       };
+
       connection
         .query(sql.text, sql.values)
         .then((result) => {

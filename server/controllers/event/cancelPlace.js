@@ -1,18 +1,18 @@
-const responseMessage = require('./../../helpers/responseMessage');
-const {
-  getUserEventById,
-  deleteUserEventbyId,
-} = require('./../../database/query/user');
+const responseMessage = require('../../helpers/responseMessage');
+const { updateEventMemberCount } = require('../../database/query/event');
+const { getUserEventById } = require('../../database/query/user');
 
+const { deleteUserEventbyId } = require('../../database/query/userEvent');
 module.exports = async (req, res) => {
-  const eventId = req.body.eventId;
-  const userId = '2b8a3b7a-1d77-4660-87ce-3155b3e7cadf'; //req.user;
+  const { eventId } = req.body;
 
-  getUserEventById(eventId, userId)
+  const { user } = req;
+
+  getUserEventById(eventId, user.gid)
     .then((result) => {
       if (result.rowCount === 0) {
         return res
-          .status(200)
+          .status(501)
           .json(
             responseMessage.InternalErrorMessage(
               null,
@@ -21,15 +21,17 @@ module.exports = async (req, res) => {
           );
       }
 
-      return result.rows[0].id;
+      return result.rows[0];
     })
-    .then((id) => {
-      return deleteUserEventbyId(id);
+    .then(async (row) => {
+      const count = row.member_cnt - 1;
+      await updateEventMemberCount(eventId, count, false);
+      return deleteUserEventbyId(row.id);
     })
     .then((deleteResult) => {
       if (deleteResult.rowCount === 0) {
         return res
-          .status(200)
+          .status(501)
           .json(
             responseMessage.InternalErrorMessage(
               null,

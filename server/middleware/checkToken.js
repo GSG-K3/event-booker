@@ -2,7 +2,7 @@
 // if the isAuth retrun next(),
 // then the token Ok
 // otherwise the isAuth will Return status 403
-const ROLE = require('../helpers/Constants');
+const { ROLE } = require('../helpers/Constants');
 module.exports = (req, res) => {
   console.log(req.user);
   res.status(200).json({

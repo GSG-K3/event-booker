@@ -67,7 +67,8 @@ class Login extends Component {
 
   renderAction = () => {
     if (this.state.redirect) {
-      return <Redirect to={this.state.ReturnUrlText} />;
+      return window.location.replace(`${this.state.ReturnUrlText}`);
+      //return <Redirect to={this.state.ReturnUrlText} />;
     }
   };
 
@@ -220,7 +221,6 @@ class Login extends Component {
                       />
                     </Grid>
                     <Grid item>
-
                       <FormControl className={classes.PasswordText}>
                         <InputLabel htmlFor="standard-adornment-password">
                           Enter your password
@@ -253,7 +253,6 @@ class Login extends Component {
                           }
                         />
                       </FormControl>
-                   
                     </Grid>
                     <Grid item>
                       <FormControl error>

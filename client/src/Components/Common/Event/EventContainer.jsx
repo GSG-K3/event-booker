@@ -64,7 +64,9 @@ export default class EventContainer extends Component {
             title={event.title}
             hostBy={event.host}
             eventDate={new Date(event.event_date).toLocaleDateString()}
-            eventTime={event.event_time}
+            eventTime={new Date(
+              '1970-01-01T' + event.event_time,
+            ).toLocaleTimeString()}
             imageurl={EventDefaultImg}
           />
         );
@@ -78,7 +80,7 @@ export default class EventContainer extends Component {
           key={item.id.toString()}
         >
           <Grid container>{eventCard}</Grid>
-        </EventCardContainer>
+        </EventCardContainer>,
       );
       if (index === eventData.length - 1) {
         console.log('last time');
@@ -106,6 +108,7 @@ export default class EventContainer extends Component {
               variant="scrollable"
               scrollButtons="on"
               aria-label="scrollable force tabs example"
+              style={{ width: '100%', maxWidth: 670 }}
             >
               {eventTab}
             </Tabs>

@@ -4,49 +4,9 @@ const { v4: uuidv4 } = require('uuid');
 
 const { addUser } = require('./query/user');
 
-const ROLE = require('../helpers/Constants');
+const { ROLE } = require('../helpers/Constants');
 
-const sql = `INSERT INTO users
-(gid,
-user_name,
-phone,
-birth_date,
-email,
-university,
-address,
-role,
-profession,
-password)
-values
-('${uuidv4()}', 'Ahmad', '123456789', '1-1-1992', 'ahmad@github.com', 'PPU', 'Hebron', 'user', 'CSE', 'abcabc');
-
-INSERT INTO users
-(gid,
-user_name,
-phone,
-birth_date,
-email,
-university,
-address,
-role,
-profession,
-password)
-values
-('${uuidv4()}','Ali', '987654321', '1-1-1992', 'ali@github.com', 'PPU', 'HEBRON', 'user', 'IT', '123123');
-
-INSERT INTO users
-(gid,
-user_name,
-phone,
-birth_date,
-email,
-university,
-address,
-role,
-profession,
-password)
-values
-('${uuidv4()}','Admin', '987654321', '1-1-1990', 'admin@gsa.com', '-', 'GAZA', 'Admin', 'IT', '$2a$10$D/IX/AtYw5YHT4YWI2B2aOg5ZGMBodHNDx2x6vIbHWomyH4fsJ9SG');
+const sql = `
 
 INSERT INTO category
 (gid,catg_name)
@@ -193,6 +153,78 @@ addUser({
   name: 'test',
   phone: '051000000',
   email: 'test@no.com',
+  password: 'Gs123456',
+  selectedDate: '10/10/2010',
+  role: ROLE.USER,
+});
+
+addUser({
+  name: 't1',
+  phone: '051000000',
+  email: 't1@no.com',
+  password: 'Gs123456',
+  selectedDate: '10/10/2010',
+  role: ROLE.USER,
+});
+
+addUser({
+  name: 't2',
+  phone: '051000000',
+  email: 't2t@no.com',
+  password: 'Gs123456',
+  selectedDate: '10/10/2010',
+  role: ROLE.USER,
+});
+
+addUser({
+  name: 't3',
+  phone: '051000000',
+  email: 't3@no.com',
+  password: 'Gs123456',
+  selectedDate: '10/10/2010',
+  role: ROLE.USER,
+});
+
+addUser({
+  name: 't4',
+  phone: '051000000',
+  email: 't4@no.com',
+  password: 'Gs123456',
+  selectedDate: '10/10/2010',
+  role: ROLE.USER,
+});
+
+addUser({
+  name: 't5',
+  phone: '051000000',
+  email: 't5@no.com',
+  password: 'Gs123456',
+  selectedDate: '10/10/2010',
+  role: ROLE.USER,
+});
+
+addUser({
+  name: 't6',
+  phone: '051000000',
+  email: 't6@no.com',
+  password: 'Gs123456',
+  selectedDate: '10/10/2010',
+  role: ROLE.USER,
+});
+
+addUser({
+  name: 't7',
+  phone: '051000000',
+  email: 't7@no.com',
+  password: 'Gs123456',
+  selectedDate: '10/10/2010',
+  role: ROLE.USER,
+});
+
+addUser({
+  name: 't8',
+  phone: '051000000',
+  email: 't8@no.com',
   password: 'Gs123456',
   selectedDate: '10/10/2010',
   role: ROLE.USER,

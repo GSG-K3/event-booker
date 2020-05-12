@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
-import AddNewEvent from './../AddNewEvent';
+import AddNewEvent from '../admin/AddNewEvent';
 import Home from '../Home';
 import Header from '../../Common/Header/Header';
 import SignUp from '../SignUp/SignUp';
 import EventDetails from '../EventDetails';
 import Login from '../Login/Login';
+import Logout from '../Logout';
 import Profile from '../Profile/Profile';
 import TakeAttendance from '../../Layout/admin/Attendance/TakeAttendance';
-import AdminEventDetails from '../AdminEventDetails';
+import AdminEventDetails from '../admin/AdminEventDetails';
 import AdminHome from '../../Layout/admin/Home/Home';
 import AuthRouter from './AuthRouter';
 import isAuth from '../../../helpers/isAuth';
@@ -88,6 +89,7 @@ export default class UserLayout extends Component {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/user/login" component={Login} />
+                <Route exact path="/user/Logout" component={Logout} />
                 <Route exact path="/user/SignUp" component={SignUp} />
                 <Route exact path="/event/:id" component={EventDetails} />
 
