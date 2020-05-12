@@ -5,7 +5,11 @@ const validateEmail = (email) => {
 };
 
 const stringValidation = (string) => {
-  var regex = new XRegExp('^\\p{L}*$');
+  //http://xregexp.com/plugins/
+  // https://stackoverflow.com/questions/27310535/xregexp-regular-expression-to-allow-single-space-between-characters
+  // var regex = new XRegExp('^\\p{L}*$'); // multi Language
+  const regex = new XRegExp('^[\\p{L}\\d]+(?:\\s[\\p{L}\\d]+)*$');
+
   return regex.test(string);
 };
 
