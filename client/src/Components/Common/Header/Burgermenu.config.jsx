@@ -15,7 +15,7 @@ const anonymousMenuItems = () => [
 ];
 
 const adminMenuItems = () => [
-  { icon: 'fas fa-home', to: '/admin/', text: 'Home' },
+  { icon: 'fas fa-home', to: '/admin/', text: 'Dashboard' },
   {
     icon: 'far fa-calendar-plus',
     to: '/admin/Event/NewEvent',
