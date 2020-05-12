@@ -6,10 +6,14 @@ const {
   takePlace,
   cancelPlace,
 } = require('./event');
+const {
+  postEvent,
+  getEventsDay,
+  takeMemberCode,
+  getEventMembers,
+} = require('./admin');
 
-const { login, profile, signup, userEvent } = require('./user');
-
-const { postEvent } = require('./admin');
+const { login, profile, signup, userEvent, logout } = require('./user');
 
 const getcategory = require('./category/getcategory');
 
@@ -26,6 +30,8 @@ router.post('/isAccess/', isAuth, checkPermissions(), checkToken);
 
 // login user , Create Auth Token Cookies
 router.post('/user/login', login);
+
+router.post('/user/logout', logout);
 
 // post new User
 router.post('/api/user/signup', signup);
