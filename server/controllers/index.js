@@ -7,7 +7,7 @@ const {
   cancelPlace,
 } = require('./event');
 
-const { login, profile, signup, userEvent } = require('./user');
+const { login, profile, signup, userEvent, checkUserEmail } = require('./user');
 
 const { postEvent } = require('./admin');
 
@@ -18,6 +18,7 @@ const isAuth = require('../middleware/isAuth');
 const checkToken = require('../middleware/checkToken');
 
 const checkPermissions = require('../middleware/checkPermissions');
+const checkEmail = require('../middleware/checkEmail');
 
 const ROLE = require('../helpers/Constants');
 
@@ -28,7 +29,9 @@ router.post('/isAccess/', isAuth, checkPermissions(), checkToken);
 router.post('/user/login', login);
 
 // post new User
-router.post('/api/user/signup', signup);
+router.post('/api/user/signup', checkEmail, signup);
+
+router.get('/api/user/checkUserEmail/:email', checkEmail, checkUserEmail);
 
 // get event Details => pageName : EventDetails
 router.get('/api/event/:id', getEventById);
