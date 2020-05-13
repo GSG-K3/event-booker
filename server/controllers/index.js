@@ -13,9 +13,14 @@ const {
   getEventMembers,
 } = require('./admin');
 
-const { login, profile, signup, userEvent, checkUserEmail } = require('./user');
-
-const { login, profile, signup, userEvent, logout } = require('./user');
+const {
+  login,
+  profile,
+  signup,
+  userEvent,
+  checkUserEmail,
+  logout,
+} = require('./user');
 
 const getcategory = require('./category/getcategory');
 
