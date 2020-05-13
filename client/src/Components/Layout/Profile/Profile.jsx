@@ -2,16 +2,22 @@ import React, { Component } from 'react';
 import { Grid, Box, Paper, Avatar, Tabs, Tab } from '@material-ui/core';
 
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import { withStyles } from '@material-ui/core/styles';
-import UserAvatar from './../../Common/Header/UserAvatar';
 import LoaderProgress from '../../Common/LoaderProgress';
 import ProfileTabContainer from '../../Common/TabContainer';
 import IndexTabProps from '../../../helpers/IndexTabProps';
 import UserInfo from './UserInfo';
-import ProfileStyles from './ProfileStyles';
+
 import Events from './Events';
+
+const ProfileStyles = (theme) => ({
+  dataPaper: {
+    width: '100%',
+    margin: 5,
+    'max-width': 310,
+  },
+});
 
 class Profile extends Component {
   state = {
@@ -60,13 +66,13 @@ class Profile extends Component {
         <LoaderProgress isLoading={isLoading} />
         <Box component="div" display={displayStatus} mt={2} width={1}>
           <Grid container justify="center">
-            <Grid container item xs={12} justify="center">
+            {/* <Grid container item xs={12} justify="center">
               <UserAvatar
                 showAvatar={true}
                 Name={userInfo.user_name}
                 cssClass={classes.large}
               />
-            </Grid>
+            </Grid> */}
             <Grid container item xs={12} justify="center">
               <Box Component="div" mt={6}>
                 <Paper square position="relative">

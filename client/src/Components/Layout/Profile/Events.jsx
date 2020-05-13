@@ -16,31 +16,10 @@ import { EventNote, FullscreenExit } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
-import { green, red, blue, orange } from '@material-ui/core/colors';
-
-const userInfoStyle = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-  inline: {
-    display: 'inline',
-  },
-  statusEvent: { display: 'flex' },
-  small: { width: 18, height: 18, margin: '5px 11px' },
-  open: { backgroundColor: blue[500], color: blue[500] },
-  Finised: { backgroundColor: green[500], color: green[500] },
-  canceled: { backgroundColor: red[500], color: red[500] },
-  hideen: { display: 'none' },
-  eventLink: {
-    color: orange[500],
-    'text-decoration': 'none',
-    '&:hover': { color: theme.palette.primary.main },
-  },
-}));
+import eventStyle from './ProfileStyles';
 
 export default ({ events }) => {
-  const classes = userInfoStyle();
+  const classes = eventStyle();
   const userEvents =
     events.length === 0 ? (
       <Paper elevation={6}>

@@ -1,4 +1,4 @@
-import { green, red, blue } from '@material-ui/core/colors';
+import { green, red, blue, orange } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   root: { 'text-align': 'center' },
@@ -23,11 +23,15 @@ export default makeStyles((theme) => ({
   userRoot: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
+    width: '100%',
+    minWidth: 250,
+    maxWidth: 320,
   },
 
   eventRoot: {
     width: '100%',
-    maxWidth: '310px',
+    minWidth: 250,
+    maxWidth: 320,
     backgroundColor: theme.palette.background.paper,
     padding: 14,
   },
@@ -40,4 +44,9 @@ export default makeStyles((theme) => ({
   Finised: { backgroundColor: green[500], color: green[500] },
   canceled: { backgroundColor: red[500], color: red[500] },
   hideen: { display: 'none' },
+  eventLink: {
+    color: orange[500],
+    'text-decoration': 'none',
+    '&:hover': { color: theme.palette.primary.main },
+  },
 }));

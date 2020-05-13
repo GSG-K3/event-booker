@@ -32,13 +32,18 @@ export default function UserAvatar({
 }
 
 function GetAvatarName(name) {
-  console.log('name.length : ', name.length);
-  if (!name) return null;
-  if (name.length == 2) return name;
-  // get First Char of every word in string
-  const matches = name.split(' ').map((item) => item.charAt(0));
-  if (matches.length === 1) return matches[0].toUpperCase();
-  const lastIndex = matches.length - 1;
-  return matches[0].toUpperCase() + ' ' + matches[lastIndex].toUpperCase();
-  return 'dfd';
+  try {
+    if (!name) return null;
+    if (name.length == 2) return name;
+    // get First Char of every word in string
+    const matches = name.split(' ').map((item) => item.charAt(0));
+    if (matches.length === 1) return matches[0].toUpperCase();
+    const lastIndex = matches.length - 1;
+    return matches[0].toUpperCase() + ' ' + matches[lastIndex].toUpperCase();
+  } catch (err) {
+    console.log('Get Avatar Name : ', { ...err });
+    if (name) {
+      return name.charAt(0);
+    }
+  }
 }

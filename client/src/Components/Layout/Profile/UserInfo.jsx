@@ -12,6 +12,7 @@ import {
   BusinessSharp,
 } from '@material-ui/icons';
 import userInfoStyle from './ProfileStyles';
+
 export default ({ userInfo }) => {
   const { user_name, phone, birth_date, email, university, address, profession } = userInfo;
   const classes = userInfoStyle();
