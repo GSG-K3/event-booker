@@ -1,11 +1,11 @@
 const joi = require('@hapi/joi');
-
+const XRegExp = require('xregexp');
 const registrationValidation = (data) => {
   const schema = joi
     .object({
       name: joi
         .string()
-        .alphanum()
+        .pattern(new XRegExp('^[\\p{L}\\d]+(?:\\s[\\p{L}\\d]+)*$'))
         .min(3)
         .required(),
       email: joi
@@ -21,10 +21,10 @@ const registrationValidation = (data) => {
         .string()
         .required()
         .pattern(new RegExp('^[A-Za-z0-9]{3,30}$')),
-      repassword: joi.ref('password'),
-      selectedDate: joi.date().required(),
+      rePassword: joi.ref('password'),
+      birthDate: joi.date().required(),
     })
-    .with('password', 'repassword');
+    .with('password', 'rePassword');
 
   return schema.validate(data);
 };

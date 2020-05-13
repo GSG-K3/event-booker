@@ -4,8 +4,9 @@ const { v4: uuidv4 } = require('uuid');
 const { ROLE } = require('../../../helpers/Constants');
 
 const addUser = (userDetails, callback) => {
-  const { name, phone, email, password, selectedDate } = userDetails;
+  const { name, phone, email, password, birthDate } = userDetails;
   const role = !userDetails.role ? ROLE.USER : userDetails.role;
+  const gid = uuidv4();
 
   bcrypt
     .hash(password, 10)
@@ -14,10 +15,10 @@ const addUser = (userDetails, callback) => {
         text:
           'INSERT INTO USERS  (gid, user_name, phone, birth_date, email, university, address, role, profession, password) VALUES ($1, $2, $3, $4,$5,$6,$7,$8,$9,$10)',
         values: [
-          uuidv4(),
+          gid,
           name,
           phone,
-          selectedDate,
+          birthDate,
           email,
           'Unknown',
           'Unknown',
@@ -30,7 +31,7 @@ const addUser = (userDetails, callback) => {
       connection
         .query(sql.text, sql.values)
         .then((result) => {
-          return callback(null, result);
+          return callback(null, gid);
         })
         .catch((error) => {
           return callback(error);
