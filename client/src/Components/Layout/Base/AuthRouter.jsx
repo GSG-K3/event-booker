@@ -14,8 +14,11 @@ export default (AuthComponent, role) => {
           this.setState({ isLoading: false, isAuthenticated: true });
         })
         .catch((err) => {
-          console.log({...err})
-          alert(err.response.data.messag);
+          console.log('Auth Error : ', { ...err });
+          if (err.response && err.response.data) {
+            alert(err.response.data.messag);
+          }
+
           this.setState({ isLoading: false, isAuthenticated: false });
         });
     }
