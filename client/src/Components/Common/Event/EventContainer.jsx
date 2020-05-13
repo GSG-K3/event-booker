@@ -79,7 +79,7 @@ class EventContainer extends Component {
           index={index}
           key={item.id.toString()}
         >
-          <Grid container justify="center">{eventCard}</Grid>
+          <Grid container id="grid-event-card-container" justify="center">{eventCard}</Grid>
         </EventCardContainer>,
       );
       if (index === eventData.length - 1) {
