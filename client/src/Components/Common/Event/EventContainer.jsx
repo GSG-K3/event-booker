@@ -2,21 +2,22 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import axios from 'axios';
-import {
-  Tabs,
-  Tab,
-  Grid,
-  CircularProgress,
-  Paper,
-  Backdrop,
-  Box,
-} from '@material-ui/core';
+import { Tabs, Tab, Grid, Box, AppBar } from '@material-ui/core';
 import EventDefaultImg from './../../../assets/eventDefaultimg.svg';
 import EventCardContainer from '../TabContainer';
 import LoaderProgress from '../LoaderProgress';
 import EventCard from './EventCard';
 import IndexTabProps from './../../../helpers/IndexTabProps';
-export default class EventContainer extends Component {
+
+const useStyles = (theme) => ({
+  root: {
+    [theme.breakpoints.between('0', '400')]: {
+      width: '310px !important',
+    },
+  },
+});
+
+class EventContainer extends Component {
   state = {
     tabIndex: 0,
     direction: 'ltr',
@@ -48,6 +49,7 @@ export default class EventContainer extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     const { tabIndex, direction, eventData, isLoading } = this.state;
     const displayStatus = isLoading ? 'none' : 'block';
     const eventCardContainer = [];
@@ -93,10 +95,10 @@ export default class EventContainer extends Component {
     });
 
     return (
-      <div>
+      <div id="EventContainer" className={classes.root}>
         <LoaderProgress isLoading={isLoading} />
         <Box component="div" display={displayStatus}>
-          <Paper square position="relative">
+          <AppBar color="default" position="relative">
             <Tabs
               value={tabIndex}
               indicatorColor="secondary"
@@ -105,15 +107,15 @@ export default class EventContainer extends Component {
               variant="scrollable"
               scrollButtons="on"
               aria-label="scrollable force tabs example"
-              style={{ width: '100%', maxWidth: 670 }}
             >
               {eventTab}
             </Tabs>
-          </Paper>
+          </AppBar>
           <SwipeableViews
             axis={direction === 'rtl' ? 'x-reverse' : 'x'}
             index={tabIndex}
             disableLazyLoading={false}
+            disabled={true}
           >
             {eventCardContainer}
           </SwipeableViews>
@@ -122,3 +124,5 @@ export default class EventContainer extends Component {
     );
   }
 }
+
+export default withStyles(useStyles)(EventContainer);
