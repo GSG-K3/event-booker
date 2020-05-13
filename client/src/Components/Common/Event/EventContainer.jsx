@@ -2,16 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import axios from 'axios';
-import {
-  Tabs,
-  Tab,
-  Grid,
-  CircularProgress,
-  Paper,
-  Backdrop,
-  Box,
-  AppBar,
-} from '@material-ui/core';
+import { Tabs, Tab, Grid, Box, AppBar } from '@material-ui/core';
 import EventDefaultImg from './../../../assets/eventDefaultimg.svg';
 import EventCardContainer from '../TabContainer';
 import LoaderProgress from '../LoaderProgress';
@@ -20,10 +11,9 @@ import IndexTabProps from './../../../helpers/IndexTabProps';
 
 const useStyles = (theme) => ({
   root: {
-    flexGrow: 0,
-    maxWidth: '100%',
-    flexBasis: '50%',
-    backgroundColor: theme.palette.background.paper,
+    [theme.breakpoints.between('0', '400')]: {
+      width: '310px !important',
+    },
   },
 });
 
@@ -105,7 +95,7 @@ class EventContainer extends Component {
     });
 
     return (
-      <div className={classes.root}>
+      <div id="EventContainer" className={classes.root}>
         <LoaderProgress isLoading={isLoading} />
         <Box component="div" display={displayStatus}>
           <AppBar color="default" position="relative">
