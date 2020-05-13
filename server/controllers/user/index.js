@@ -7,4 +7,4 @@ const checkUserEmail = require('./checkUserEmail');
 
 const logout = require('./logout');
 
-module.exports = { login, profile, signup, userEvent, checkUserEmail };
+module.exports = { login, profile, signup, userEvent, checkUserEmail, logout };
