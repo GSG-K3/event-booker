@@ -183,103 +183,105 @@ class EventDetails extends Component {
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
 
     return (
-      <Box component="div">
+      <Box component="div" p={3} width={1}>
         <LoaderProgress isLoading={isLoading} />
-        <Box component="div" display={displayStatus} mt={6}>
-          <Paper elevation={3}>
-            <Box p={6}>
-              <Grid item xs={12}>
-                <Typography variant="h6">{eventdetail.title}</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h7" className={classes.red}>
-                  Hosted by: {eventdetail.host}
-                </Typography>
-              </Grid>
+        <Box component="div" display={displayStatus} mt={6} width={1}>
+          <Grid container justify="center">
+            <Paper elevation={3}>
+              <Box p={6}>
+                <Grid item xs={12}>
+                  <Typography variant="h6">{eventdetail.title}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="h7" className={classes.red}>
+                    Hosted by: {eventdetail.host}
+                  </Typography>
+                </Grid>
 
-              <Grid item xs={12}>
-                <Box my={3}>
-                  <Typography variant="body1" align="justify">
-                    {eventdetail.description}
-                  </Typography>
-                </Box>
-              </Grid>
-
-              <Grid container spacing={1}>
-                <Grid item>
-                  <EventNoteIcon />
-                </Grid>
-                <Grid item>
-                  <Typography variant="h7">
-                    {new Date(eventdetail.event_date).toLocaleDateString()}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container spacing={1}>
-                <Grid item>
-                  <QueryBuilderIcon />
-                </Grid>
-                <Grid item>
-                  <Typography variant="h7">
-                    {new Date(
-                      '1970-01-01T' + eventdetail.event_time,
-                    ).toLocaleTimeString()}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container spacing={1}>
-                <Grid item>
-                  <RoomIcon />
-                </Grid>
-                <Grid item>
-                  <Typography variant="h7">
-                    {eventdetail.event_location}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid item>
-                <Box
-                  classes={{ root: classes.root }}
-                  m={4}
-                  display={isEnrolled ? 'none' : 'block'}
-                >
-                  {this.renderRedirect()}
-                  <Button
-                    size="small"
-                    color="primary"
-                    variant="contained"
-                    onClick={this.handleEnrollEvent}
-                  >
-                    Take a place
-                  </Button>
-                </Box>
-              </Grid>
-
-              <Grid item>
-                <Box
-                  classes={{ root: classes.root }}
-                  m={4}
-                  display={isEnrolled ? 'block' : 'none'}
-                >
-                  <Box m={1} p={1}>
-                    <Paper variant="outlined">
-                      <Box p={1}>{userCode}</Box>
-                    </Paper>
+                <Grid item xs={12}>
+                  <Box my={3}>
+                    <Typography variant="body1" align="justify">
+                      {eventdetail.description}
+                    </Typography>
                   </Box>
-                  {this.renderRedirect()}
-                  <Button
-                    size="small"
-                    color="default"
-                    variant="outlined"
-                    onClick={this.handleCancelRegistration}
-                    className={classes.btnCancel}
+                </Grid>
+
+                <Grid container spacing={1}>
+                  <Grid item>
+                    <EventNoteIcon />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h7">
+                      {new Date(eventdetail.event_date).toLocaleDateString()}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={1}>
+                  <Grid item>
+                    <QueryBuilderIcon />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h7">
+                      {new Date(
+                        '1970-01-01T' + eventdetail.event_time,
+                      ).toLocaleTimeString()}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={1}>
+                  <Grid item>
+                    <RoomIcon />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h7">
+                      {eventdetail.event_location}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <Box
+                    classes={{ root: classes.root }}
+                    m={4}
+                    display={isEnrolled ? 'none' : 'block'}
                   >
-                    Cancel Registration
-                  </Button>
-                </Box>
-              </Grid>
-            </Box>
-          </Paper>
+                    {this.renderRedirect()}
+                    <Button
+                      size="small"
+                      color="primary"
+                      variant="contained"
+                      onClick={this.handleEnrollEvent}
+                    >
+                      Take a place
+                    </Button>
+                  </Box>
+                </Grid>
+
+                <Grid item>
+                  <Box
+                    classes={{ root: classes.root }}
+                    m={4}
+                    display={isEnrolled ? 'block' : 'none'}
+                  >
+                    <Box m={1} p={1}>
+                      <Paper variant="outlined">
+                        <Box p={1}>{userCode}</Box>
+                      </Paper>
+                    </Box>
+                    {this.renderRedirect()}
+                    <Button
+                      size="small"
+                      color="default"
+                      variant="outlined"
+                      onClick={this.handleCancelRegistration}
+                      className={classes.btnCancel}
+                    >
+                      Cancel Registration
+                    </Button>
+                  </Box>
+                </Grid>
+              </Box>
+            </Paper>
+          </Grid>
         </Box>
       </Box>
     );
