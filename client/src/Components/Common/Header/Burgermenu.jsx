@@ -12,6 +12,7 @@ import {
   ListItemText,
   IconButton,
   Icon,
+  Grid,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -45,14 +46,17 @@ class BurgerMenu extends React.Component {
         {menu.map((e, index) => (
           <div>
             <ListItem key={index} button={true}>
-              <ListItemIcon className={classes.iconStyle}>
-                <Icon
-                  className={clsx(e.icon, classes.iconStyle)}
-                  color="secondary"
-                />
-              </ListItemIcon>
               <Link className={classes.link} to={e.to}>
-                <ListItemText primary={e.text} />
+                <Grid container>
+                  <ListItemIcon className={classes.iconStyle}>
+                    <Icon
+                      className={clsx(e.icon, classes.iconStyle)}
+                      color="secondary"
+                    />
+                  </ListItemIcon>
+
+                  <ListItemText primary={e.text} />
+                </Grid>
               </Link>
             </ListItem>
             <Divider />
