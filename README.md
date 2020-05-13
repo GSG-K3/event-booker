@@ -2,7 +2,7 @@
 
 [Figma Design](https://www.figma.com/file/1TG0gAAmL4qvqlhIlieYv1/event-booker?node-id=0%3A1&viewport=1114%2C1177%2C0.09017345309257507)
 
-[Event Booke Site](https://github.com/GSG-K3/event-booker)
+[Event Booke Site](https://event-booker.herokuapp.com/)
 
 ## Proplem
 GSG Create Events Frequent , and the members of event in some time up to hundred, GSG logistics and operations admin using 4 ipads to the registration Newcomers , and take attendance.
