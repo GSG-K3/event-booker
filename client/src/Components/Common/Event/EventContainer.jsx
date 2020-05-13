@@ -10,13 +10,24 @@ import {
   Paper,
   Backdrop,
   Box,
+  AppBar,
 } from '@material-ui/core';
 import EventDefaultImg from './../../../assets/eventDefaultimg.svg';
 import EventCardContainer from '../TabContainer';
 import LoaderProgress from '../LoaderProgress';
 import EventCard from './EventCard';
 import IndexTabProps from './../../../helpers/IndexTabProps';
-export default class EventContainer extends Component {
+
+const useStyles = (theme) => ({
+  root: {
+    flexGrow: 0,
+    maxWidth: '100%',
+    flexBasis: '50%',
+    backgroundColor: theme.palette.background.paper,
+  },
+});
+
+class EventContainer extends Component {
   state = {
     tabIndex: 0,
     direction: 'ltr',
@@ -48,6 +59,7 @@ export default class EventContainer extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     const { tabIndex, direction, eventData, isLoading } = this.state;
     const displayStatus = isLoading ? 'none' : 'block';
     const eventCardContainer = [];
@@ -93,10 +105,10 @@ export default class EventContainer extends Component {
     });
 
     return (
-      <div>
+      <div className={classes.root}>
         <LoaderProgress isLoading={isLoading} />
         <Box component="div" display={displayStatus}>
-          <Paper square position="relative">
+          <AppBar color="default" position="relative">
             <Tabs
               value={tabIndex}
               indicatorColor="secondary"
@@ -105,15 +117,16 @@ export default class EventContainer extends Component {
               variant="scrollable"
               scrollButtons="on"
               aria-label="scrollable force tabs example"
-              style={{ width: '100%', maxWidth: 670 }}
+              // style={{ width: '100%', maxWidth: 310, maxWidth: 670 }}
             >
               {eventTab}
             </Tabs>
-          </Paper>
+          </AppBar>
           <SwipeableViews
             axis={direction === 'rtl' ? 'x-reverse' : 'x'}
             index={tabIndex}
             disableLazyLoading={false}
+            disabled={true}
           >
             {eventCardContainer}
           </SwipeableViews>
@@ -122,3 +135,5 @@ export default class EventContainer extends Component {
     );
   }
 }
+
+export default withStyles(useStyles)(EventContainer);
