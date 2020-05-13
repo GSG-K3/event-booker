@@ -9,6 +9,7 @@ export default (theme) => ({
   root: { fontSize: 38 },
   link: {
     color: orange[500],
+    width: '100%',
     'text-decoration': 'none',
     '&:hover': { color: theme.palette.primary.main },
   },
