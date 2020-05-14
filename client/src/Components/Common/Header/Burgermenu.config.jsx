@@ -17,10 +17,16 @@ const anonymousMenuItems = () => [
 const adminMenuItems = () => [
   { icon: 'fas fa-home', to: '/admin/', text: 'Dashboard' },
   {
+    icon: 'fas fa-calendar-alt',
+    to: '/admin/Events',
+    text: 'Events',
+  },
+  {
     icon: 'far fa-calendar-plus',
     to: '/admin/Event/NewEvent',
-    text: ' New event',
+    text: ' New Event',
   },
+
   // {
   //   icon: 'fas fa-user-plus',
   //   to: '/admin/user/NewMember',

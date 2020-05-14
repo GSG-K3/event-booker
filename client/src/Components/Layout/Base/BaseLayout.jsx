@@ -12,6 +12,7 @@ import Profile from '../Profile/Profile';
 import TakeAttendance from '../../Layout/admin/Attendance/TakeAttendance';
 import AdminEventDetails from '../admin/AdminEventDetails';
 import AdminHome from '../../Layout/admin/Home/Home';
+import AdminEvent from '../../Layout/admin/AdminEvent';
 import AuthRouter from './AuthRouter';
 import isAuth from '../../../helpers/isAuth';
 export default class UserLayout extends Component {
@@ -102,6 +103,11 @@ export default class UserLayout extends Component {
                   exact
                   path="/admin/"
                   component={AuthRouter(AdminHome, 'admin')}
+                />
+                <Route
+                  exact
+                  path="/admin/Events"
+                  component={AuthRouter(AdminEvent, 'admin')}
                 />
                 <Route
                   exact
