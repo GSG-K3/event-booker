@@ -15,4 +15,7 @@ export default (theme) => ({
     fontSize: 14,
     color: '#1C7690',
   },
+  memberRoot: {
+    width: '100%',
+  },
 });

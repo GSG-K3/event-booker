@@ -30,7 +30,7 @@ const useStyles = (theme) => ({
     textTransform: 'uppercase',
     color: '#F6554D',
   },
-  statusEvent: { display: 'flex', padding: '5px 15px 0px 0px' },
+  statusEvent: { display: 'flex', padding: '5px 32px 0px 0px' },
   small: { width: 18, height: 18, margin: '5px 12px' },
   open: { backgroundColor: blue[500], color: blue[500] },
   Finised: { backgroundColor: green[500], color: green[500] },
@@ -90,6 +90,7 @@ class AdminEventDetails extends Component {
             attendance_status={member.attendance_status}
             showCodeField={false}
             onClick={this.handlerAttendanceCode}
+            isAdmin={true}
           />
         );
       })
@@ -200,7 +201,7 @@ class AdminEventDetails extends Component {
                     <Grid
                       container
                       spacing={1}
-                      justify="center"
+                      justify="flex-end"
                       alignItems="center"
                       xs={6}
                     >
@@ -217,8 +218,10 @@ class AdminEventDetails extends Component {
                           >
                             s
                           </Avatar>
-                          <div>{event_status}</div>
                         </Typography>
+                      </Grid>
+                      <Grid item>
+                        <div>{event_status}</div>
                       </Grid>
                     </Grid>
                   </Grid>
