@@ -2,6 +2,8 @@ const DbgetupComingEvent = require('../../database/query/event/getupComingEvent'
 
 const DbgetAllcategory = require('../../database/query/category/getAllcategory');
 
+const GetEventsOfCategory = require('../../helpers/BuildCategoryEvents');
+
 const responseMessage = require('../../helpers/responseMessage');
 
 module.exports = async (req, res) => {
@@ -29,17 +31,4 @@ module.exports = async (req, res) => {
         'the Data Contains Events of each Category enjoy',
       ),
     );
-};
-
-const GetEventsOfCategory = (category, upComingEvent) => {
-  if (!category || !upComingEvent) return null;
-
-  return category.map((item) => {
-    // get event of Category
-    const event = upComingEvent.filter((cevent) => {
-      return cevent.category_id === item.id;
-    });
-    // return Events of each Category
-    return { ...item, events: event };
-  });
 };
