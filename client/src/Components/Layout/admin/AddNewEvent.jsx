@@ -91,7 +91,10 @@ class AddNewEvent extends Component {
         type: 'text',
         lable: 'Description',
       },
-      event_date: { value: new Date(), type: 'date' },
+      event_date: {
+        value: new Date().setDate(new Date().getDate() + 1),
+        type: 'date',
+      },
       event_time: { value: new Date(), type: 'time' },
     },
     category: [],
