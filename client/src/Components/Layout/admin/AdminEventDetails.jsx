@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { Grid, Box, Typography, Paper, List } from '@material-ui/core';
-import { Redirect } from 'react-router-dom';
+
+import { Grid, Box, Typography, Paper, List, Avatar } from '@material-ui/core';
+import clsx from 'clsx';
 import {
   QueryBuilder as QueryBuilderIcon,
   Room as RoomIcon,
   EventNote as EventNoteIcon,
+  Person,
 } from '@material-ui/icons';
 import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
+import { green, blue, orange, red } from '@material-ui/core/colors';
 import LoaderProgress from '../../Common/LoaderProgress';
 import EventMembers from './EventMembers/EventMembers';
 const useStyles = (theme) => ({
@@ -28,6 +30,12 @@ const useStyles = (theme) => ({
     textTransform: 'uppercase',
     color: '#F6554D',
   },
+  statusEvent: { display: 'flex', padding: '5px 15px 0px 0px' },
+  small: { width: 18, height: 18, margin: '5px 12px' },
+  open: { backgroundColor: blue[500], color: blue[500] },
+  Finised: { backgroundColor: green[500], color: green[500] },
+  canceled: { backgroundColor: red[500], color: red[500] },
+  hideen: { display: 'none' },
 });
 
 class AdminEventDetails extends Component {
@@ -92,9 +100,7 @@ class AdminEventDetails extends Component {
     const { classes } = this.props;
     const { isLoading, displayBlock, eventDetail, eventMember } = this.state;
     const {
-      gid,
       title,
-      category_id,
       description,
       event_date,
       event_time,
@@ -105,6 +111,14 @@ class AdminEventDetails extends Component {
       attendance_cnt,
     } = eventDetail;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
+    const statusColor =
+      event_status === 'open'
+        ? classes.open
+        : event_status === 'finised'
+        ? classes.Finised
+        : event_status === 'canceled'
+        ? classes.canceled
+        : classes.hideen;
     return (
       <Box component="div" width={1} p={3}>
         <LoaderProgress isLoading={isLoading} />
@@ -137,8 +151,9 @@ class AdminEventDetails extends Component {
                       </Typography>
                     </Box>
                   </Grid>
+
                   <Grid container item spacing={1} justify="space-around">
-                    <Grid container spacing={1} alignItems="flex-end" xs={6}>
+                    <Grid container spacing={1} alignItems="center" xs={6}>
                       <Grid item>
                         <RoomIcon />
                       </Grid>
@@ -148,13 +163,61 @@ class AdminEventDetails extends Component {
                         </Typography>
                       </Grid>
                     </Grid>
-                    <Grid container spacing={1} justify="flex-end" xs={6}>
+                    <Grid
+                      container
+                      spacing={1}
+                      justify="flex-end"
+                      alignItems="center"
+                      xs={6}
+                    >
                       <Grid item>
                         <EventNoteIcon />
                       </Grid>
                       <Grid item>
                         <Typography variant="caption" display="block">
                           {new Date(event_date).toLocaleDateString()}
+                        </Typography>
+                        <Typography variant="caption" display="block">
+                          {new Date(
+                            '1970-01-01T' + event_time,
+                          ).toLocaleTimeString()}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
+                  <Grid container item spacing={1} justify="space-around">
+                    <Grid container spacing={1} alignItems="center" xs={6}>
+                      <Grid item>
+                        <Person />
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="caption" display="block">
+                          {attendance_cnt} / {member_cnt}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Grid
+                      container
+                      spacing={1}
+                      justify="center"
+                      alignItems="center"
+                      xs={6}
+                    >
+                      <Grid item>
+                        <Typography
+                          component="div"
+                          variant="body2"
+                          color="textPrimary"
+                          className={classes.statusEvent}
+                        >
+                          <Avatar
+                            component="span"
+                            className={clsx(classes.small, statusColor)}
+                          >
+                            s
+                          </Avatar>
+                          <div>{event_status}</div>
                         </Typography>
                       </Grid>
                     </Grid>
