@@ -10,6 +10,7 @@ const responsemessage = require('../../helpers/responseMessage');
 
 const { logInValidation } = require('../../helpers/Validation');
 
+const { ROLE } = require('../../helpers/Constants');
 const login = (req, res) => {
   const userData = req.body;
   const { error } = logInValidation(userData);
@@ -58,7 +59,7 @@ const login = (req, res) => {
             .status(200)
             .json(
               responsemessage.successMessage(
-                auth,
+                { isAdmin: data.rows[0].role === ROLE.ADMIN },
                 'welcome , you are login Successfully',
               ),
             );
