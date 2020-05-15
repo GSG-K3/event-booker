@@ -145,20 +145,22 @@ class AddNewEvent extends Component {
   };
 
   clearDataField() {
+    const { eventData } = this.state;
+    const fromInput = {};
+
+    for (let control of Object.keys(eventData)) {
+      let input = eventData[control];
+      input.value = '';
+      input.message = '';
+      input.isValid = true;
+      fromInput[control] = input;
+    }
+
+    fromInput.event_date.value = new Date().setDate(new Date().getDate() + 1);
+    fromInput.event_time.value = new Date();
+
     this.setState({
-      eventData: {
-        title: { value: '', message: '', isValid: true },
-        host: { value: '', message: '', isValid: true },
-        category_id: { value: 0, message: '', isValid: true },
-        event_location: { value: '', message: '', isValid: true },
-        description: { value: '', message: '', isValid: true },
-        event_date: {
-          value: new Date().setDate(new Date().getDate() + 1),
-          message: '',
-          isValid: true,
-        },
-        event_time: { value: new Date(), message: '', isValid: true },
-      },
+      eventData: fromInput,
       isLoading: false,
     });
   }
@@ -168,6 +170,8 @@ class AddNewEvent extends Component {
 
     let formValid = true;
     const { eventData } = this.state;
+
+    console.log('eventData', eventData);
 
     const fromInput = {};
 
