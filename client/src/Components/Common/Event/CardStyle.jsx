@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { green, red, blue, orange } from '@material-ui/core/colors';
 export default makeStyles((theme) => ({
   root: {
-    maxWidth: 160,
+    maxWidth: 180,
     minHeight: 215,
     maxHeight: 230,
   },
