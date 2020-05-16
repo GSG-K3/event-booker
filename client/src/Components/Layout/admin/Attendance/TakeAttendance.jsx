@@ -201,7 +201,7 @@ class TakeAttendance extends Component {
             <Grid container item xs={12} justify="center">
               <Box Component="div" mt={6} width={1}>
                 <Grid container justify="center">
-                  <List className={classes.root}>{members}</List>
+                  <List className={classes.memberRoot}>{members}</List>
                 </Grid>
               </Box>
             </Grid>

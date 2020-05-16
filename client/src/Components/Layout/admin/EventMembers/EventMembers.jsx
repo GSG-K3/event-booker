@@ -5,9 +5,11 @@ import {
   ListItemAvatar,
   IconButton,
   ListItemSecondaryAction,
+  Button,
 } from '@material-ui/core';
 import UserAvatar from '../../../Common/Header/UserAvatar';
 import { makeStyles, withStyles, fade } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import { CheckCircle } from '@material-ui/icons';
 
 import CodeTextField from './CodeTextField';
@@ -20,12 +22,15 @@ export default ({
   code,
   onClick,
   showCodeField,
+  isAdmin,
 }) => {
   const classes = EventMemberStyle();
   const [userCode, setCode] = useState(code);
   const codeHandleChange = (event) => {
     setCode(event.target.value);
   };
+
+  const enableBtn = isAdmin ? true : attendance_status;
 
   return (
     <ListItem className={classes.memberItem}>
@@ -54,7 +59,7 @@ export default ({
           aria-label="Take Attendance"
           color="secondary"
           onClick={() => onClick(userCode, gid)}
-          disabled={attendance_status}
+          disabled={enableBtn}
         >
           <CheckCircle />
         </IconButton>

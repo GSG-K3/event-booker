@@ -23,209 +23,138 @@ values('${uuidv4()}','start up');
 INSERT INTO category
 (gid,catg_name)
 values('${uuidv4()}','Public');
-
-INSERT INTO events
-(
-gid,
-title,
-category_id,
-description,
-event_date,
-event_time,
-event_location,
-host )
-values
-('${uuidv4()}','Coding for everyone', '1', 'abcdefghijklmnobqrstvwxyz', '1-10-2019', '2:00:00', 'Hebron', 'GSG');
-
-INSERT INTO events
-(
-gid,
-title,
-category_id,
-description,
-event_date,
-event_time,
-event_location,
-host )
-values
-('${uuidv4()}','JS workshop', '1', 'abcdefghijklmnobqrstvwxyz', '7-20-2020', '9:00:00', 'Hebron', 'YDRC');
-
-
-
-INSERT INTO events
-(
-gid,
-title,
-category_id,
-description,
-event_date,
-event_time,
-event_location,
-host )
-values
-('${uuidv4()}','JS workshop 123', '2', 'abcdefghijklmnobqrstvwxyz', '4-26-2020', '3:00:00', 'Hebron', 'YDRC');
-
-
-INSERT INTO events
-(
-gid,
-title,
-category_id,
-description,
-event_date,
-event_time,
-event_location,
-host )
-values
-('${uuidv4()}','JS workshop 22', '2', 'abcdefghijklmnobqrstvwxyz', '4-29-2020', '4:00:00', 'Hebron', 'YDRC');
-
-
-INSERT INTO events
-(
-gid,
-title,
-category_id,
-description,
-event_date,
-event_time,
-event_location,
-host )
-values
-('${uuidv4()}','JS workshop 3333', '3', 'abcdefghijklmnobqrstvwxyz', '4-28-2020', '5:00:00', 'Hebron', 'YDRC');
-
-
-INSERT INTO events
-(
-gid,
-title,
-category_id,
-description,
-event_date,
-event_time,
-event_location,
-host )
-values
-('${uuidv4()}','JS workshop 33', '3', 'abcdefghijklmnobqrstvwxyz', '5-5-2020', '5:00:00', 'Hebron', 'YDRC');
-
-
-INSERT INTO events
-(
-gid,
-title,
-category_id,
-description,
-event_date,
-event_time,
-event_location,
-host )
-values
-('${uuidv4()}','JS workshop 44', '4', 'abcdefghijklmnobqrstvwxyz', '4-30-2020', '5:00:00', 'Hebron', 'YDRC');
-
-
-INSERT INTO events
-(
-gid,
-title,
-category_id,
-description,
-event_date,
-event_time,
-event_location,
-host )
-values
-('${uuidv4()}','JS workshop', '1', 'abcdefghijklmnobqrstvwxyz', '6-14-2020', '5:00:00', 'Hebron', 'YDRC');`;
+`;
 
 connection
   .query(sql)
   .then(() => console.log('Add Data!'))
   .catch((e) => console.error('failed to build', e.stack));
 
-addUser({
-  name: 'Admin',
-  phone: '059000000',
-  email: 'admin@no.com',
-  password: 'Gs123456',
-  selectedDate: '1/1/2000',
-  role: ROLE.ADMIN,
-});
+addUser(
+  {
+    name: 'Admin',
+    phone: '059000000',
+    email: 'admin@no.com',
+    password: 'Gs123456',
+    birthDate: '1/1/2000',
+    role: ROLE.ADMIN,
+  },
+  (err, result) => {
+    console.log('Error in user', err);
+  },
+);
 
 addUser({
-  name: 'test',
+  name: 'Karmel Mahmoud Salah',
   phone: '051000000',
-  email: 'test@no.com',
+  email: 'karmel@hotmail.com',
   password: 'Gs123456',
-  selectedDate: '10/10/2010',
+  birthDate: '10/10/2010',
+  role: ROLE.USER,
+});
+addUser({
+  name: 'Hanan Awawdeh',
+  phone: '051000000',
+  email: 'Hanan@hotmail.com',
+  password: 'Gs123456',
+  birthDate: '10/10/2010',
+  role: ROLE.USER,
+});
+addUser({
+  name: 'banan Alhaj',
+  phone: '051000000',
+  email: 'banan@hotmail.com',
+  password: 'Gs123456',
+  birthDate: '10/10/2010',
   role: ROLE.USER,
 });
 
 addUser({
-  name: 't1',
+  name: 'bayan Al jubah',
   phone: '051000000',
-  email: 't1@no.com',
+  email: 'bayan@hotmail.com',
   password: 'Gs123456',
-  selectedDate: '10/10/2010',
+  birthDate: '10/10/2010',
   role: ROLE.USER,
 });
-
 addUser({
-  name: 't2',
+  name: 'nidaa awawdeh',
   phone: '051000000',
-  email: 't2t@no.com',
+  email: 'nidaa@hotmail.com',
   password: 'Gs123456',
-  selectedDate: '10/10/2010',
+  birthDate: '10/10/2010',
   role: ROLE.USER,
 });
-
 addUser({
-  name: 't3',
+  name: 'Duha Ballut',
   phone: '051000000',
-  email: 't3@no.com',
+  email: 'duha@hotmail.com',
   password: 'Gs123456',
-  selectedDate: '10/10/2010',
+  birthDate: '10/10/2010',
   role: ROLE.USER,
 });
-
 addUser({
-  name: 't4',
+  name: 'Sahar Froukh',
   phone: '051000000',
-  email: 't4@no.com',
+  email: 'sahar@hotmail.com',
   password: 'Gs123456',
-  selectedDate: '10/10/2010',
+  birthDate: '10/10/2010',
   role: ROLE.USER,
 });
-
+// =============
 addUser({
-  name: 't5',
+  name: ' Abed Alfattah Sowaity',
   phone: '051000000',
-  email: 't5@no.com',
+  email: 'bbed@hotmail.com',
   password: 'Gs123456',
-  selectedDate: '10/10/2010',
+  birthDate: '10/10/2010',
   role: ROLE.USER,
 });
-
 addUser({
-  name: 't6',
+  name: 'yakoob Hammouri',
   phone: '051000000',
-  email: 't6@no.com',
+  email: 'yakoob@hotmail.com',
   password: 'Gs123456',
-  selectedDate: '10/10/2010',
+  birthDate: '10/10/2010',
   role: ROLE.USER,
 });
-
 addUser({
-  name: 't7',
+  name: 'Hussein shahatet',
   phone: '051000000',
-  email: 't7@no.com',
+  email: 'hussein@hotmail.com',
   password: 'Gs123456',
-  selectedDate: '10/10/2010',
+  birthDate: '10/10/2010',
   role: ROLE.USER,
 });
-
 addUser({
-  name: 't8',
+  name: 'ruba sider',
   phone: '051000000',
-  email: 't8@no.com',
+  email: 'ruba@hotmail.com',
   password: 'Gs123456',
-  selectedDate: '10/10/2010',
+  birthDate: '10/10/2010',
+  role: ROLE.USER,
+});
+addUser({
+  name: 'bayan seder',
+  phone: '051000000',
+  email: 'bayans@hotmail.com',
+  password: 'Gs123456',
+  birthDate: '10/10/2010',
+  role: ROLE.USER,
+});
+addUser({
+  name: 'kholoud fannoun',
+  phone: '051000000',
+  email: 'kholoud@hotmail.com',
+  password: 'Gs123456',
+  birthDate: '10/10/2010',
+  role: ROLE.USER,
+});
+addUser({
+  name: 'tasneem al-bhiri',
+  phone: '051000000',
+  email: 'tasneem@hotmail.com',
+  password: 'Gs123456',
+  birthDate: '10/10/2010',
   role: ROLE.USER,
 });

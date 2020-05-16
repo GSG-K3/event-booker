@@ -9,19 +9,48 @@ import {
   CardMedia,
   Typography,
   Grid,
+  Avatar,
 } from '@material-ui/core';
+
+import clsx from 'clsx';
 
 import { EventNote } from '@material-ui/icons';
 
 import cardStyle from './CardStyle';
 
 export default function EventCard(props) {
-  const { id, title, hostBy, eventDate, eventTime, imageurl, type } = props;
   const classes = cardStyle();
+
+  const {
+    id,
+    title,
+    hostBy,
+    eventDate,
+    eventTime,
+    imageurl,
+    type,
+    status,
+    isAdmin,
+  } = props;
+
   const link =
     type === 'takeAttendance'
       ? `/admin/Event/takeAttendance/${id}`
+      : isAdmin
+      ? `/admin/Event/Detail/${id}`
       : `/event/${id}`;
+
+  const hideen = !status ? classes.hideen : '';
+  const statusColor = !status
+    ? ''
+    : status === 'open'
+    ? classes.open
+    : status === 'finised'
+    ? classes.Finised
+    : status === 'canceled'
+    ? classes.canceled
+    : classes.hideen;
+
   return (
     <div>
       <Link className={classes.eventLink} to={link}>
@@ -63,6 +92,26 @@ export default function EventCard(props) {
                       className={classes.eventDate}
                     >
                       {eventDate + ' ' + eventTime}
+                    </Typography>
+                  </Grid>
+                  <Grid container alignItems="center">
+                    <Typography
+                      component="div"
+                      variant="body2"
+                      color="textPrimary"
+                      className={clsx(
+                        classes.statusEvent,
+                        classes.eventDate,
+                        hideen,
+                      )}
+                    >
+                      <Avatar
+                        component="span"
+                        className={clsx(classes.small, statusColor)}
+                      >
+                        s
+                      </Avatar>
+                      {status}
                     </Typography>
                   </Grid>
                 </Grid>

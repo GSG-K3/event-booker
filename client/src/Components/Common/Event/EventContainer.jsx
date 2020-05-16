@@ -23,6 +23,7 @@ class EventContainer extends Component {
     direction: 'ltr',
     isLoading: true,
     eventData: [],
+    isAdmin: this.props.isAdmin,
   };
 
   finishLoading = () => {
@@ -33,13 +34,17 @@ class EventContainer extends Component {
     }
   };
   componentDidMount() {
+    const url = this.state.isAdmin
+      ? '/api/envet/getAdminEvent'
+      : '/api/envet/getupComingEvent';
+
     axios
-      .get('/api/envet/getupComingEvent')
+      .get(url)
       .then((result) => {
         this.setState({ eventData: result.data.data });
       })
       .catch((err) => {
-        console.log('Error ', err);
+        console.log('Error ', { ...err });
         alert(err.response.data.messag);
       });
   }
@@ -57,6 +62,7 @@ class EventContainer extends Component {
     const eventTab = eventData.map((item, index) => {
       // Create Event Card for each Tab
       const eventCard = item.events.map((event, eventIndex) => {
+        const status = this.state.isAdmin ? event.event_status : undefined;
         return (
           <EventCard
             key={eventIndex.toString()}
@@ -68,6 +74,8 @@ class EventContainer extends Component {
               '1970-01-01T' + event.event_time,
             ).toLocaleTimeString()}
             imageurl={EventDefaultImg}
+            status={status}
+            isAdmin={this.state.isAdmin}
           />
         );
       });
@@ -79,7 +87,9 @@ class EventContainer extends Component {
           index={index}
           key={item.id.toString()}
         >
-          <Grid container id="grid-event-card-container" justify="center">{eventCard}</Grid>
+          <Grid container id="grid-event-card-container" justify="center">
+            {eventCard}
+          </Grid>
         </EventCardContainer>,
       );
       if (index === eventData.length - 1) {

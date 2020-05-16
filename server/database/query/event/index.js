@@ -9,6 +9,7 @@ const getEventMemberInfoById = require('./getEventMemberInfoById');
 const checkUserCode = require('./checkUserCode');
 
 const updateEventMemberCount = require('./updateEventMemberCount');
+const getAllEvents = require('./getAllEvents');
 
 module.exports = {
   getEventById,
@@ -18,4 +19,5 @@ module.exports = {
   getEventMemberInfoById,
   updateEventMemberCount,
   checkUserCode,
+  getAllEvents,
 };

@@ -11,6 +11,8 @@ const {
   getEventsDay,
   takeMemberCode,
   getEventMembers,
+  getAdminEvents,
+  getAdminEventDetail,
 } = require('./admin');
 
 const {
@@ -66,7 +68,7 @@ router.delete('/api/event/cancelPlace', isAuth, cancelPlace);
 // open user Profile , contains userInfo , Event of user
 router.get('/api/user/profile', isAuth, profile);
 
-router.get('/api/admin/event/:id', isAuth, getEventById);
+router.get('/api/admin/eventDetail/:id', isAuth, getAdminEventDetail);
 
 router.get('/api/admin/getcategory', isAuth, getcategory);
 
@@ -90,6 +92,13 @@ router.post(
   isAuth,
   checkPermissions(ROLE.ADMIN),
   takeMemberCode,
+);
+
+router.get(
+  '/api/envet/getAdminEvent',
+  isAuth,
+  checkPermissions(ROLE.ADMIN),
+  getAdminEvents,
 );
 
 module.exports = router;

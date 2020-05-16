@@ -47,6 +47,7 @@ class Login extends Component {
     redirect: false,
     ReturnUrlText: '/',
     SignupLink: '/user/Signup/',
+    ReturnUrl: false,
   };
 
   componentDidMount() {
@@ -55,6 +56,7 @@ class Login extends Component {
     if (qstring.ReturnUrl) {
       this.setState({
         ReturnUrlText: qstring.ReturnUrl,
+        ReturnUrl: true,
         SignupLink: `/user/Signup/?ReturnUrl=${qstring.ReturnUrl}`,
       });
     } else {
@@ -126,10 +128,16 @@ class Login extends Component {
 
     axios
       .post(`/user/login/`, logindata)
-      .then((req) => {
-        const datalog = req.data;
-        this.setState({ redirect: true });
-        alert(datalog.messag);
+      .then((result) => {
+        const data = result.data;
+        console.log(data.data);
+        //ReturnUrlText;
+        const url =
+          data.data.isAdmin && !this.state.ReturnUrl
+            ? '/admin'
+            : this.state.ReturnUrlText;
+        this.setState({ redirect: true, ReturnUrlText: url });
+        alert(data.messag);
       })
       .catch((err) => {
         alert(err.response.data.messag);

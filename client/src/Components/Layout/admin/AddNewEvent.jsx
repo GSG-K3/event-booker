@@ -12,18 +12,11 @@ import {
   InputLabel,
   FormHelperText,
 } from '@material-ui/core';
-import {
-  Person as PersonIcon,
-  Lock as LockIcon,
-  InputOutlined,
-} from '@material-ui/icons';
+
 import { withStyles } from '@material-ui/core/styles';
+
 import { deepOrange } from '@material-ui/core/colors';
-import {
-  QueryBuilder as QueryBuilderIcon,
-  Room as RoomIcon,
-  EventNote as EventNoteIcon,
-} from '@material-ui/icons';
+import { Save, DeleteSweep, KeyboardBackspace } from '@material-ui/icons';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -91,7 +84,10 @@ class AddNewEvent extends Component {
         type: 'text',
         lable: 'Description',
       },
-      event_date: { value: new Date(), type: 'date' },
+      event_date: {
+        value: new Date().setDate(new Date().getDate() + 1),
+        type: 'date',
+      },
       event_time: { value: new Date(), type: 'time' },
     },
     category: [],
@@ -102,6 +98,11 @@ class AddNewEvent extends Component {
 
   handleClearValues = () => {
     this.clearDataField();
+  };
+
+  handleBack = () => {
+    // to return the user from where he comes
+    this.props.history.goBack();
   };
 
   componentDidMount() {
@@ -144,16 +145,22 @@ class AddNewEvent extends Component {
   };
 
   clearDataField() {
+    const { eventData } = this.state;
+    const fromInput = {};
+
+    for (let control of Object.keys(eventData)) {
+      let input = eventData[control];
+      input.value = '';
+      input.message = '';
+      input.isValid = true;
+      fromInput[control] = input;
+    }
+
+    fromInput.event_date.value = new Date().setDate(new Date().getDate() + 1);
+    fromInput.event_time.value = new Date();
+
     this.setState({
-      eventData: {
-        title: { value: '', message: '', isValid: true },
-        host: { value: '', message: '', isValid: true },
-        category_id: { value: 0, message: '', isValid: true },
-        event_location: { value: '', message: '', isValid: true },
-        description: { value: '', message: '', isValid: true },
-        event_date: { value: new Date(), message: '', isValid: true },
-        event_time: { value: new Date(), message: '', isValid: true },
-      },
+      eventData: fromInput,
       isLoading: false,
     });
   }
@@ -163,6 +170,8 @@ class AddNewEvent extends Component {
 
     let formValid = true;
     const { eventData } = this.state;
+
+    console.log('eventData', eventData);
 
     const fromInput = {};
 
@@ -192,7 +201,6 @@ class AddNewEvent extends Component {
       }
 
       fromInput[control] = input;
-      console.log('fromInput', fromInput);
     }
 
     if (!formValid) {
@@ -428,17 +436,33 @@ class AddNewEvent extends Component {
                       </Grid>
                     </MuiPickersUtilsProvider>
                   </Grid>
-                  <Grid item>
-                    <Box classes={{ root: classes.root }} m={4}>
-                      <Button
-                        size="large"
-                        color="primary"
-                        variant="contained"
-                        type="submit"
-                      >
-                        ADD EVENT
-                      </Button>
-                    </Box>
+                  <Grid container>
+                    <Grid item xs={6}>
+                      <Box classes={{ root: classes.root }} m={4}>
+                        <Button
+                          size="medium"
+                          color="primary"
+                          variant="contained"
+                          type="submit"
+                          startIcon={<Save />}
+                        >
+                          Save
+                        </Button>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Box classes={{ root: classes.root }} m={4}>
+                        <Button
+                          size="medium"
+                          color="primary"
+                          variant="contained"
+                          onClick={this.handleClearValues}
+                          startIcon={<DeleteSweep />}
+                        >
+                          Clear
+                        </Button>
+                      </Box>
+                    </Grid>
                   </Grid>
                 </form>
               </Grid>
@@ -449,9 +473,10 @@ class AddNewEvent extends Component {
                     size="large"
                     color="secondary"
                     variant="contained"
-                    onClick={this.handleClearValues}
+                    onClick={this.handleBack}
+                    startIcon={<KeyboardBackspace />}
                   >
-                    CANCEL
+                    Back
                   </Button>
                 </Box>
               </Grid>
