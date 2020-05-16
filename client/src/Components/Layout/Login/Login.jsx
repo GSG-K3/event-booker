@@ -130,7 +130,7 @@ class Login extends Component {
       .post(`/user/login/`, logindata)
       .then((result) => {
         const data = result.data;
-        console.log(data.data);
+   
         //ReturnUrlText;
         const url =
           data.data.isAdmin && !this.state.ReturnUrl

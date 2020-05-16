@@ -69,7 +69,6 @@ class AdminEventDetails extends Component {
   }
 
   buildMember = (eventMember) => {
-    console.log('eventMember : ', eventMember);
     return !eventMember || eventMember.length === 0 ? (
       <Paper elevation={6}>
         <Box p={3}>
