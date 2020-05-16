@@ -31,10 +31,10 @@ const addUser = (userDetails, callback) => {
       connection
         .query(sql.text, sql.values)
         .then((result) => {
-          return callback(null, gid);
+          if (callback) return callback(null, gid);
         })
         .catch((error) => {
-          return callback(error);
+          if (callback) return callback(error);
         });
     })
     .catch((error) => {
