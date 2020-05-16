@@ -70,8 +70,7 @@ class EventDetails extends Component {
               ? null
               : userCode.data.data.userEvent.code;
           }
-
-          console.log(eventDetail.data.data);
+          
           const detail =
             eventDetail.data.data.length === 0
               ? null
