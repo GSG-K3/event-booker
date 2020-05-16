@@ -12,7 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import LoaderProgress from './../Common/LoaderProgress';
 import '../../Theme/Css/App.css';
-
+import { KeyboardBackspace } from '@material-ui/icons';
 const useStyles = (theme) => ({
   root: { 'text-align': 'center' },
   red: {
@@ -34,7 +34,7 @@ const useStyles = (theme) => ({
 
 class EventDetails extends Component {
   state = {
-    eventdetail: [],
+    eventdetail: null,
     isEnrolled: false,
     userCode: null,
     redirect: false,
@@ -54,6 +54,10 @@ class EventDetails extends Component {
       return axios.get(`/api/user/userCode/${id}`);
     }
   };
+  handleBack = () => {
+    // to return the user from where he comes
+    this.props.history.goBack();
+  };
 
   componentDidMount() {
     axios
@@ -67,8 +71,13 @@ class EventDetails extends Component {
               : userCode.data.data.userEvent.code;
           }
 
+          console.log(eventDetail.data.data);
+          const detail =
+            eventDetail.data.data.length === 0
+              ? null
+              : eventDetail.data.data[0];
           this.setState({
-            eventdetail: eventDetail.data.data[0],
+            eventdetail: detail,
             userCode: code,
             isEnrolled: !code ? false : true,
             isLoading: false,
@@ -182,104 +191,125 @@ class EventDetails extends Component {
     } = this.state;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
 
+    const event = !eventdetail ? (
+      <Box p={3}>
+        <Typography variant="h6" align="center">
+          Sorry Some Error happened at get Event Data
+        </Typography>
+      </Box>
+    ) : (
+      <Box p={6}>
+        <Grid item xs={12}>
+          <Typography variant="h6">{eventdetail.title}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h7" className={classes.red}>
+            Hosted by: {eventdetail.host}
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Box my={3}>
+            <Typography variant="body1" align="justify">
+              {eventdetail.description}
+            </Typography>
+          </Box>
+        </Grid>
+
+        <Grid container spacing={1}>
+          <Grid item>
+            <EventNoteIcon />
+          </Grid>
+          <Grid item>
+            <Typography variant="h7">
+              {new Date(eventdetail.event_date).toLocaleDateString()}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={1}>
+          <Grid item>
+            <QueryBuilderIcon />
+          </Grid>
+          <Grid item>
+            <Typography variant="h7">
+              {new Date(
+                '1970-01-01T' + eventdetail.event_time,
+              ).toLocaleTimeString()}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={1}>
+          <Grid item>
+            <RoomIcon />
+          </Grid>
+          <Grid item>
+            <Typography variant="h7">{eventdetail.event_location}</Typography>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Box
+            classes={{ root: classes.root }}
+            m={4}
+            display={isEnrolled ? 'none' : 'block'}
+          >
+            {this.renderRedirect()}
+            <Button
+              size="small"
+              color="primary"
+              variant="contained"
+              onClick={this.handleEnrollEvent}
+            >
+              Take a place
+            </Button>
+          </Box>
+        </Grid>
+
+        <Grid item>
+          <Box
+            classes={{ root: classes.root }}
+            mt={4}
+            display={isEnrolled ? 'block' : 'none'}
+          >
+            <Box m={1} p={1}>
+              <Paper variant="outlined">
+                <Box p={1}>{userCode}</Box>
+              </Paper>
+            </Box>
+            {this.renderRedirect()}
+            <Button
+              size="small"
+              color="default"
+              variant="outlined"
+              onClick={this.handleCancelRegistration}
+              className={classes.btnCancel}
+            >
+              Cancel Registration
+            </Button>
+          </Box>
+        </Grid>
+      </Box>
+    );
+
     return (
       <Box component="div" p={3} width={1}>
         <LoaderProgress isLoading={isLoading} />
         <Box component="div" display={displayStatus} mt={6} width={1}>
           <Grid container justify="center">
             <Paper elevation={3}>
-              <Box p={6}>
-                <Grid item xs={12}>
-                  <Typography variant="h6">{eventdetail.title}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h7" className={classes.red}>
-                    Hosted by: {eventdetail.host}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Box my={3}>
-                    <Typography variant="body1" align="justify">
-                      {eventdetail.description}
-                    </Typography>
-                  </Box>
-                </Grid>
-
-                <Grid container spacing={1}>
-                  <Grid item>
-                    <EventNoteIcon />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="h7">
-                      {new Date(eventdetail.event_date).toLocaleDateString()}
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={1}>
-                  <Grid item>
-                    <QueryBuilderIcon />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="h7">
-                      {new Date(
-                        '1970-01-01T' + eventdetail.event_time,
-                      ).toLocaleTimeString()}
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={1}>
-                  <Grid item>
-                    <RoomIcon />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="h7">
-                      {eventdetail.event_location}
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid item>
-                  <Box
-                    classes={{ root: classes.root }}
-                    m={4}
-                    display={isEnrolled ? 'none' : 'block'}
+              {event}
+              <Grid item>
+                <Box classes={{ root: classes.root }} m={4}>
+                  <Button
+                    size="large"
+                    color="secondary"
+                    variant="contained"
+                    onClick={this.handleBack}
+                    startIcon={<KeyboardBackspace />}
                   >
-                    {this.renderRedirect()}
-                    <Button
-                      size="small"
-                      color="primary"
-                      variant="contained"
-                      onClick={this.handleEnrollEvent}
-                    >
-                      Take a place
-                    </Button>
-                  </Box>
-                </Grid>
-
-                <Grid item>
-                  <Box
-                    classes={{ root: classes.root }}
-                    m={4}
-                    display={isEnrolled ? 'block' : 'none'}
-                  >
-                    <Box m={1} p={1}>
-                      <Paper variant="outlined">
-                        <Box p={1}>{userCode}</Box>
-                      </Paper>
-                    </Box>
-                    {this.renderRedirect()}
-                    <Button
-                      size="small"
-                      color="default"
-                      variant="outlined"
-                      onClick={this.handleCancelRegistration}
-                      className={classes.btnCancel}
-                    >
-                      Cancel Registration
-                    </Button>
-                  </Box>
-                </Grid>
-              </Box>
+                    Back
+                  </Button>
+                </Box>
+              </Grid>
             </Paper>
           </Grid>
         </Box>
