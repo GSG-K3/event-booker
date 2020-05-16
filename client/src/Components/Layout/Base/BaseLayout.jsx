@@ -43,7 +43,7 @@ export default class UserLayout extends Component {
         });
       })
       .catch((err) => {
-        console.log({ ...err });
+    
         this.setState({
           showlogo: true,
           showMeun: true,

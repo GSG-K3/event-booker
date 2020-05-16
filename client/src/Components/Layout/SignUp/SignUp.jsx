@@ -312,16 +312,7 @@ class SignUp extends Component {
     } = this.state;
     const { name, phone, email, password, rePassword } = userDetails;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
-    console.log(
-      'displayStatus : ',
-      displayStatus,
-      ' | isLoading :  ',
-      isLoading,
-      '| !displayBlock :',
-      !displayBlock,
-      ' |  isLoading && !displayBlock : ',
-      isLoading && !displayBlock,
-    );
+   
     return (
       <Box component="div" p={3} width={1}>
         <LoaderProgress isLoading={isLoading} />
