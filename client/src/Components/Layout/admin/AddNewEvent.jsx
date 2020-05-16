@@ -171,8 +171,6 @@ class AddNewEvent extends Component {
     let formValid = true;
     const { eventData } = this.state;
 
-    console.log('eventData', eventData);
-
     const fromInput = {};
 
     for (let control of Object.keys(eventData)) {
@@ -239,6 +237,7 @@ class AddNewEvent extends Component {
       .catch((error) => {
         alert(error.response.data.messag);
         console.log(error);
+        this.setState({ isLoading: false });
       });
   };
 

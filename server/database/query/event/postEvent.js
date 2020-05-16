@@ -22,7 +22,7 @@ const PostEventBydata = (eventDetails) => {
       title,
       category_id,
       description,
-      event_date,
+      new Date(event_date),
       eventTime,
       event_location,
       host,
