@@ -14,8 +14,7 @@ Create WebSite where events attendees can register for one or more events, and e
 
 ##  User Journey
 
-![user jerny](https://user-images.githubusercontent.com/7718220/79892228-e3867280-840a-11ea-9081-6e5a4807752c.png)
-
+![user jerny](https://user-images.githubusercontent.com/7718220/82132659-bbf8af00-97ea-11ea-8098-97706790a820.png)
 
 ## user story:
   ### As User
