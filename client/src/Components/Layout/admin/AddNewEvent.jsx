@@ -26,6 +26,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import 'date-fns';
 import axios from 'axios';
 import LoaderProgress from '../../Common/LoaderProgress';
+import swal from 'sweetalert';
 const useStyles = (theme) => ({
   root: { 'text-align': 'center' },
   deepOrange: {
@@ -122,7 +123,7 @@ class AddNewEvent extends Component {
       .catch((err) => {
         console.log(err);
         this.setState({ isLoading: false });
-        alert(err.response.data.messag);
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
       });
   }
 
@@ -231,7 +232,8 @@ class AddNewEvent extends Component {
           alert(res.data.messg);
           return;
         }
-        alert('event added succesfully');
+        swal('Good job!', "'event added succesfully", 'success');
+
         this.clearDataField();
       })
       .catch((error) => {

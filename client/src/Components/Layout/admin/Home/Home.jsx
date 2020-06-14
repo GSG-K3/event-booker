@@ -12,7 +12,7 @@ import { EventNote } from '@material-ui/icons';
 import EventCard from '../../../Common/Event/EventCard';
 import LoaderProgress from '../../../Common/LoaderProgress';
 import EventDefaultImg from '../../../../assets/eventDefaultimg.svg';
-
+import swal from 'sweetalert';
 import HomeStyle from './HomeStyle';
 import axios from 'axios';
 
@@ -30,7 +30,7 @@ class Home extends Component {
       })
       .catch((err) => {
         console.log({ ...err });
-        alert(err.response.data.messag);
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
       });
   }
   render() {
