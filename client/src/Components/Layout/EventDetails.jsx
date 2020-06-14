@@ -13,6 +13,7 @@ import { red } from '@material-ui/core/colors';
 import LoaderProgress from './../Common/LoaderProgress';
 import '../../Theme/Css/App.css';
 import { KeyboardBackspace } from '@material-ui/icons';
+import swal from 'sweetalert';
 const useStyles = (theme) => ({
   root: { 'text-align': 'center' },
   red: {
@@ -70,7 +71,7 @@ class EventDetails extends Component {
               ? null
               : userCode.data.data.userEvent.code;
           }
-          
+
           const detail =
             eventDetail.data.data.length === 0
               ? null
@@ -84,7 +85,8 @@ class EventDetails extends Component {
         }),
       )
       .catch((err) => {
-        alert(err.response.data.messag);
+        if (err.response.data)
+          alert('Error', err.response.data.messag, 'error');
         console.log({ ...err });
       });
   }
@@ -117,7 +119,8 @@ class EventDetails extends Component {
       .then((res) => {
         const result = res.data;
         if (result.status === 401) {
-          alert(result.messag);
+          swal('Error', result.messag, 'error');
+
           this.props.history.push({
             pathname: '/user/login',
             search: `?ReturnUrl=/event/${id}`,
@@ -125,11 +128,11 @@ class EventDetails extends Component {
           return;
         }
         if (result.status !== 200) {
-          alert(result.messag);
+          swal('Error', result.messag, 'error');
           return;
         }
 
-        alert(result.messag);
+        swal('Success Enroll', result.messag, 'success');
 
         this.setState({
           isEnrolled: true,
@@ -138,7 +141,7 @@ class EventDetails extends Component {
         });
       })
       .catch((err) => {
-        alert(err.response.data.messag);
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
         console.log('axios Error Enroll Event : ', err);
       });
   };
@@ -154,6 +157,8 @@ class EventDetails extends Component {
         const result = res.data;
         if (result.status === 401) {
           alert(result.messag);
+
+          swal('Error', result.messag, 'error');
           this.props.history.push({
             pathname: '/user/login',
             search: `?ReturnUrl=/event/${id}`,
@@ -161,11 +166,11 @@ class EventDetails extends Component {
           return;
         }
         if (result.status !== 200) {
-          alert(result.messag);
+          swal('Error', result.messag, 'error');
           return;
         }
 
-        alert(result.messag);
+        swal('Success Cancel', result.messag, 'success');
 
         this.setState({
           isEnrolled: false,
@@ -174,7 +179,7 @@ class EventDetails extends Component {
         });
       })
       .catch((err) => {
-        alert(err.response.data.messag);
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
         console.log('axios Error Cancle Place in  Event : ', err);
       });
   };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import { Link, Redirect } from 'react-router-dom';
+import swal from 'sweetalert';
 import {
   Grid,
   Box,
@@ -130,17 +131,17 @@ class Login extends Component {
       .post(`/user/login/`, logindata)
       .then((result) => {
         const data = result.data;
-   
+
         //ReturnUrlText;
         const url =
           data.data.isAdmin && !this.state.ReturnUrl
             ? '/admin'
             : this.state.ReturnUrlText;
         this.setState({ redirect: true, ReturnUrlText: url });
-        alert(data.messag);
+        //swal(data.messag);
       })
       .catch((err) => {
-        alert(err.response.data.messag);
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
         this.setState({ isLoading: false });
       });
   };

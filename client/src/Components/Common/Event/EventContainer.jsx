@@ -16,6 +16,7 @@ import EventCardContainer from '../TabContainer';
 import LoaderProgress from '../LoaderProgress';
 import EventCard from './EventCard';
 import IndexTabProps from './../../../helpers/IndexTabProps';
+import swal from 'sweetalert';
 
 const useStyles = (theme) => ({
   root: {
@@ -80,7 +81,7 @@ class EventContainer extends Component {
       })
       .catch((err) => {
         console.log('Error ', { ...err });
-        alert(err.response.data.messag);
+        swal('Error', err.response.data.messag, 'error');
         this.setState({ isLoading: false });
       });
   }
