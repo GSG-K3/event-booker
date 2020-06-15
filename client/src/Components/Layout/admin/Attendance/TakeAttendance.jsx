@@ -79,7 +79,7 @@ class TakeAttendance extends Component {
         eventMember[index].attendance_status = '1';
         event.attendance_cnt = data.count;
 
-        swal(response.data.messag);
+        swal(result.data.messag);
 
         this.setState({
           isLoading: false,
