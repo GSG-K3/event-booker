@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+import swal from 'sweetalert';
 import axios from 'axios';
+
 import LoaderProgress from '../Common/LoaderProgress';
 export default () => {
   useEffect(() => {
@@ -9,8 +11,8 @@ export default () => {
         window.location.replace('/');
       })
       .catch((err) => {
-        console.log({ ...err });
-        alert(err.response.data.messag);
+        console.log('Error in Logout : ', { ...err });
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
       });
   }, []);
 

@@ -13,6 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { green, blue, orange, red } from '@material-ui/core/colors';
 import LoaderProgress from '../../Common/LoaderProgress';
 import EventMembers from './EventMembers/EventMembers';
+import swal from 'sweetalert';
 const useStyles = (theme) => ({
   root: { 'text-align': 'center' },
   red: {
@@ -63,7 +64,8 @@ class AdminEventDetails extends Component {
       })
       .catch((err) => {
         console.log(err);
-        alert(err.response.data.messag);
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
+
         this.setState({ isLoading: false });
       });
   }

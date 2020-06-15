@@ -10,6 +10,7 @@ import IndexTabProps from '../../../helpers/IndexTabProps';
 import UserInfo from './UserInfo';
 
 import Events from './Events';
+import swal from 'sweetalert';
 
 const ProfileStyles = (theme) => ({
   dataPaper: {
@@ -44,7 +45,7 @@ class Profile extends Component {
         });
       })
       .catch((err) => {
-        alert(err.response.data.messag);
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
         this.setState({ isLoading: false });
       });
   }

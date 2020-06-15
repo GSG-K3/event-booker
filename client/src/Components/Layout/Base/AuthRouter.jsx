@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import isAuth from '../../../helpers/isAuth';
+import swal from 'sweetalert';
 
 export default (AuthComponent, role) => {
   return class AuthRouter extends Component {
@@ -15,7 +16,7 @@ export default (AuthComponent, role) => {
         })
         .catch((err) => {
           if (err.response && err.response.data) {
-            alert(err.response.data.messag);
+            swal('Error', err.response.data.messag, 'error');
           }
 
           this.setState({ isLoading: false, isAuthenticated: false });

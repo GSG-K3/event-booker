@@ -7,6 +7,7 @@ import LoaderProgress from '../../../Common/LoaderProgress';
 import UserInfoDialog from './UserInfoDialog';
 import EventMembers from '../EventMembers/EventMembers';
 import AttendanceStyle from './Style';
+import swal from 'sweetalert';
 import axios from 'axios';
 
 class TakeAttendance extends Component {
@@ -38,14 +39,16 @@ class TakeAttendance extends Component {
         });
       })
       .catch((err) => {
-        alert(err.response.data.messag);
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
+
         this.setState({ isLoading: false });
       });
   }
 
   handlerAttendanceCode = (code, gid) => {
     if (!code) {
-      alert('you must enter the Code ');
+      swal('you must enter the code');
+
       return;
     }
     const { eventMemberInfo } = this.state;
@@ -75,7 +78,9 @@ class TakeAttendance extends Component {
         const index = eventMember.findIndex((x) => x.gid === data.userId);
         eventMember[index].attendance_status = '1';
         event.attendance_cnt = data.count;
-        alert(result.data.messag);
+
+        swal(response.data.messag);
+
         this.setState({
           isLoading: false,
           displayBlock: true,
@@ -85,13 +90,14 @@ class TakeAttendance extends Component {
       })
       .catch((err) => {
         console.log({ ...err });
-        alert(err.response.data.messag);
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
         this.setState({ isLoading: false, displayBlock: true });
       });
   };
 
   handleUpdate = (code) => {
-    alert('cnacel' + code);
+    swal('cancel', code);
+
     this.setState({ open: false });
   };
   render() {

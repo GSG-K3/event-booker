@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
           .json(
             successMessage(
               { userCode: code },
-              'you are successfully Enroll in Event Enjoy',
+              'you are successfully Enroll in Event Enjoy \n The Code was Sent to your Email',
             ),
           );
       })
