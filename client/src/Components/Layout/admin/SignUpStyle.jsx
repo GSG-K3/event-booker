@@ -25,10 +25,17 @@ export default (theme) => ({
   gutterBottom: {
     paddingTop: 12,
   },
+  checkBottom: {
+    padding: '19px 18px 0 13px',
+  },
+  dropBottom: {
+    padding: '19px 32px 0 32px',
+  },
   PasswordText: {
     width: 215,
   },
   textFieldGrid: {
     width: '75%',
   },
+  fullWidth: { width: '100%' },
 });

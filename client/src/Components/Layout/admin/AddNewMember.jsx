@@ -5,7 +5,8 @@ import { Link, Redirect } from 'react-router-dom';
 import DateFnsUtils from '@date-io/date-fns';
 import { withStyles } from '@material-ui/core/styles';
 import LoaderProgress from '../../Common/LoaderProgress';
-
+import Checkbox from '@material-ui/core/Checkbox';
+import swal from 'sweetalert';
 import {
   Box,
   Grid,
@@ -20,6 +21,7 @@ import {
   IconButton,
   InputAdornment,
   s,
+  NativeSelect,
 } from '@material-ui/core';
 
 import {
@@ -43,24 +45,36 @@ import {
 import queryString from 'query-string';
 import Cookies from 'js-cookie';
 import SignUpStyle from './SignUpStyle';
+const useStyles = (theme) => ({
+  root: { 'text-align': 'center' },
+
+  right: { 'text-align': 'right' },
+  content: {
+    padding: '33px',
+    width: '100%',
+    minWidth: 290,
+    maxWidth: 390,
+  },
+  fullWidth: { width: '100%' },
+});
 
 class AddNewMember extends Component {
   state = {
     userDetails: {
       name: {
-        value: '',
+        value: 'tte',
         message: '',
         isValid: true,
         isRequired: true,
       },
       phone: {
-        value: '',
+        value: '1230000000',
         message: '',
         isValid: true,
         isRequired: true,
       },
       email: {
-        value: '',
+        value: 't@no.com',
         message: '',
         isValid: true,
         isRequired: true,
@@ -71,28 +85,48 @@ class AddNewMember extends Component {
         isValid: true,
         isRequired: true,
       },
-      rePassword: {
-        value: '',
-        message: '',
-        isValid: true,
-        isRequired: true,
-      },
     },
     showPassword: false,
-    showRePassword: false,
     returnUrlText: '/',
     redirect: false,
-    loginLink: '/user/login',
+
     birthDate: '',
     minDate: '',
     maxDate: '',
     isLoading: false,
     displayBlock: true,
+    changePass: true,
+    eventID: '',
+    // selectedDate: new Date('2014-08-18T21:11:54'),
+    isLoading: true,
+    displayBlock: false,
+    eventData: [],
   };
 
   componentDidMount() {
     // max age of member must be less than 100 year
     // actually Do not happen , but it type of validation
+
+    axios
+      .get('/api/admin/getEventsDay')
+      .then((res) => {
+        const resdata = res.data.data;
+
+        const event = resdata.map((e, index) => {
+          return (
+            <option name="event_id" value={e.gid} key={index}>
+              {e.title}
+            </option>
+          );
+        });
+        this.setState({ eventData: event, isLoading: false });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ isLoading: false });
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
+      });
+
     const min = new Date();
     min.setDate(1);
     min.setMonth(0);
@@ -102,25 +136,13 @@ class AddNewMember extends Component {
     const max = new Date();
     max.setFullYear(max.getFullYear() - 4);
 
-    const AuthToken = Cookies.get('AuthToken');
-    const qstring = queryString.parse(this.props.history.location.search);
-    if (qstring.ReturnUrl) {
-      this.setState({
-        returnUrlText: qstring.ReturnUrl,
-        loginLink: `/admin/user/newmember/?ReturnUrl=${qstring.ReturnUrl}`,
-        minDate: min,
-        maxDate: max,
-        birthDate: min,
-      });
-    } else {
-      this.setState({
-        // if the user log in we will redirect to Home
-        redirect: !AuthToken ? false : true,
-        minDate: min,
-        maxDate: max,
-        birthDate: min,
-      });
-    }
+    this.setState({
+      // if the user log in we will redirect to Home
+      //  redirect: !AuthToken ? false : true,
+      minDate: min,
+      maxDate: max,
+      birthDate: min,
+    });
   }
 
   // it form password show icon , from materil ui documentaion
@@ -146,12 +168,17 @@ class AddNewMember extends Component {
   handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  handleChangeCheckbox = (event) => {
+    this.setState({ changePass: event.target.checked });
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
+
     let formValid = true;
     const fromInput = this.state.userDetails;
-    const { name, phone, email, password, rePassword } = fromInput;
+    const { name, phone, email, password } = fromInput;
+    const { changePass, eventID } = this.state;
 
     if (!name.value.trim()) {
       name.message = 'Enter your name, please';
@@ -202,35 +229,6 @@ class AddNewMember extends Component {
       password.isValid = true;
     }
 
-    if (!rePassword.value.trim()) {
-      rePassword.message = 'Re-enter your password';
-      rePassword.isValid = false;
-      formValid = false;
-    } else {
-      rePassword.message = '';
-      rePassword.isValid = true;
-    }
-
-    if (
-      password.value.trim() &&
-      rePassword.value.trim() &&
-      password.value.trim() !== rePassword.value.trim()
-    ) {
-      password.message =
-        'the Password not match , Enter password, again please';
-      password.isValid = false;
-      rePassword.isValid = false;
-      formValid = false;
-    } else if (
-      password.value.trim() &&
-      rePassword.value.trim() &&
-      password.value.trim() === rePassword.value.trim()
-    ) {
-      password.message = '';
-      password.isValid = true;
-      rePassword.isValid = true;
-    }
-
     if (!formValid) {
       this.setState({ userDetails: fromInput });
       return;
@@ -238,16 +236,18 @@ class AddNewMember extends Component {
 
     this.setState({ userDetails: fromInput, isLoading: true });
 
-    const data = {
+    const data2 = {
       name: name.value,
       phone: phone.value,
       email: email.value,
       password: password.value,
-      rePassword: rePassword.value,
       birthDate: this.state.birthDate,
+      changePass,
+      eventID: eventID,
     };
 
     // create axios request to check if email used in db or not
+
     axios
       .get(`/api/user/checkUserEmail/${email.value}`)
       .then(() => {
@@ -256,15 +256,17 @@ class AddNewMember extends Component {
         email.isAvailable = true;
 
         // axios to Create User
+
         axios
-          .post('/api/user/signup', data)
+          .post('/api/admin/user/newmember', data2)
           .then((req) => {
             const datalog = req.data;
-            this.setState({ redirect: true });
-            alert(datalog.messag);
+            this.setState({ isLoading: false });
+
+            swal(datalog.messag);
           })
           .catch((err) => {
-            alert(err.response.data.messag);
+            swal('Error', err.response.data.messag, 'error');
             this.setState({ isLoading: false });
           });
       })
@@ -291,12 +293,20 @@ class AddNewMember extends Component {
     });
   };
 
+  handleDrop = (event) => {
+    const target = event.target;
+    this.setState({
+      eventID: target.value,
+    });
+  };
+
   renderAction = () => {
     if (this.state.redirect) {
       return window.location.replace(`${this.state.returnUrlText}`);
       // return <Redirect to={this.state.returnUrlText} />;
     }
   };
+
   render() {
     const { classes } = this.props;
     const {
@@ -321,16 +331,10 @@ class AddNewMember extends Component {
             <Paper elevation={3} className={classes.content}>
               <Grid item xs={12}>
                 <Typography variant="h4" color="textSecondary">
-                  Sign Up
+                  Add new member
                 </Typography>
               </Grid>
-              <Grid item xs={12}>
-                <Box mb={1}>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    Please enter your info to continue.
-                  </Typography>
-                </Box>
-              </Grid>
+
               <Grid item xs={12}>
                 <form
                   onSubmit={this.handleSubmit}
@@ -364,6 +368,7 @@ class AddNewMember extends Component {
                         />
                       </Grid>
                     </Grid>
+
                     <Grid item className={classes.errorTitle}>
                       <FormControl error className={classes.errorTitle}>
                         <FormHelperText className={classes.textError}>
@@ -371,6 +376,7 @@ class AddNewMember extends Component {
                         </FormHelperText>
                       </FormControl>
                     </Grid>
+
                     <Grid
                       container
                       justify="flex-start"
@@ -490,58 +496,14 @@ class AddNewMember extends Component {
                         </FormHelperText>
                       </FormControl>
                     </Grid>
-                    <Grid
+                    {/* <Grid
                       container
                       justify="flex-start"
                       spacing={1}
                       alignItems="flex-end"
                       className={classes.gutterBottom}
                       justify="center"
-                    >
-                      <Grid item>
-                        <Lock color="disabled" />
-                      </Grid>
-                      <Grid item className={classes.textFieldGrid}>
-                        <FormControl fullWidth={true}>
-                          <InputLabel htmlFor="standard-adornment-password">
-                            Enter your password
-                          </InputLabel>
-                          <Input
-                            id="rePassword"
-                            type={showRePassword ? 'text' : 'password'}
-                            value={rePassword.value}
-                            error={!rePassword.isValid}
-                            onChange={this.handleTextInput}
-                            required={true}
-                            name="rePassword"
-                            color="secondary"
-                            label="Re-enter your password"
-                            endAdornment={
-                              <InputAdornment position="end">
-                                <IconButton
-                                  aria-label="toggle re-password visibility"
-                                  onClick={this.handleClickShowRePassword}
-                                  onMouseDown={this.handleMouseDownRePassword}
-                                >
-                                  {showRePassword ? (
-                                    <Visibility />
-                                  ) : (
-                                    <VisibilityOff />
-                                  )}
-                                </IconButton>
-                              </InputAdornment>
-                            }
-                          />
-                        </FormControl>
-                      </Grid>
-                    </Grid>
-                    <Grid className={classes.errorTitle} item>
-                      <FormControl error className={classes.errorTitle}>
-                        <FormHelperText className={classes.textError}>
-                          {rePassword.message}
-                        </FormHelperText>
-                      </FormControl>
-                    </Grid>
+                    > */}
                     <Grid
                       container
                       justify="flex-start"
@@ -577,6 +539,62 @@ class AddNewMember extends Component {
 
                     <Grid
                       container
+                      spacing={1}
+                      alignItems="baseline"
+                      justify="center"
+                      className={classes.checkBottom}
+                    >
+                      <Grid item xs={2}>
+                        <Checkbox
+                          checked={this.state.changePass}
+                          onChange={this.handleChangeCheckbox}
+                          inputProps={{ 'aria-label': 'primary checkbox' }}
+                        />
+                      </Grid>
+                      <Grid item xs={10}>
+                        <Typography variant="h9" color="textSecondary">
+                          Change password at first Login
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Grid
+                      container
+                      spacing={1}
+                      alignItems="baseline"
+                      justify="center"
+                      className={classes.dropBottom}
+                    >
+                      <Grid xs={12}>
+                        <FormControl className={classes.fullWidth}>
+                          <InputLabel htmlFor="event" color="secondary">
+                            Choose Event
+                          </InputLabel>
+                          <NativeSelect
+                            color="secondary"
+                            value={this.state.eventID}
+                            // error={!gid.isValid}
+                            onChange={this.handleDrop}
+                            inputProps={{
+                              name: 'gid',
+                              id: 'eventID',
+                            }}
+                          >
+                            <option aria-label="None" value="" />
+                            {this.state.eventData}
+                          </NativeSelect>
+                        </FormControl>
+                        {/* <Grid item className={classes.errorTitle}>
+                        <FormControl error className={classes.errorTitle}>
+                          <FormHelperText className={classes.textError}>
+                            {category_id.message}
+                          </FormHelperText>
+                        </FormControl>
+                      </Grid> */}
+                      </Grid>
+                    </Grid>
+
+                    <Grid
+                      container
                       justify="center"
                       spacing={1}
                       alignItems="flex-end"
@@ -590,22 +608,9 @@ class AddNewMember extends Component {
                           color="primary"
                           variant="contained"
                         >
-                          Sign up
+                          Add Member
                         </Button>
                       </Box>
-                    </Grid>
-                    <Grid
-                      container
-                      justify="center"
-                      spacing={1}
-                      alignItems="flex-end"
-                    >
-                      <Typography variant="subtitle2" color="primary">
-                        {'Have an account?  '}
-                        <Link className={classes.loginLink} to={loginLink}>
-                          Login
-                        </Link>
-                      </Typography>
                     </Grid>
                   </Grid>
                 </form>
@@ -617,5 +622,4 @@ class AddNewMember extends Component {
     );
   }
 }
-
 export default withStyles(SignUpStyle)(AddNewMember);

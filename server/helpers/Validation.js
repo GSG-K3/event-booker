@@ -17,6 +17,7 @@ const registrationValidation = (data) => {
         .number()
         .min(8)
         .required(),
+
       password: joi
         .string()
         .required()
@@ -60,9 +61,39 @@ const V4UUIDValidation = (uuid) => {
   return uuidV4Regex.test(uuid);
 };
 
+const newmemberValidation = (data) => {
+  const schema = joi.object({
+    name: joi
+      .string()
+      .pattern(new XRegExp('^[\\p{L}\\d]+(?:\\s[\\p{L}\\d]+)*$'))
+      .min(3)
+      .required(),
+    email: joi
+      .string()
+      .min(6)
+      .required()
+      .email(),
+    phone: joi
+      .number()
+      .min(8)
+      .required(),
+    eventID: joi.string().optional(),
+    changePass: joi.boolean().required(),
+
+    password: joi
+      .string()
+      .required()
+      .pattern(new RegExp('^[A-Za-z0-9]{3,30}$')),
+
+    birthDate: joi.date().required(),
+  });
+
+  return schema.validate(data);
+};
 module.exports = {
   registrationValidation,
   logInValidation,
   V4UUIDValidation,
   emilValidation,
+  newmemberValidation,
 };

@@ -129,6 +129,7 @@ export default class UserLayout extends Component {
                   exact
                   path="/admin/user/newmember"
                   component={AuthRouter(AddNewMember, 'admin')}
+                  //component={AddNewMember}
                 />
               </Switch>
             </Grid>

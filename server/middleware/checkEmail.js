@@ -6,7 +6,7 @@ const {
 
 module.exports = (req, res, next) => {
   const { email } = req.params;
-
+  console.log(email);
   getUserByEmail(email)
     .then((result) => {
       if (result.rowCount !== 0) {
