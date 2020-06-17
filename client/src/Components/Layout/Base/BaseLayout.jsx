@@ -11,6 +11,7 @@ import Logout from '../Logout';
 import Profile from '../Profile/Profile';
 import TakeAttendance from '../../Layout/admin/Attendance/TakeAttendance';
 import AdminEventDetails from '../admin/AdminEventDetails';
+import AddNewMember from '../admin/AddNewMember';
 import AdminHome from '../../Layout/admin/Home/Home';
 import AdminEvent from '../../Layout/admin/AdminEvent';
 import AuthRouter from './AuthRouter';
@@ -43,7 +44,6 @@ export default class UserLayout extends Component {
         });
       })
       .catch((err) => {
-    
         this.setState({
           showlogo: true,
           showMeun: true,
@@ -124,6 +124,12 @@ export default class UserLayout extends Component {
                   exact
                   path="/admin/Event/Detail/:id"
                   component={AuthRouter(AdminEventDetails, 'admin')}
+                />
+                <Route
+                  exact
+                  path="/admin/user/newmember"
+                  component={AuthRouter(AddNewMember, 'admin')}
+                  //component={AddNewMember}
                 />
               </Switch>
             </Grid>
