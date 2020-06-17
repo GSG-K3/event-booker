@@ -6,6 +6,7 @@ const {
   takePlace,
   cancelPlace,
 } = require('./event');
+
 const {
   postEvent,
   getEventsDay,
@@ -13,6 +14,7 @@ const {
   getEventMembers,
   getAdminEvents,
   getAdminEventDetail,
+  getNewMember,
 } = require('./admin');
 
 const {
@@ -45,6 +47,8 @@ router.post('/user/logout', logout);
 
 // post new User
 router.post('/api/user/signup', checkEmail, signup);
+
+router.post('/api/admin/user/newmember', checkEmail, getNewMember);
 
 router.get('/api/user/checkUserEmail/:email', checkEmail, checkUserEmail);
 
