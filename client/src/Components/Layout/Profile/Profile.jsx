@@ -86,7 +86,7 @@ class Profile extends Component {
                   >
                     <Tab label="info" {...IndexTabProps(0)} />
                     <Tab label="Events" {...IndexTabProps(1)} />
-                    {/* <Tab label="Setting" {...IndexTabProps(2)} /> */}
+                    <Tab label="Setting" {...IndexTabProps(2)} />
                   </Tabs>
                 </Paper>
                 <Box mt={1}>
@@ -107,9 +107,6 @@ class Profile extends Component {
                           <Events events={userEvent} />
                         </Grid>
                       </ProfileTabContainer>
-                      {/* <ProfileTabContainer value={tabIndex} index={2}>
-                    <Grid container>Setting</Grid>
-                  </ProfileTabContainer> */}
                     </SwipeableViews>
                   </Paper>
                 </Box>

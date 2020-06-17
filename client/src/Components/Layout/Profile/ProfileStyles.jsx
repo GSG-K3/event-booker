@@ -20,6 +20,9 @@ export default makeStyles((theme) => ({
     textTransform: 'uppercase',
     color: '#F6554D',
   },
+  savebtn: {
+    textAlign: 'felx-end',
+  },
   userRoot: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,

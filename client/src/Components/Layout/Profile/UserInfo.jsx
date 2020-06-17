@@ -1,5 +1,15 @@
 import React from 'react';
-import { List, ListItem, Divider, ListItemText, ListItemAvatar, makeStyles, Grid } from '@material-ui/core';
+import {
+  List,
+  ListItem,
+  Divider,
+  ListItemText,
+  ListItemAvatar,
+  makeStyles,
+  Grid,
+  Box,
+  Button,
+} from '@material-ui/core';
 import {
   DateRange,
   Person,
@@ -10,14 +20,45 @@ import {
   Business,
   Home,
   BusinessSharp,
+  Edit,
 } from '@material-ui/icons';
 import userInfoStyle from './ProfileStyles';
 
 export default ({ userInfo }) => {
-  const { user_name, phone, birth_date, email, university, address, profession } = userInfo;
+  const {
+    user_name,
+    phone,
+    birth_date,
+    email,
+    university,
+    address,
+    profession,
+  } = userInfo;
   const classes = userInfoStyle();
   return (
-    <Grid container>
+    <Grid container className={classes.savebtn}>
+      <Grid item xs={6}>
+        <Box m={4} alignItems="right">
+          <Button
+            size="medium"
+            color="primary"
+            variant="contained"
+            // onChange={}
+            startIcon={<Edit />}
+          >
+            Edit
+          </Button>
+        </Box>
+      </Grid>
+      {/* ********
+
+
+
+
+
+
+      ********** */}
+
       <List className={classes.userRoot}>
         <ListItem alignItems="center">
           <ListItemAvatar>
