@@ -85,8 +85,7 @@ class EventDetails extends Component {
         }),
       )
       .catch((err) => {
-        if (err.response.data)
-          alert('Error', err.response.data.messag, 'error');
+        if (err.response.data) swal('Error', err.response.data.messag, 'error');
         console.log({ ...err });
       });
   }
@@ -156,8 +155,6 @@ class EventDetails extends Component {
       .then((res) => {
         const result = res.data;
         if (result.status === 401) {
-          alert(result.messag);
-
           swal('Error', result.messag, 'error');
           this.props.history.push({
             pathname: '/user/login',
