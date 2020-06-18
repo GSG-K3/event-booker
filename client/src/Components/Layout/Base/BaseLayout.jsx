@@ -130,7 +130,10 @@ export default class UserLayout extends Component {
                   exact
                   path="/admin/user/newmember"
                   component={AuthRouter(AddNewMember, 'admin')}
-                  //component={AddNewMember}
+                />
+
+                <Route
+                  exact
                   path="/admin/Event/add-Member-to-event"
                   component={AuthRouter(AddMemberToEvent, 'admin')}
                 />
