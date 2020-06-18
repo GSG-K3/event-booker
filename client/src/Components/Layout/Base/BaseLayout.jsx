@@ -16,6 +16,7 @@ import AdminHome from '../../Layout/admin/Home/Home';
 import AdminEvent from '../../Layout/admin/AdminEvent';
 import AuthRouter from './AuthRouter';
 import isAuth from '../../../helpers/isAuth';
+import AddMemberToEvent from '../../Layout/admin/AddMemberToEvent';
 export default class UserLayout extends Component {
   state = {
     showlogo: true,
@@ -130,6 +131,8 @@ export default class UserLayout extends Component {
                   path="/admin/user/newmember"
                   component={AuthRouter(AddNewMember, 'admin')}
                   //component={AddNewMember}
+                  path="/admin/Event/add-Member-to-event"
+                  component={AuthRouter(AddMemberToEvent, 'admin')}
                 />
               </Switch>
             </Grid>
