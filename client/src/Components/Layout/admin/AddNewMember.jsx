@@ -62,19 +62,19 @@ class AddNewMember extends Component {
   state = {
     userDetails: {
       name: {
-        value: 'tte',
+        value: '',
         message: '',
         isValid: true,
         isRequired: true,
       },
       phone: {
-        value: '1230000000',
+        value: '',
         message: '',
         isValid: true,
         isRequired: true,
       },
       email: {
-        value: 't@no.com',
+        value: '',
         message: '',
         isValid: true,
         isRequired: true,
