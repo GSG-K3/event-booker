@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 module.exports = async (emailinfo) => {
   try {
     const { to, subject, text, html } = emailinfo;
+
     let transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
