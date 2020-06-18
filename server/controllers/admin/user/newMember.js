@@ -49,24 +49,26 @@ const newMember = (req, res) => {
     }
 
     getUserById(gid)
-      .then((userres) => {
+      .then(async (userres) => {
         const user = userres.rows[0];
-        const takePlace = enroll(data.eventID, user);
+        const takePlace = await enroll(data.eventID, user);
 
         if (takePlace === null) {
-          return res.status(400).json(FailedMessage('', 'Enroll Event'));
-        }
-
-        if (takePlace === true) {
           return res
-            .status(200)
+            .status(400)
             .json(
-              FailedMessage(
-                null,
-                'The Member Added Successfully and Enroll in Event ',
-              ),
+              FailedMessage('', 'Some Error Happened at user Enroll Event'),
             );
         }
+
+        return res
+          .status(200)
+          .json(
+            successMessage(
+              null,
+              'The Member Added Successfully and Enroll in Event , the Code was sent to member Email',
+            ),
+          );
       })
       .catch((err) => {
         console.log('Error in get user by id ', { ...err });

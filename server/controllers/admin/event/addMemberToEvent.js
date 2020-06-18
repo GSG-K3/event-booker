@@ -10,27 +10,27 @@ const {
 module.exports = async (req, res) => {
   const { eventId, memberId } = req.body.data;
 
-  console.log('memberId : ', memberId);
   try {
     const user = (await getUserById(memberId)).rows[0];
 
     const takePlace = await enrollEvent(eventId, user);
 
     if (takePlace === null) {
-      return res.status(400).json(FailedMessage('', 'Enroll Event'));
-    }
-
-    if (takePlace === true) {
       return res
         .status(400)
         .json(
-          FailedMessage(null, 'Sorry some Error happened at Enroll in Event '),
+          FailedMessage('', 'Sorry some Error happened at Enroll in Event'),
         );
     }
 
     return res
       .status(200)
-      .json(successMessage('', 'The Member Added to Event'));
+      .json(
+        successMessage(
+          '',
+          'The Member Added to Event , and the Event Code was sent to member email',
+        ),
+      );
   } catch (err) {
     console.log('error in add member to event ', err);
     return res
