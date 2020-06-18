@@ -1,5 +1,6 @@
 const login = require('./login');
 const profile = require('./profile');
+const editprofile = require('./editprofile');
 const signup = require('./signup');
 const userEvent = require('./userEvent');
 
