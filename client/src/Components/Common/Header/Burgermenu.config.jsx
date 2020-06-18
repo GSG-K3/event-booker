@@ -32,11 +32,6 @@ const adminMenuItems = () => [
     to: '/admin/user/newmember',
     text: 'New member',
   },
-  // {
-  //   icon: 'fas fa-user-plus',
-  //   to: '/admin/user/NewMember',
-  //   text: 'New member',
-  // },
   {
     icon: 'fas fa-user-astronaut',
     to: '/admin/Event/add-Member-to-event',
