@@ -15,6 +15,8 @@ const {
   getAdminEvents,
   getAdminEventDetail,
   getNewMember,
+  getAllMember,
+  addMemberToEvent,
 } = require('./admin');
 
 const {
@@ -33,7 +35,10 @@ const isAuth = require('../middleware/isAuth');
 const checkToken = require('../middleware/checkToken');
 
 const checkPermissions = require('../middleware/checkPermissions');
+
 const checkEmail = require('../middleware/checkEmail');
+
+const isMemberEnrollEvent = require('../middleware/isMemberEnrollEvent');
 
 const { ROLE } = require('../helpers/Constants');
 
@@ -103,6 +108,21 @@ router.get(
   isAuth,
   checkPermissions(ROLE.ADMIN),
   getAdminEvents,
+);
+
+router.get(
+  '/api/admin/user/getAllMember',
+  isAuth,
+  checkPermissions(ROLE.ADMIN),
+  getAllMember,
+);
+
+router.post(
+  '/api/admin/Event/add-Member-to-event',
+  isAuth,
+  checkPermissions(ROLE.ADMIN),
+  isMemberEnrollEvent,
+  addMemberToEvent,
 );
 
 module.exports = router;
