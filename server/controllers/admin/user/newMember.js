@@ -42,7 +42,6 @@ const newMember = (req, res) => {
   }
 
   addUser(data, (err, gid) => {
-    console.log('adduser');
     if (err) {
       console.log('err add user ', err);
       return res
@@ -50,33 +49,41 @@ const newMember = (req, res) => {
         .json(InternalErrorMessage(null, 'internal error with the server'));
     }
 
-    console.log('gid of new user ', gid);
     getUserById(gid)
-      .then((userres) => {
-        console.log('user by id', userres.rows);
-        const usergid = userres.rows[0];
+      .then(async (userres) => {
+        const user = userres.rows[0];
+        if (!data.eventID) {
+          return res
+            .status(200)
+            .json(successMessage(null, 'The Member just  Added Successfully '));
+        }
 
-        console.log('start enroll');
-        enroll(data.eventID, usergid.id)
-          .then((responseEnroll) => {
-            console.log('enroll res', responseEnroll);
-            res.json(successMessage('', 'ok'));
-          })
-          .catch((err) => {
-            console.log('err enroll ', err);
-            res.status(501).json('Error');
-          });
+        const takePlace = await enroll(data.eventID, user);
+
+        if (takePlace === null) {
+          return res
+            .status(400)
+            .json(
+              FailedMessage('', 'Some Error Happened at user Enroll Event'),
+            );
+        }
+
+        return res
+          .status(200)
+          .json(
+            successMessage(
+              null,
+              'The Member Added Successfully and Enroll in Event , the Code was sent to member Email',
+            ),
+          );
       })
       .catch((err) => {
-        console.log('gt ueer id ', err);
-        res.status(501).json('Error');
+        console.log('Error in get user by id ', { ...err });
+        return res
+          .status(500)
+          .json(InternalErrorMessage(null, 'Error In Add Member '));
       });
-
-    // const auth = jwt.sign({ id: gid }, process.env.acces_Token_secret);
-    // res.cookie('AuthToken', auth);
-    // return res
-    //   .status(200)
-    //   .json(successMessage(null, ' You are registered successfully'));
   });
 };
+
 module.exports = newMember;

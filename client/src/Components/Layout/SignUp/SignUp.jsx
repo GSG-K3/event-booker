@@ -43,6 +43,7 @@ import {
 import queryString from 'query-string';
 import Cookies from 'js-cookie';
 import SignUpStyle from './SignUpStyle';
+import swal from 'sweetalert';
 
 class SignUp extends Component {
   state = {
@@ -261,10 +262,12 @@ class SignUp extends Component {
           .then((req) => {
             const datalog = req.data;
             this.setState({ redirect: true });
-            alert(datalog.messag);
+            swal(datalog.messag);
           })
           .catch((err) => {
-            alert(err.response.data.messag);
+            if (err.response.data)
+              swal('Error', err.response.data.messag, 'error');
+
             this.setState({ isLoading: false });
           });
       })
@@ -312,7 +315,7 @@ class SignUp extends Component {
     } = this.state;
     const { name, phone, email, password, rePassword } = userDetails;
     const displayStatus = isLoading && !displayBlock ? 'none' : 'block';
-   
+
     return (
       <Box component="div" p={3} width={1}>
         <LoaderProgress isLoading={isLoading} />

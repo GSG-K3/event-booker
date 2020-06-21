@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
         const eventinfo = {
           to: user.email,
           subject: ` The ${event.title} Event registration code `,
-          text: `The code for ${event.title} event is ${code} `,
+          html: `<h2>The code for ${event.title} event is ${code} </h2>`,
         };
         await sendEmail(eventinfo);
 

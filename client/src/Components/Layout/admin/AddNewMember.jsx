@@ -93,10 +93,9 @@ class AddNewMember extends Component {
     birthDate: '',
     minDate: '',
     maxDate: '',
-    isLoading: false,
-    displayBlock: true,
+
     changePass: true,
-    eventID: '',
+    eventID: undefined,
     // selectedDate: new Date('2014-08-18T21:11:54'),
     isLoading: true,
     displayBlock: false,
@@ -234,7 +233,11 @@ class AddNewMember extends Component {
       return;
     }
 
-    this.setState({ userDetails: fromInput, isLoading: true });
+    this.setState({
+      userDetails: fromInput,
+      isLoading: true,
+      displayBlock: true,
+    });
 
     const data2 = {
       name: name.value,
@@ -259,14 +262,19 @@ class AddNewMember extends Component {
 
         axios
           .post('/api/admin/user/newmember', data2)
-          .then((req) => {
-            const datalog = req.data;
-            this.setState({ isLoading: false });
+          .then((result) => {
+            if (result.data.status !== 200) {
+              this.setState({ isLoading: false });
+              swal('Error', result.data.messag, 'error');
+              return;
+            }
 
-            swal(datalog.messag);
+            this.setState({ isLoading: false });
+            swal('Good job!', result.data.messag, 'success');
           })
           .catch((err) => {
-            swal('Error', err.response.data.messag, 'error');
+            if (err.response.data)
+              swal('Error', err.response.data.messag, 'error');
             this.setState({ isLoading: false });
           });
       })

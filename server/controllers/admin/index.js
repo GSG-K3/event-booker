@@ -7,6 +7,10 @@ const getNewMember = require('./user/newMember');
 const getAdminEvents = require('./event/getAdminEvents');
 const getAdminEventDetail = require('./event/getAdminEventDetail');
 
+const getAllMember = require('./user/getAllMember');
+
+const addMemberToEvent = require('./event/addMemberToEvent');
+
 module.exports = {
   getNewMember,
   getEventsDay,
@@ -15,4 +19,6 @@ module.exports = {
   getEventMembers,
   getAdminEvents,
   getAdminEventDetail,
+  getAllMember,
+  addMemberToEvent,
 };

@@ -3,11 +3,12 @@ const getAllUserEvent = require('./getAllUserEvent');
 const getUserById = require('./getUserById');
 const addUser = require('./addUser');
 const getUserByEmail = require('./getUserByEmail');
-
+const getAllUserByRole = require('./getAllUserByRole');
 module.exports = {
   getUserById,
   getAllUserEvent,
   getUserEventById,
   addUser,
   getUserByEmail,
+  getAllUserByRole,
 };

@@ -229,7 +229,7 @@ class AddNewEvent extends Component {
       .post(`/api/admin/event/addEvent`, data)
       .then((res) => {
         if (res.data.status !== 200) {
-          alert(res.data.messg);
+          swal(res.data.messg);
           return;
         }
         swal('Good job!', "'event added succesfully", 'success');
@@ -237,7 +237,7 @@ class AddNewEvent extends Component {
         this.clearDataField();
       })
       .catch((error) => {
-        alert(error.response.data.messag);
+        if (error.response.data) swal(error.response.data.messag);
         console.log(error);
         this.setState({ isLoading: false });
       });
@@ -437,6 +437,7 @@ class AddNewEvent extends Component {
                       </Grid>
                     </MuiPickersUtilsProvider>
                   </Grid>
+
                   <Grid container>
                     <Grid item xs={6}>
                       <Box classes={{ root: classes.root }} m={4}>
