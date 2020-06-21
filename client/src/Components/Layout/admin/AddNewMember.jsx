@@ -95,7 +95,7 @@ class AddNewMember extends Component {
     maxDate: '',
 
     changePass: true,
-    eventID: '',
+    eventID: undefined,
     // selectedDate: new Date('2014-08-18T21:11:54'),
     isLoading: true,
     displayBlock: false,

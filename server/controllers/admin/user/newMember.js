@@ -28,6 +28,7 @@ const newMember = (req, res) => {
       );
   }
 
+  console.log(data);
   const { error } = newmemberValidation(data);
 
   if (error) {
@@ -51,6 +52,12 @@ const newMember = (req, res) => {
     getUserById(gid)
       .then(async (userres) => {
         const user = userres.rows[0];
+        if (!data.eventID) {
+          return res
+            .status(200)
+            .json(successMessage(null, 'The Member just  Added Successfully '));
+        }
+
         const takePlace = await enroll(data.eventID, user);
 
         if (takePlace === null) {
