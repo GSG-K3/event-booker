@@ -21,17 +21,16 @@ export default makeStyles((theme) => ({
     color: '#F6554D',
   },
   userRoot: {
-    width: '100%',
+    width: '95%',
     backgroundColor: theme.palette.background.paper,
-    width: '100%',
-    minWidth: 250,
-    maxWidth: 320,
+    //minWidth: 250,
+    //maxWidth: 320,
   },
 
   eventRoot: {
-    width: '100%',
-    minWidth: 250,
-    maxWidth: 320,
+    width: '95%',
+    //    minWidth: 250,
+    //  maxWidth: 320,
     backgroundColor: theme.palette.background.paper,
     padding: 14,
   },
