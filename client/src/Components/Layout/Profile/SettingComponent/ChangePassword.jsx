@@ -21,7 +21,9 @@ import {
   Save,
 } from '@material-ui/icons';
 
-import LoaderProgress from '../../../Common/LoaderProgress';
+import swal from 'sweetalert';
+
+import axios from 'axios';
 
 const inputObj = {
   password: '',
@@ -44,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default ({ userInfo, setIsLoading }) => {
+export default ({ setIsLoading }) => {
   const [currentPass, setCurrentPass] = React.useState(inputObj);
   const [newPass, setNewPass] = React.useState(inputObj);
   const [reNewPass, setReNewPass] = React.useState(inputObj);
@@ -141,6 +143,31 @@ export default ({ userInfo, setIsLoading }) => {
       reNewPassword.isValid = true;
     }
 
+    if (
+      newPassword.password.trim() &&
+      reNewPassword.password.trim() &&
+      newPassword.password.trim() !== reNewPassword.password.trim()
+    ) {
+      newPassword.message =
+        'the New Password not match , Enter password, again please';
+
+      newPassword.isValid = false;
+      newPassword.password = '';
+
+      reNewPassword.isValid = false;
+      reNewPassword.password = '';
+
+      formValid = false;
+    } else if (
+      newPassword.password.trim() &&
+      reNewPassword.password.trim() &&
+      newPassword.password.trim() === reNewPassword.password.trim()
+    ) {
+      newPassword.message = '';
+      newPassword.isValid = true;
+      reNewPassword.isValid = true;
+    }
+
     setCurrentPass(currentPassword);
     setNewPass(newPassword);
     setReNewPass(reNewPassword);
@@ -152,15 +179,19 @@ export default ({ userInfo, setIsLoading }) => {
 
     axios
       .post(`/api/user/changePassword`, {
-        currentPass: currentPass.value,
-        newPass: newPass.value,
-        reNewPass: reNewPass.value,
+        currentPass: currentPass.password,
+        newPass: newPass.password,
+        reNewPass: reNewPass.password,
       })
       .then((result) => {
         const data = result.data;
-        console.log({ ...result });
         setIsLoading(false, true);
-        //swal(data.messag);
+        if (result.data.status !== 200) {
+          swal('Error', result.data.messag, 'error');
+          return;
+        }
+        handleClearValues();
+        swal('Good job!', result.data.messag, 'success');
       })
       .catch((err) => {
         console.log('Error', { ...err });
