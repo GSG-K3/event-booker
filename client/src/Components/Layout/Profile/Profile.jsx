@@ -8,15 +8,17 @@ import LoaderProgress from '../../Common/LoaderProgress';
 import ProfileTabContainer from '../../Common/TabContainer';
 import IndexTabProps from '../../../helpers/IndexTabProps';
 import UserInfo from './UserInfo';
-
+import Settings from './Settings';
 import Events from './Events';
 import swal from 'sweetalert';
 
 const ProfileStyles = (theme) => ({
   dataPaper: {
-    width: '100%',
-    margin: 5,
-    'max-width': 310,
+    width: '90%',
+    // margin: 5,
+    //'max-width': 310,
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 
@@ -50,6 +52,9 @@ class Profile extends Component {
       });
   }
 
+  setIsLoading = (loading, isDisplayBlock) => {
+    this.setState({ isLoading: loading, displayBlock: isDisplayBlock });
+  };
   render() {
     const { classes } = this.props;
     const {
@@ -67,13 +72,6 @@ class Profile extends Component {
         <LoaderProgress isLoading={isLoading} />
         <Box component="div" display={displayStatus} mt={2} width={1}>
           <Grid container justify="center">
-            {/* <Grid container item xs={12} justify="center">
-              <UserAvatar
-                showAvatar={true}
-                Name={userInfo.user_name}
-                cssClass={classes.large}
-              />
-            </Grid> */}
             <Grid container item xs={12} justify="center">
               <Box Component="div" mt={6}>
                 <Paper square position="relative">
@@ -90,25 +88,35 @@ class Profile extends Component {
                   </Tabs>
                 </Paper>
                 <Box mt={1}>
-                  <Paper className={classes.dataPaper}>
-                    <SwipeableViews
-                      axis={direction === 'rtl' ? 'x-reverse' : 'x'}
-                      index={tabIndex}
-                      disableLazyLoading={false}
-                      disabled={true}
-                    >
-                      <ProfileTabContainer value={tabIndex} index={0}>
-                        <Grid container>
-                          <UserInfo userInfo={userInfo} />
-                        </Grid>
-                      </ProfileTabContainer>
-                      <ProfileTabContainer value={tabIndex} index={1}>
-                        <Grid container>
-                          <Events events={userEvent} />
-                        </Grid>
-                      </ProfileTabContainer>
-                    </SwipeableViews>
-                  </Paper>
+                  <Grid container item justify="center">
+                    <Paper className={classes.dataPaper}>
+                      <SwipeableViews
+                        axis={direction === 'rtl' ? 'x-reverse' : 'x'}
+                        index={tabIndex}
+                        disableLazyLoading={false}
+                        disabled={true}
+                      >
+                        <ProfileTabContainer value={tabIndex} index={0}>
+                          <Grid container>
+                            <UserInfo userInfo={userInfo} />
+                          </Grid>
+                        </ProfileTabContainer>
+                        <ProfileTabContainer value={tabIndex} index={1}>
+                          <Grid container>
+                            <Events events={userEvent} />
+                          </Grid>
+                        </ProfileTabContainer>
+                        <ProfileTabContainer value={tabIndex} index={2}>
+                          <Grid container>
+                            <Settings
+                              userInfo={userInfo}
+                              setIsLoading={this.setIsLoading}
+                            />
+                          </Grid>
+                        </ProfileTabContainer>
+                      </SwipeableViews>
+                    </Paper>
+                  </Grid>
                 </Box>
               </Box>
             </Grid>

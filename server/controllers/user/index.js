@@ -8,4 +8,14 @@ const checkUserEmail = require('./checkUserEmail');
 
 const logout = require('./logout');
 
-module.exports = { login, profile, signup, userEvent, checkUserEmail, logout };
+const changePassword = require('./changePassword');
+
+module.exports = {
+  login,
+  profile,
+  signup,
+  userEvent,
+  checkUserEmail,
+  logout,
+  changePassword,
+};
