@@ -25,6 +25,7 @@ const {
   signup,
   userEvent,
   checkUserEmail,
+  changePassword,
   logout,
 } = require('./user');
 
@@ -37,6 +38,8 @@ const checkToken = require('../middleware/checkToken');
 const checkPermissions = require('../middleware/checkPermissions');
 
 const checkEmail = require('../middleware/checkEmail');
+
+const checkCurrentPassword = require('../middleware/checkCurrentPassword');
 
 const isMemberEnrollEvent = require('../middleware/isMemberEnrollEvent');
 
@@ -123,6 +126,13 @@ router.post(
   checkPermissions(ROLE.ADMIN),
   isMemberEnrollEvent,
   addMemberToEvent,
+);
+
+router.post(
+  '/api/user/changePassword',
+  isAuth,
+  checkCurrentPassword,
+  changePassword,
 );
 
 module.exports = router;

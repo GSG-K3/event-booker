@@ -30,6 +30,31 @@ const registrationValidation = (data) => {
   return schema.validate(data);
 };
 
+/**
+ *  currentPass: currentPass.password,
+        newPass: newPass.password,
+        reNewPass: reNewPass.password,
+ * 
+ */
+
+const changePasswordValidation = (data) => {
+  const schema = joi
+    .object({
+      currentPass: joi
+        .string()
+        .required()
+        .pattern(new RegExp('^[A-Za-z0-9]{3,30}$')),
+      newPass: joi
+        .string()
+        .required()
+        .pattern(new RegExp('^[A-Za-z0-9]{3,30}$')),
+      reNewPass: joi.ref('newPass'),
+    })
+    .with('newPass', 'reNewPass');
+
+  return schema.validate(data);
+};
+
 const emilValidation = (data) => {
   const schema = joi.object({
     email: joi
@@ -96,4 +121,5 @@ module.exports = {
   V4UUIDValidation,
   emilValidation,
   newmemberValidation,
+  changePasswordValidation,
 };

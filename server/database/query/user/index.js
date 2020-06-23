@@ -4,6 +4,7 @@ const getUserById = require('./getUserById');
 const addUser = require('./addUser');
 const getUserByEmail = require('./getUserByEmail');
 const getAllUserByRole = require('./getAllUserByRole');
+const changePassword = require('./changePassword');
 module.exports = {
   getUserById,
   getAllUserEvent,
@@ -11,4 +12,5 @@ module.exports = {
   addUser,
   getUserByEmail,
   getAllUserByRole,
+  changePassword,
 };
