@@ -66,19 +66,6 @@ export default ({ userInfo }) => {
         </Box>
       </Grid>
 
-      <Grid item xs={6}>
-        <Box m={4} alignItems="right" display={displaySave}>
-          <Button
-            size="medium"
-            color="primary"
-            variant="contained"
-            onClick={handleSaveClick}
-            startIcon={<Save />}
-          >
-            Save
-          </Button>
-        </Box>
-      </Grid>
       {/* ********
 
 
@@ -146,9 +133,18 @@ export default ({ userInfo }) => {
 
 
         ****************** */}
-
         <Box display={displaySave}>
-          <EditUserInfo userInfo={userInfo} />
+          {displaySave === 'block' ? (
+            <EditUserInfo
+              userInfo={userInfo}
+              handleSaveClick={handleSaveClick}
+              displaySave={displaySave}
+            >
+              {' '}
+            </EditUserInfo>
+          ) : (
+            ''
+          )}
         </Box>
       </List>
     </Grid>

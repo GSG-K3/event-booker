@@ -72,7 +72,7 @@ router.delete('/api/event/cancelPlace', isAuth, cancelPlace);
 //============== Admin Endpoint ==================================
 // open user Profile , contains userInfo , Event of user
 router.get('/api/user/profile', isAuth, profile);
-// router.post('/api/user/edituserinfo', isAuth, editprofile);
+router.put('/api/user/edituserinfo', isAuth, editprofile);
 
 router.get('/api/admin/eventDetail/:id', isAuth, getAdminEventDetail);
 
