@@ -18,7 +18,7 @@ module.exports = async (userDetails, gid) => {
         name,
         phone,
         birthDate,
-        email,
+        email.toLowerCase(),
         'Unknown',
         'Unknown',
         role,
