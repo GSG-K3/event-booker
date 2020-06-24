@@ -17,5 +17,6 @@ module.exports = {
   userEvent,
   checkUserEmail,
   logout,
+  editprofile,
   changePassword,
 };

@@ -8,6 +8,13 @@ export default makeStyles((theme) => ({
     fontSize: 48,
     fontWeight: 800,
   },
+  gutterBottom: {
+    paddingTop: 12,
+  },
+
+  textFieldGrid: {
+    width: '75%',
+  },
   btnCancel: {
     borderRadius: 15,
     width: 230,

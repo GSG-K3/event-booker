@@ -2,15 +2,11 @@ import React, { useState, useEffect } from 'react';
 import swal from 'sweetalert';
 import {
   List,
-  ListItem,
-  Divider,
-  ListItemText,
-  ListItemAvatar,
-  makeStyles,
   Grid,
   Box,
   Button,
   TextField,
+  IconButton,
 } from '@material-ui/core';
 import {
   DateRange,
@@ -19,9 +15,7 @@ import {
   AlternateEmail,
   AccountBalance,
   BusinessCenter,
-  Business,
   Home,
-  BusinessSharp,
   Edit,
   Save,
 } from '@material-ui/icons';
@@ -34,23 +28,19 @@ import {
 import userInfoStyle from './ProfileStyles';
 import UserInfo from './UserInfo';
 
-export default ({ userInfo, handleSaveClick, displaySave }) => {
+export default ({ userInfo, handleSaveClick, updateuserinfo, displaySave }) => {
   // console.log('prop', props);
 
   const classes = userInfoStyle();
 
   const data = { ...userInfo };
-  // console.log('data1111', data);
+
   const [userInformation, setUserInformation] = useState(data);
   const [oldEmail, setEmail] = useState('');
-  //console.log(userInformation);
 
   useEffect(() => {
-    console.log(data.email);
-
-    console.log(data);
     setEmail(data.email);
-    console.log(oldEmail);
+
     const fromInput = {};
     for (let key of Object.keys(data)) {
       const input = {};
@@ -130,13 +120,11 @@ export default ({ userInfo, handleSaveClick, displaySave }) => {
       return;
     }
     setUserInformation(fromInput);
-    // isLoading:true
-    // this.setState({ userInfo: fromInput, isLoading: true });
 
     const data = {
-      user_name: user_name.Value,
+      user_name: user_name.value,
       phone: phone.value,
-      birth_date: birth_date,
+      birth_date: birth_date.value,
       email: email.value,
       university: university.value,
       address: address.value,
@@ -144,9 +132,6 @@ export default ({ userInfo, handleSaveClick, displaySave }) => {
     };
 
     // create axios request to check if email used in db or not
-    console.log('bef check');
-    console.log('old', oldEmail);
-    console.log('new', userInformation.email.value);
 
     if (userInformation.email.value !== oldEmail) {
       axios
@@ -167,18 +152,14 @@ export default ({ userInfo, handleSaveClick, displaySave }) => {
                 swal('Error', req.data.messag, 'error');
                 return;
               }
-              // handleSave...
+
+              updateuserinfo({ ...data });
               handleSaveClick();
               swal('Good job!', req.data.messag, 'success');
-              // this.setState({ redirect: true });
-              console.log('1111', data);
-
-              alert(datalog.messag);
-              console.log('done');
             })
             .catch((err) => {
-              alert(err.response.data.messag);
-              // this.setState({ isLoading: false });
+              if (err.response.data)
+                swal('error', err.response.data.messag, 'error');
             });
         })
         .catch((err) => {
@@ -191,52 +172,58 @@ export default ({ userInfo, handleSaveClick, displaySave }) => {
         });
     } else {
       axios
-        .post('/api/user/edituserinfo', data)
+        .put('/api/user/edituserinfo', data)
         .then((req) => {
           const datalog = req.data;
           if (req.data.status !== 200) {
             swal('Error', req.data.messag, 'error');
             return;
           }
-          // handleSave...
+
+          updateuserinfo({ ...data });
           handleSaveClick();
           swal('Good job!', req.data.messag, 'success');
-          // this.setState({ redirect: true });
-          console.log(data);
-          alert(datalog.messag);
-          console.log('done');
         })
         .catch((err) => {
-          alert(err.response.data.messag);
-          // this.setState({ isLoading: false });
+          if (err.response.data)
+            swal('error', err.response.data.messag, 'error');
         });
     }
-    console.log('aft check');
   };
   //console.log('user info in render : ', userInformation);
   return (
     <Grid container className={classes.userRoot}>
-      <List className={classes.userRoot}>
-        <Box>
-          <form onSubmit={handleSubmit} noValidate autoComplete="off">
-            {/* <form onSubmit={handleSubmit}> */}
-            {/* <form> */}
-            <Grid item xs={6}>
-              <Box m={4} alignItems="right" display={displaySave}>
-                <Button
-                  type="submit"
-                  size="medium"
-                  color="primary"
-                  variant="contained"
-                  // onClick={handleSaveClick}
-                  startIcon={<Save />}
-                >
-                  Save
-                </Button>
-              </Box>
-            </Grid>
+      {/* <List className={classes.userRoot}> */}
+      <Box>
+        <form onSubmit={handleSubmit} noValidate autoComplete="off">
+          <Grid item>
+            <Box alignItems="right" display={displaySave}>
+              <Button
+                type="submit"
+                size="medium"
+                color="primary"
+                variant="contained"
+                startIcon={<Save />}
+              >
+                Save
+              </Button>
+              {/* <IconButton type="submit" aria-label="save">
+                  <Save />
+                </IconButton> */}
+            </Box>
+          </Grid>
+          <Grid
+            container
+            spacing={1}
+            alignItems="flex-end"
+            justify="flex-start"
+            className={classes.gutterBottom}
+            justify="center"
+          >
             <Grid>
-              <Person color="disabled" fontSize="large" />
+              <Person color="disabled" />
+            </Grid>
+            <Grid item className={classes.textFieldGrid}>
               <TextField
                 name="user_name"
                 id="user_name"
@@ -245,13 +232,24 @@ export default ({ userInfo, handleSaveClick, displaySave }) => {
                 error={!userInformation.user_name.isValid}
                 // autoFocus={true}
                 required={true}
-                // color="secondary"
+                color="secondary"
                 // fullWidth={true}
                 onChange={handleChange}
               />
             </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={1}
+            alignItems="flex-end"
+            justify="flex-start"
+            className={classes.gutterBottom}
+            justify="center"
+          >
             <Grid>
-              <Phone color="disabled" fontSize="large" />
+              <Phone color="disabled" />
+            </Grid>
+            <Grid item className={classes.textFieldGrid}>
               <TextField
                 name="phone"
                 id="phone"
@@ -260,13 +258,24 @@ export default ({ userInfo, handleSaveClick, displaySave }) => {
                 error={!userInformation.phone.isValid}
                 // autoFocus={true}
                 required={true}
-                // color="secondary"
+                color="secondary"
                 // fullWidth={true}
                 onChange={handleChange}
               />
             </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={1}
+            alignItems="flex-end"
+            justify="flex-start"
+            className={classes.gutterBottom}
+            justify="center"
+          >
             <Grid>
-              <AlternateEmail color="disabled" fontSize="large" />
+              <AlternateEmail color="disabled" />
+            </Grid>
+            <Grid item className={classes.textFieldGrid}>
               <TextField
                 name="email"
                 id="email"
@@ -275,13 +284,24 @@ export default ({ userInfo, handleSaveClick, displaySave }) => {
                 error={!userInformation.email.isValid}
                 // autoFocus={true}
                 required={true}
-                // color="secondary"
+                color="secondary"
                 // fullWidth={true}
                 onChange={handleChange}
               />
             </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={1}
+            alignItems="flex-end"
+            justify="flex-start"
+            className={classes.gutterBottom}
+            justify="center"
+          >
             <Grid>
-              <DateRange color="disabled" fontSize="large" />
+              <DateRange color="disabled" />
+            </Grid>
+            <Grid item className={classes.textFieldGrid}>
               <TextField
                 name="birth_date"
                 id="birth_date"
@@ -290,13 +310,24 @@ export default ({ userInfo, handleSaveClick, displaySave }) => {
                 error={!userInformation.birth_date.isValid}
                 // autoFocus={true}
                 required={true}
-                // color="secondary"
+                color="secondary"
                 // fullWidth={true}
                 onChange={handleChange}
               />
             </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={1}
+            alignItems="flex-end"
+            justify="flex-start"
+            className={classes.gutterBottom}
+            justify="center"
+          >
             <Grid>
-              <AccountBalance color="disabled" fontSize="large" />
+              <AccountBalance color="disabled" />
+            </Grid>
+            <Grid item className={classes.textFieldGrid}>
               <TextField
                 name="university"
                 id="university"
@@ -305,13 +336,24 @@ export default ({ userInfo, handleSaveClick, displaySave }) => {
                 error={!userInformation.university.isValid}
                 // autoFocus={true}
                 required={true}
-                // color="secondary"
+                color="secondary"
                 // fullWidth={true}
                 onChange={handleChange}
               />
             </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={1}
+            alignItems="flex-end"
+            justify="flex-start"
+            className={classes.gutterBottom}
+            justify="center"
+          >
             <Grid>
-              <BusinessCenter color="disabled" fontSize="large" />
+              <BusinessCenter color="disabled" />
+            </Grid>
+            <Grid item className={classes.textFieldGrid}>
               <TextField
                 name="profession"
                 id="profession"
@@ -320,13 +362,24 @@ export default ({ userInfo, handleSaveClick, displaySave }) => {
                 error={!userInformation.profession.isValid}
                 // autoFocus={true}
                 required={true}
-                // color="secondary"
+                color="secondary"
                 // fullWidth={true}
                 onChange={handleChange}
               />
             </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={1}
+            alignItems="flex-end"
+            justify="flex-start"
+            className={classes.gutterBottom}
+            justify="center"
+          >
             <Grid>
-              <Home color="disabled" fontSize="large" />
+              <Home color="disabled" />
+            </Grid>
+            <Grid item className={classes.textFieldGrid}>
               <TextField
                 name="address"
                 id="address"
@@ -335,14 +388,15 @@ export default ({ userInfo, handleSaveClick, displaySave }) => {
                 error={!userInformation.address.isValid}
                 // autoFocus={true}
                 required={true}
-                // color="secondary"
+                color="secondary"
                 // fullWidth={true}
                 onChange={handleChange}
               />
             </Grid>
-          </form>
-        </Box>
-      </List>
+          </Grid>
+        </form>
+      </Box>
+      {/* </List> */}
     </Grid>
   );
 };

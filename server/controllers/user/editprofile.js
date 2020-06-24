@@ -10,7 +10,7 @@ const {
   successMessage,
 } = require('../../helpers/responseMessage');
 
-const { registrationValidation } = require('../../helpers/Validation');
+const { updateProfileValidation } = require('../../helpers/Validation');
 
 const editprofile = (req, res) => {
   const data = !req.body ? null : req.body;
@@ -26,7 +26,7 @@ const editprofile = (req, res) => {
       );
   }
 
-  const { error } = registrationValidation(data);
+  const { error } = updateProfileValidation(data);
 
   if (error) {
     // return error message if not valid
@@ -38,19 +38,11 @@ const editprofile = (req, res) => {
     return res.status(400).json(FailedMessage(null, `Oops ! ${errorMessage}`));
   }
 
-  editUserInfo(data)
+  editUserInfo(data, req.user.gid)
     .then((result) => {
-      if (err) {
-        return res
-          .status(501)
-          .json(InternalErrorMessage(null, 'internal error with the server'));
-      }
-
-      const auth = jwt.sign({ id: gid }, process.env.acces_Token_secret);
-      res.cookie('AuthToken', auth);
       return res
         .status(200)
-        .json(successMessage(null, ' You are registered successfully'));
+        .json(successMessage(null, ' You updated you info successfully'));
     })
     .catch((err) => {
       res.status(501).json(InternalErrorMessage(null, 'internal error'));

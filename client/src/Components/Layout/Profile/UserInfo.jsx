@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   TextField,
+  IconButton,
 } from '@material-ui/core';
 import {
   DateRange,
@@ -30,7 +31,7 @@ import EditUserInfo from './EdituserInfo';
 export default ({ userInfo }) => {
   const [displayEdit, setDisplayEdit] = React.useState('block');
   const [displaySave, setDisplaySave] = React.useState('none');
-
+  const [userInfoData, setUserInfoData] = React.useState({ ...userInfo });
   const {
     user_name,
     phone,
@@ -39,7 +40,7 @@ export default ({ userInfo }) => {
     university,
     address,
     profession,
-  } = userInfo;
+  } = userInfoData;
   const classes = userInfoStyle();
   const handleEditClick = () => {
     setDisplayEdit('none');
@@ -49,11 +50,19 @@ export default ({ userInfo }) => {
     setDisplaySave('none');
     setDisplayEdit('block');
   };
-
+  const updateuserinfo = (updatedata) => {
+    setUserInfoData(updatedata);
+  };
+  React.useEffect(() => {
+    updateuserinfo({ ...userInfo });
+  }, [userInfo]);
   return (
     <Grid container className={classes.savebtn}>
-      <Grid item xs={6}>
-        <Box m={4} alignItems="right" display={displayEdit}>
+      <Grid item xs={1}>
+        <Box display={displayEdit} justify="flex-end">
+          {/* <IconButton onClick={handleEditClick} aria-label="edit">
+            <Edit />
+          </IconButton> */}
           <Button
             size="medium"
             color="primary"
@@ -65,15 +74,6 @@ export default ({ userInfo }) => {
           </Button>
         </Box>
       </Grid>
-
-      {/* ********
-
-
-
-
-
-
-      ********** */}
 
       <List className={classes.userRoot}>
         <Box display={displayEdit}>
@@ -127,17 +127,13 @@ export default ({ userInfo }) => {
           </ListItem>
           <Divider variant="fullWidth" component="li" />
         </Box>
-        {/* 
-        ***********
 
-
-
-        ****************** */}
         <Box display={displaySave}>
           {displaySave === 'block' ? (
             <EditUserInfo
-              userInfo={userInfo}
+              userInfo={userInfoData}
               handleSaveClick={handleSaveClick}
+              updateuserinfo={updateuserinfo}
               displaySave={displaySave}
             >
               {' '}
