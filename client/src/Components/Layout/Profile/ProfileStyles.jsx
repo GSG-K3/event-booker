@@ -8,6 +8,13 @@ export default makeStyles((theme) => ({
     fontSize: 48,
     fontWeight: 800,
   },
+  gutterBottom: {
+    paddingTop: 12,
+  },
+
+  textFieldGrid: {
+    width: '75%',
+  },
   btnCancel: {
     borderRadius: 15,
     width: 230,
@@ -19,6 +26,9 @@ export default makeStyles((theme) => ({
     letterSpacing: '0.05em',
     textTransform: 'uppercase',
     color: '#F6554D',
+  },
+  savebtn: {
+    textAlign: 'felx-end',
   },
   userRoot: {
     width: '95%',

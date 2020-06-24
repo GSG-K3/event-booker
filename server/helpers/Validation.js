@@ -86,6 +86,32 @@ const V4UUIDValidation = (uuid) => {
   return uuidV4Regex.test(uuid);
 };
 
+const updateProfileValidation = (data) => {
+  const schema = joi.object({
+    user_name: joi
+      .string()
+      .pattern(new XRegExp('^[\\p{L}\\d]+(?:\\s[\\p{L}\\d]+)*$'))
+      .min(3)
+      .required(),
+    email: joi
+      .string()
+      .min(6)
+      .required()
+      .email(),
+    phone: joi
+      .number()
+      .min(8)
+      .required(),
+
+    birth_date: joi.date().required(),
+    university: joi.string().optional(),
+    address: joi.string().optional(),
+    profession: joi.string().optional(),
+  });
+
+  return schema.validate(data);
+};
+
 const newmemberValidation = (data) => {
   const schema = joi.object({
     name: joi
@@ -122,4 +148,5 @@ module.exports = {
   emilValidation,
   newmemberValidation,
   changePasswordValidation,
+  updateProfileValidation,
 };
