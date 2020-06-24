@@ -43,26 +43,6 @@ class EventContainer extends Component {
     }
   };
   componentDidMount() {
-    const key = this.state.isAdmin ? 'adminEventData' : 'eventData';
-    // admin  20 minutes => 1200000
-    // user 180 minutes => 10800000 => 3 hours
-    // ttl => Time to live
-    // if user is Admin the data will update in each 20 minutes,
-    // otherwise update in each 3 hours
-    const ttl = this.state.isAdmin ? 1200000 : 10800000;
-    // get data to session
-    const temp = localStorage.getItem(key);
-    if (temp) {
-      const data = JSON.parse(temp);
-      const now = new Date();
-      // check if data expired
-      if (now.getTime() >= data.expiry) {
-        localStorage.removeItem(key);
-      } else {
-        this.setState({ eventData: data.eventData, isLoading: true });
-        return;
-      }
-    }
     const url = this.state.isAdmin
       ? '/api/envet/getAdminEvent'
       : '/api/envet/getupComingEvent';
@@ -70,13 +50,6 @@ class EventContainer extends Component {
     axios
       .get(url)
       .then((result) => {
-        localStorage.setItem(
-          key,
-          JSON.stringify({
-            eventData: result.data.data,
-            expiry: new Date().getTime() + ttl,
-          }),
-        );
         this.setState({ eventData: result.data.data });
       })
       .catch((err) => {
