@@ -1,6 +1,10 @@
+require('dotenv').config();
+
+const { v4: uuidv4 } = require('uuid');
+
 const { addUser } = require('../../database/query/user');
 
-require('dotenv').config();
+const gid = uuidv4();
 
 const jwt = require('jsonwebtoken');
 
@@ -12,7 +16,7 @@ const {
 
 const { registrationValidation } = require('../../helpers/Validation');
 
-const signup = (req, res) => {
+module.exports = (req, res) => {
   const data = !req.body ? null : req.body;
 
   if (!data) {
@@ -38,18 +42,18 @@ const signup = (req, res) => {
     return res.status(400).json(FailedMessage(null, `Oops ! ${errorMessage}`));
   }
 
-  addUser(data, (err, gid) => {
-    if (err) {
+  addUser(data, gid)
+    .then((resutl) => {
+      const auth = jwt.sign({ id: gid }, process.env.acces_Token_secret);
+      res.cookie('AuthToken', auth);
+      return res
+        .status(200)
+        .json(successMessage(null, ' You are registered successfully'));
+    })
+    .catch((err) => {
+      console.log('Erro in singun controll ', err);
       return res
         .status(501)
         .json(InternalErrorMessage(null, 'internal error with the server'));
-    }
-
-    const auth = jwt.sign({ id: gid }, process.env.acces_Token_secret);
-    res.cookie('AuthToken', auth);
-    return res
-      .status(200)
-      .json(successMessage(null, ' You are registered successfully'));
-  });
+    });
 };
-module.exports = signup;
